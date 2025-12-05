@@ -183,6 +183,30 @@ export class ClassAttendService {
     }
   }
 
+  async deleteAttendanceBySubject(userId, subjectId) {
+    try {
+      const record = await this.databases.listDocuments(
+        this.databasesId,
+        this.attendClassesCollection,
+        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)]
+      );
+      if (record.total === 0) {
+        console.log("No attendance records found for this subject to delete.");
+        return;
+      }
+      const deleteAttendance = record.documents.map((doc) => {
+        return this.databases.deleteDocument(
+          this.databasesId,
+          this.attendClassesCollection,
+          doc.$id
+        );
+      });
+      await Promise.all(deleteAttendance);
+    } catch (error) {
+      console.error("Not able to Delete Attendance by Subject", error.message);
+    }
+  }
+
   async getAttendanceBySubject(userId, subjectId) {
     try {
       const response = await this.databases.listDocuments(

@@ -19,6 +19,7 @@ import Signup from "./Application_files/Loginin_signup/Signup/Signup.jsx";
 import AuthLayout from "./Data_management/AuthLayout.jsx";
 import "./index.css";
 import { LocalStorageProvider } from "./Context/LocalStorageContext.jsx";
+import { DeleteUpdateProvider } from "./Context/Delete_UpdateContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -82,7 +83,9 @@ createRoot(document.getElementById("root")).render(
         <LocalStorageProvider>
           <ScheduleProvider>
             <AttendanceProvider>
-              <RouterProvider router={router} />
+              <DeleteUpdateProvider>
+                <RouterProvider router={router} />
+              </DeleteUpdateProvider>
             </AttendanceProvider>
           </ScheduleProvider>
         </LocalStorageProvider>
