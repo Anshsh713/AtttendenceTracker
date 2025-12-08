@@ -48,13 +48,17 @@ export class ScheduleService {
     }
   }
 
-  async updateSubject(SubjectId, data) {
+  async updateSubject(SubjectID, userId, subjectName, classesSchedule) {
     try {
       return await this.databases.updateDocument(
         this.databasesId,
         this.ScheduleCollection,
-        SubjectId,
-        data
+        SubjectID,
+        {
+          UserID: userId,
+          SubjectName: subjectName,
+          ClassesSchedule: classesSchedule,
+        }
       );
     } catch (error) {
       console.error("Not able to Update your Subject ", error.message);
