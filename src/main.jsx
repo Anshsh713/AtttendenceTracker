@@ -20,6 +20,8 @@ import AuthLayout from "./Data_management/AuthLayout.jsx";
 import "./index.css";
 import { LocalStorageProvider } from "./Context/LocalStorageContext.jsx";
 import { DeleteUpdateProvider } from "./Context/Delete_UpdateContext.jsx";
+import { HistoryProvider } from "./Context/HistoryContext.jsx";
+import History from "./Application_files/History/History_Page.jsx";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,14 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
+      {
+        path: "/History",
+        element: (
+          <AuthLayout authentication={true}>
+            <History />
+          </AuthLayout>
+        ),
+      },
     ],
   },
 ]);
@@ -84,7 +94,9 @@ createRoot(document.getElementById("root")).render(
           <ScheduleProvider>
             <AttendanceProvider>
               <DeleteUpdateProvider>
-                <RouterProvider router={router} />
+                <HistoryProvider>
+                  <RouterProvider router={router} />
+                </HistoryProvider>
               </DeleteUpdateProvider>
             </AttendanceProvider>
           </ScheduleProvider>

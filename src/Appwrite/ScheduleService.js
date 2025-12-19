@@ -150,6 +150,23 @@ export class ScheduleService {
       throw error;
     }
   }
+
+  async getAttendanceHistory(subjectId, userId) {
+    try {
+      const attendanceResponse = await this.databases.listDocuments(
+        this.databasesId,
+        conf.appwriteAttendClassesCollectionID,
+        [Query.equal("UserID", userId), Query.equal("SubjectID", subjectId)]
+      );
+
+      return attendanceResponse.documents.sort(
+        (a, b) => new Date(b.ClassDate) - new Date(a.ClassDate)
+      );
+    } catch (error) {
+      console.error("Error fetching attendance history:", error);
+      return [];
+    }
+  }
 }
 
 const scheduleService = new ScheduleService();
