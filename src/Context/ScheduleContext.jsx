@@ -7,6 +7,8 @@ const ScheduleContext = createContext();
 export const ScheduleProvider = ({ children }) => {
   const { user } = useUser();
   const [todayClasses, setTodayClasses] = useState([]);
+  const [pastClasses, setPastClasses] = useState([]);
+  const [futureClasses, setFutureClasses] = useState([]);
   const [allSubjects, setAllSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const { LoadData, SaveData } = useLocalStorage();
@@ -42,13 +44,51 @@ export const ScheduleProvider = ({ children }) => {
       return;
     }
     try {
-      const todayclass = await scheduleService.getTodayClasses(user.$id);
+      const baseDate = new Date();
       const subjects = await scheduleService.getUserSubject(user.$id);
+      const todayclass = await scheduleService.getTodayClasses(
+        user.$id,
+        new Date(baseDate)
+      );
+      const past = [];
+      const future = [];
+
+      for (let offset = 1; offset <= 4; offset++) {
+        const pastDate = new Date(baseDate);
+        pastDate.setDate(pastDate.getDate() - offset);
+
+        const futureDate = new Date(baseDate);
+        futureDate.setDate(futureDate.getDate() + offset);
+
+        const pastClasses = await scheduleService.getTodayClasses(
+          user.$id,
+          pastDate
+        );
+
+        const futureClasses = await scheduleService.getTodayClasses(
+          user.$id,
+          futureDate
+        );
+
+        past.push({
+          date: pastDate,
+          classes: pastClasses,
+        });
+
+        future.push({
+          date: futureDate,
+          classes: futureClasses,
+        });
+      }
       console.log(subjects);
       setTodayClasses(todayclass || []);
+      setPastClasses(past || []);
+      setFutureClasses(future || []);
       setAllSubjects(subjects || []);
       saveToCache({
         todayClasses: todayclass || [],
+        pastClasses: past || [],
+        futureClasses: future || [],
         allSubjects: subjects || [],
       });
       console.log("Fetched schedule data from Appwrite");
@@ -69,7 +109,14 @@ export const ScheduleProvider = ({ children }) => {
 
   return (
     <ScheduleContext.Provider
-      value={{ todayClasses, allSubjects, refreshSchedule, loading }}
+      value={{
+        futureClasses,
+        pastClasses,
+        todayClasses,
+        allSubjects,
+        refreshSchedule,
+        loading,
+      }}
     >
       {children}
     </ScheduleContext.Provider>

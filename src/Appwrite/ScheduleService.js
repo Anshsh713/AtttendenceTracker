@@ -93,9 +93,11 @@ export class ScheduleService {
     }
   }
 
-  async getTodayClasses(userId) {
+  async getTodayClasses(userId, date) {
     try {
-      const today = new Date();
+      if (!(date instanceof Date)) {
+        throw new Error("Invalid date object passed");
+      }
       const dayNames = [
         "Sunday",
         "Monday",
@@ -105,7 +107,7 @@ export class ScheduleService {
         "Friday",
         "Saturday",
       ];
-      const todayName = dayNames[today.getDay()].toLowerCase();
+      const todayName = dayNames[date.getDay()].toLowerCase();
 
       // Fetch all subjects for the user
       const response = await this.databases.listDocuments(
