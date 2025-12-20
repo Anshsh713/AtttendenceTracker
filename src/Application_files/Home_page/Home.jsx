@@ -29,9 +29,16 @@ function Home() {
 
   const getClassesForDay = () => {
     if (dayOffset === 0) return todayClasses;
-    if (dayOffset < 0)
-      return pastClasses[Math.abs(dayOffset) - 1]?.classes || [];
-    return futureClasses[dayOffset - 1]?.classes || [];
+
+    if (dayOffset < 0) {
+      return pastClasses.length
+        ? pastClasses[Math.abs(dayOffset) - 1]?.classes || []
+        : [];
+    }
+
+    return futureClasses.length
+      ? futureClasses[dayOffset - 1]?.classes || []
+      : [];
   };
 
   const getDayLabel = () => {

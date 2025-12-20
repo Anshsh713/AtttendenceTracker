@@ -21,6 +21,8 @@ export const ScheduleProvider = ({ children }) => {
       if (cache) {
         setTodayClasses(cache.todayClasses || []);
         setAllSubjects(cache.allSubjects || []);
+        setPastClasses(cache.pastClasses || []);
+        setFutureClasses(cache.futureClasses || []);
         setLoading(false);
         return true;
       }

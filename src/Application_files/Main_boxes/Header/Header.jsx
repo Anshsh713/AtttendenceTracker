@@ -12,9 +12,6 @@ function Header() {
             <NavLink to="/Home">Home</NavLink>
           </li>
           <li>
-            <NavLink to="/planner">Day Planner</NavLink>
-          </li>
-          <li>
             <NavLink to="/History">History</NavLink>
           </li>
         </ul>
