@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../Common_Componenets/Common_Button/Button";
 import UpdateAttendenceform from "../Forms/UpdateAttendenceform.jsx";
 import { useAttendance } from "../Context/AttendenceContext.jsx";
+
 export default function Attendencecard({ subject = [], onAttendenceMarked }) {
   const {
     attendanceRecords,
@@ -10,14 +11,14 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
     loading,
     UpdateAttendance,
   } = useAttendance();
+
   const [lastAction, setLastAction] = useState("");
-  const [updateattendence, setUpdateAttendence] = useState(false);
   const [editingkey, setEditingKey] = useState(null);
-  const toggleUpdateAttendance = (key) => {
-    setEditingKey((prev) => (prev === key ? null : key));
-  };
+
   useEffect(() => {
-    if (subject.length > 0) {
+    setEditingKey(null);
+    setLastAction("");
+    if (Array.isArray(subject) && subject.length > 0) {
       fetchAttendance(subject);
     }
   }, [subject]);
@@ -30,14 +31,18 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
         `Marked "${status}" for ${subj.subjectName} on ${schedule.day} at ${schedule.time}`
       );
     } catch (error) {
-      console.error("Error marking attendance:", error);
       setLastAction(`Error: ${error.message}`);
     }
   };
-  if (subject.length == 0) return <p>No class Today Enjoy</p>;
+
+  if (loading) return <p>Loading attendance...</p>;
+  if (!Array.isArray(subject) || subject.length === 0)
+    return <p>No class scheduled for this day</p>;
+
   return (
     <div>
       <h2>Your Subjects</h2>
+
       {subject.map((subj) => (
         <div
           key={subj.subjectId}
@@ -49,6 +54,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
           }}
         >
           <h3>{subj.subjectName}</h3>
+
           <ul>
             {subj.schedules?.map((schedule, index) => {
               const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
@@ -57,29 +63,29 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
               return (
                 <li key={index}>
                   <strong>{schedule.day}</strong> — {schedule.time}
-                  <div style={{ marginTop: "5px" }}>
+                  <div style={{ marginTop: "6px" }}>
                     {record ? (
-                      <div>
-                        <span>Your attendance is marked: {record.Status}</span>
+                      <>
+                        <span>Your attendance: {record.Status}</span>
                         <Button
-                          title="Mistake ?"
-                          onClick={() => toggleUpdateAttendance(key)}
+                          title="Mistake?"
+                          onClick={() =>
+                            setEditingKey((prev) => (prev === key ? null : key))
+                          }
                         />
                         {editingkey === key && (
                           <UpdateAttendenceform
                             updateClass={async (data) => {
-                              const sucess = await UpdateAttendance(
+                              const success = await UpdateAttendance(
                                 subj,
                                 schedule,
                                 data
                               );
-                              if (sucess) {
-                                setEditingKey(null);
-                              }
+                              if (success) setEditingKey(null);
                             }}
                           />
                         )}
-                      </div>
+                      </>
                     ) : (
                       <>
                         <Button
@@ -109,6 +115,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
           </ul>
         </div>
       ))}
+
       {lastAction && <p>Last action: {lastAction}</p>}
     </div>
   );
