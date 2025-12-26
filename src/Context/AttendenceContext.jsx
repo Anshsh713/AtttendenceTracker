@@ -73,6 +73,68 @@ export const AttendanceProvider = ({ children }) => {
     }
   };
 
+  const autoMarkNotForMissedClasses = async () => {
+    if (!user || !allSubjects?.length) return;
+
+    const today = new Date().toISOString().split("T")[0];
+    const dayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
+
+    // 1️⃣ find today classes from schedule
+    const todayClasses = allSubjects
+      .flatMap((subj) =>
+        subj.ClassesSchedule?.map((sch) => ({
+          subjectId: subj.$id,
+          subjectName: subj.SubjectName,
+          day: sch.day,
+          time: sch.time,
+        }))
+      )
+      .filter((c) => c.day === dayName);
+
+    if (!todayClasses.length) return;
+
+    // 2️⃣ read attendance cache
+    const cache = LoadData("AttendClassesCache");
+
+    const markedKeys = cache?.attendancerecords
+      ? Object.keys(cache.attendancerecords)
+      : [];
+
+    // 3️⃣ for each today class → check if missing
+    for (const cls of todayClasses) {
+      const key = `${cls.subjectId}_${cls.day}_${cls.time}`;
+
+      const alreadyMarked = markedKeys.includes(key);
+      if (alreadyMarked) continue;
+
+      // 4️⃣ mark NOT
+      await classAttendService.markAsNot(
+        user.$id,
+        cls.subjectId,
+        cls.day,
+        cls.time,
+        today
+      );
+
+      // 5️⃣ update cache + state
+      const updated = {
+        ...(cache?.attendancerecords || {}),
+        [key]: {
+          UserID: user.$id,
+          SubjectID: cls.subjectId,
+          ClassDay: cls.day,
+          ClassTime: cls.time,
+          ClassDate: today,
+          Status: "NOT",
+        },
+      };
+
+      setAttendanceRecords(updated);
+
+      SaveData({ attendancerecords: updated }, "AttendClassesCache");
+    }
+  };
+
   const fetchAttendance = async (subjects) => {
     if (!user || !subjects?.length) return;
     setLoading(true);
@@ -94,6 +156,7 @@ export const AttendanceProvider = ({ children }) => {
 
       setAttendanceRecords(allRecords);
       saveToCache({ attendancerecords: allRecords }, "AttendClassesCache");
+      await autoMarkNotForMissedClasses();
     } catch (error) {
       console.error("❌ Error fetching attendance:", error);
     } finally {

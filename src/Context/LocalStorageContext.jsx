@@ -4,7 +4,6 @@ import { useUser } from "./UserContext";
 const LocalStorageContext = createContext();
 
 export const LocalStorageProvider = ({ children }) => {
-  const { user } = useUser();
   const [loading, setloading] = useState(true);
 
   const CHECK_EXPIREY = new Date().toLocaleDateString("en-CA");
