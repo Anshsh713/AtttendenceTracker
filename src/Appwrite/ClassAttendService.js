@@ -286,26 +286,47 @@ export class ClassAttendService {
   }
   async TotalAttendance(userId, subjectId) {
     console.log("userid", userId, "and Subject id", subjectId);
+
     try {
       const response = await this.databases.listDocuments(
         this.databasesId,
         this.attendClassesCollection,
-        [
-          Query.equal("SubjectID", subjectId),
-          Query.equal("UserID", userId),
-          Query.notEqual("Status", "Canceled"),
-        ]
+        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)]
       );
-      const totalRecord = response.documents.length;
-      if (totalRecord === 0) return 0;
-      const totalPresent = response.documents.filter(
-        (doc) => doc.Status === "Present"
-      ).length;
-      const TotalPercentage = (totalPresent / totalRecord) * 100;
-      return TotalPercentage.toFixed(2); // return the count
+
+      const docs = response.documents;
+
+      const totalClasses = docs.length;
+
+      const totalPresent = docs.filter((d) => d.Status === "Present").length;
+      const totalAbsent = docs.filter((d) => d.Status === "Absent").length;
+      const totalCanceled = docs.filter((d) => d.Status === "Canceled").length;
+
+      // Classes that actually count toward attendance
+      const effectiveClasses = totalPresent + totalAbsent;
+
+      const attendancePercentage =
+        effectiveClasses === 0
+          ? 0
+          : ((totalPresent / effectiveClasses) * 100).toFixed(2);
+
+      return {
+        totalClasses,
+        totalPresent,
+        totalAbsent,
+        totalCanceled,
+        attendancePercentage,
+      };
     } catch (error) {
       console.error("Not able to Get Your Attendance:", error.message);
-      return 0; // return 0 in case of error
+
+      return {
+        totalClasses: 0,
+        totalPresent: 0,
+        totalAbsent: 0,
+        totalCanceled: 0,
+        attendancePercentage: 0,
+      };
     }
   }
 }
