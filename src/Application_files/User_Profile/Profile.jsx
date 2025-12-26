@@ -3,14 +3,19 @@ import { useUser } from "../../Context/UserContext";
 import { useSchedule } from "../../Context/ScheduleContext";
 import { useDeleteUpdate } from "../../Context/Delete_UpdateContext";
 import UpdateAttendencefrom from "../../Forms/UpdateSubjectform.jsx";
+import UserProfileform from "../../Forms/UserProfileform";
 import Button from "../../Common_Componenets/Common_Button/Button";
 
 export default function Profile() {
   const { user } = useUser();
   const { allSubjects, refreshSchedule, loading } = useSchedule();
   const { Deleting_the_Subject } = useDeleteUpdate();
-
+  const [showform, setshowform] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
+
+  const toggleform = () => {
+    setshowform(!showform);
+  };
 
   useEffect(() => {
     if (!allSubjects || allSubjects.length === 0) {
@@ -24,6 +29,11 @@ export default function Profile() {
     <div>
       <h1>Welcome {user.name}</h1>
       <p>{user.email}</p>
+      <Button title="edit" onClick={toggleform} />
+      {showform && <UserProfileform />}
+
+      <hr style={{ margin: "30px 0" }} />
+
       {editingSubject && (
         <>
           <UpdateAttendencefrom
@@ -38,7 +48,7 @@ export default function Profile() {
         </>
       )}
 
-      {/* 🔹 LIST MODE */}
+      {/* 🔹 SUBJECT LIST MODE */}
       {!editingSubject && (
         <>
           {allSubjects.length === 0 ? (

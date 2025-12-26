@@ -7,7 +7,7 @@ const ScheduleContext = createContext();
 export const ScheduleProvider = ({ children }) => {
   const { user } = useUser();
   const [todayClasses, setTodayClasses] = useState([]);
-  const [pastClasses, setPastClasses] = useState([]);
+  //const [pastClasses, setPastClasses] = useState([]);
   const [futureClasses, setFutureClasses] = useState([]);
   const [allSubjects, setAllSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ export const ScheduleProvider = ({ children }) => {
       if (cache) {
         setTodayClasses(cache.todayClasses || []);
         setAllSubjects(cache.allSubjects || []);
-        setPastClasses(cache.pastClasses || []);
+        //setPastClasses(cache.pastClasses || []);
         setFutureClasses(cache.futureClasses || []);
         setLoading(false);
         return true;
@@ -52,30 +52,30 @@ export const ScheduleProvider = ({ children }) => {
         user.$id,
         new Date(baseDate)
       );
-      const past = [];
+      //const past = [];
       const future = [];
 
-      for (let offset = 1; offset <= 4; offset++) {
-        const pastDate = new Date(baseDate);
-        pastDate.setDate(pastDate.getDate() - offset);
+      for (let offset = 1; offset <= 2; offset++) {
+        //const pastDate = new Date(baseDate);
+        //pastDate.setDate(pastDate.getDate() - offset);
 
         const futureDate = new Date(baseDate);
         futureDate.setDate(futureDate.getDate() + offset);
 
-        const pastClasses = await scheduleService.getTodayClasses(
-          user.$id,
-          pastDate
-        );
+        // const pastClasses = await scheduleService.getTodayClasses(
+        // user.$id,
+        // pastDate
+        // );
 
         const futureClasses = await scheduleService.getTodayClasses(
           user.$id,
           futureDate
         );
 
-        past.push({
-          date: pastDate,
-          classes: pastClasses,
-        });
+        //  past.push({
+        //   date: pastDate,
+        //   classes: pastClasses,
+        //  });
 
         future.push({
           date: futureDate,
@@ -84,12 +84,12 @@ export const ScheduleProvider = ({ children }) => {
       }
       console.log(subjects);
       setTodayClasses(todayclass || []);
-      setPastClasses(past || []);
+      //setPastClasses(past || []);
       setFutureClasses(future || []);
       setAllSubjects(subjects || []);
       saveToCache({
         todayClasses: todayclass || [],
-        pastClasses: past || [],
+        // pastClasses: past || [],
         futureClasses: future || [],
         allSubjects: subjects || [],
       });
@@ -113,7 +113,7 @@ export const ScheduleProvider = ({ children }) => {
     <ScheduleContext.Provider
       value={{
         futureClasses,
-        pastClasses,
+        //  pastClasses,
         todayClasses,
         allSubjects,
         refreshSchedule,

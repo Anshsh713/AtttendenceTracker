@@ -7,16 +7,12 @@ import Total_Attendence from "../Total_Attendence/Attendence.jsx";
 import ExtraClasscard from "../../Cards/ExtraClassAttendencecard.jsx";
 
 function Home() {
-  const {
-    futureClasses,
-    pastClasses,
-    allSubjects,
-    todayClasses,
-    refreshSchedule,
-  } = useSchedule();
+  const { futureClasses, allSubjects, todayClasses, refreshSchedule } =
+    useSchedule();
 
   const [addSubject, setaddSubject] = useState(false);
   const [refresh_Attendence, setRefresh_Attendence] = useState(false);
+
   const [dayOffset, setDayOffset] = useState(0);
 
   const handleAttendanceRefresh = () => {
@@ -30,11 +26,11 @@ function Home() {
   const getClassesForDay = () => {
     if (dayOffset === 0) return todayClasses;
 
-    if (dayOffset < 0) {
-      return pastClasses.length
-        ? pastClasses[Math.abs(dayOffset) - 1]?.classes || []
-        : [];
-    }
+    // if (dayOffset < 0) {
+    //return pastClasses.length
+    //  ? pastClasses[Math.abs(dayOffset) - 1]?.classes || []
+    //  : [];
+    // }
 
     return futureClasses.length
       ? futureClasses[dayOffset - 1]?.classes || []
@@ -65,14 +61,16 @@ function Home() {
       <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
         <Button
           title="⬅ Previous"
-          onClick={() => setDayOffset((d) => Math.max(d - 1, -4))}
+          // NOTE: pastClasses are not loaded, so we stop at 0
+          onClick={() => setDayOffset((d) => Math.max(d - 1, 0))}
         />
 
         <strong>{getDayLabel()}</strong>
 
         <Button
           title="Next ➡"
-          onClick={() => setDayOffset((d) => Math.min(d + 1, 4))}
+          // NOTE: Only 2 future days are fetched in ScheduleContext
+          onClick={() => setDayOffset((d) => Math.min(d + 1, 2))}
         />
       </div>
 
@@ -83,7 +81,14 @@ function Home() {
       />
 
       <Button title="Add" className="Adding" onClick={toggleshowing} />
-      {addSubject && <Attendencefrom onSubjectAdded={refreshSchedule} />}
+      {addSubject && (
+        <Attendencefrom
+          onSubjectAdded={() => {
+            refreshSchedule();
+            setaddSubject(false);
+          }}
+        />
+      )}
 
       <ExtraClasscard />
 
