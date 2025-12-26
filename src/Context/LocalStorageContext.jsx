@@ -12,11 +12,7 @@ export const LocalStorageProvider = ({ children }) => {
   const LoadData = (key) => {
     try {
       const data = JSON.parse(localStorage.getItem(key));
-      if (
-        data &&
-        data.userId === user?.$id &&
-        data.timestamp === CHECK_EXPIREY
-      ) {
+      if (data && data.timestamp === CHECK_EXPIREY) {
         setloading(false);
         return data;
       } else {
@@ -32,7 +28,6 @@ export const LocalStorageProvider = ({ children }) => {
   const SaveData = (key, data) => {
     try {
       const cache = {
-        userId: user.$id,
         timestamp: CHECK_EXPIREY,
         ...data,
       };

@@ -3,48 +3,126 @@ import Input from "../Common_Componenets/Common_Input/Input";
 import { useUser } from "../Context/UserContext";
 import authInformation from "../Appwrite/AuthInformation";
 
-export default function UserProfileform() {
-  const { user } = useUser();
+export default function UserProfileform({ onprofileupdate }) {
+  const { user, profile } = useUser();
 
   const [form, setForm] = useState({
     name: "",
-    college: "",
-    city: "",
-    state: "",
-    country: "",
     attendence: 75,
+    country: "",
+    state: "",
+    city: "",
+    college: "",
   });
 
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const [loadingStates, setLoadingStates] = useState(false);
+  const [loadingCities, setLoadingCities] = useState(false);
+
+  // ------------ LOAD PROFILE DATA ------------
   useEffect(() => {
-    if (!user) return;
+    if (profile) {
+      setForm({
+        name: profile.name ?? "",
+        attendence: profile.attendence ?? 75,
+        country: profile.country ?? "",
+        state: profile.state ?? "",
+        city: profile.city ?? "",
+        college: profile.college ?? "",
+      });
+    }
+  }, [profile]);
 
-    const loadProfile = async () => {
-      const profile = await authInformation.getProfile(user.$id);
-
-      if (profile) {
-        setForm({
-          name: profile.USERNAME ?? "",
-          college: profile.College_Name ?? "",
-          city: profile.City ?? "",
-          state: profile.State ?? "",
-          country: profile.Country ?? "",
-          attendence: profile.attendence ?? 75,
-        });
+  // ------------ LOAD COUNTRIES ------------
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch(
+          "https://countriesnow.space/api/v0.1/countries/positions"
+        );
+        const data = await res.json();
+        setCountries(data.data || []);
+      } catch (err) {
+        console.error("Failed to load countries", err);
       }
     };
 
-    loadProfile();
-  }, [user]);
+    fetchCountries();
+  }, []);
 
+  // ------------ LOAD STATES WHEN COUNTRY CHANGES ------------
+  useEffect(() => {
+    if (!form.country) return;
+
+    const fetchStates = async () => {
+      setLoadingStates(true);
+      try {
+        const res = await fetch(
+          "https://countriesnow.space/api/v0.1/countries/states",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ country: form.country }),
+          }
+        );
+        const data = await res.json();
+        setStates(data.data?.states || []);
+      } catch (err) {
+        console.error("Failed to load states", err);
+      } finally {
+        setLoadingStates(false);
+      }
+    };
+
+    fetchStates();
+  }, [form.country]);
+
+  // ------------ LOAD CITIES WHEN STATE CHANGES ------------
+  useEffect(() => {
+    if (!form.country || !form.state) return;
+
+    const fetchCities = async () => {
+      setLoadingCities(true);
+      try {
+        const res = await fetch(
+          "https://countriesnow.space/api/v0.1/countries/state/cities",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              country: form.country,
+              state: form.state,
+            }),
+          }
+        );
+        const data = await res.json();
+        setCities(data.data || []);
+      } catch (err) {
+        console.error("Failed to load cities", err);
+      } finally {
+        setLoadingCities(false);
+      }
+    };
+
+    fetchCities();
+  }, [form.country, form.state]);
+
+  // ------------ HANDLE INPUT CHANGE ------------
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [name]: name === "attendence" ? Number(value) : value,
-    });
+      ...(name === "country" && { state: "", city: "" }),
+      ...(name === "state" && { city: "" }),
+    }));
   };
 
+  // ------------ SAVE PROFILE ------------
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -58,14 +136,7 @@ export default function UserProfileform() {
       attendence: form.attendence,
     });
 
-    setForm({
-      name: "",
-      college: "",
-      city: "",
-      state: "",
-      country: "",
-      attendence: 75,
-    });
+    if (onprofileupdate) onprofileupdate();
   };
 
   return (
@@ -92,35 +163,64 @@ export default function UserProfileform() {
         required
       />
 
+      {/* COUNTRY */}
+      <label>Country</label>
+      <select
+        name="country"
+        value={form.country}
+        onChange={handleChange}
+        required
+      >
+        <option value="">Select Country</option>
+        {countries.map((c, i) => (
+          <option key={i} value={c.name}>
+            {c.name}
+          </option>
+        ))}
+      </select>
+
+      {/* STATE */}
+      <label>State</label>
+      <select
+        name="state"
+        value={form.state}
+        onChange={handleChange}
+        disabled={!form.country}
+        required
+      >
+        <option value="">
+          {loadingStates ? "Loading..." : "Select State"}
+        </option>
+        {states.map((s, i) => (
+          <option key={i} value={s.name}>
+            {s.name}
+          </option>
+        ))}
+      </select>
+
+      {/* CITY */}
+      <label>City</label>
+      <select
+        name="city"
+        value={form.city}
+        onChange={handleChange}
+        disabled={!form.state}
+        required
+      >
+        <option value="">{loadingCities ? "Loading..." : "Select City"}</option>
+        {cities.map((city, i) => (
+          <option key={i} value={city}>
+            {city}
+          </option>
+        ))}
+      </select>
+
+      {/* COLLEGE */}
       <Input
         label="College"
         type="text"
         name="college"
         value={form.college}
-        onChange={handleChange}
-      />
-
-      <Input
-        label="City"
-        type="text"
-        name="city"
-        value={form.city}
-        onChange={handleChange}
-      />
-
-      <Input
-        label="State"
-        type="text"
-        name="state"
-        value={form.state}
-        onChange={handleChange}
-      />
-
-      <Input
-        label="Country"
-        type="text"
-        name="country"
-        value={form.country}
         onChange={handleChange}
       />
 
