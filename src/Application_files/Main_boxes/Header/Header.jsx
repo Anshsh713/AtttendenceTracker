@@ -4,13 +4,15 @@ import "./Header.css";
 
 function Header() {
   return (
-    <header>
+    <header className="header-container">
       <nav>
-        <ul>
+        <ul className="nav-list">
           <li>
             <NavLink
               to="/Profile"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
             >
               Profile
             </NavLink>
@@ -19,7 +21,9 @@ function Header() {
           <li>
             <NavLink
               to="/Home"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
             >
               Home
             </NavLink>
@@ -28,7 +32,9 @@ function Header() {
           <li>
             <NavLink
               to="/History"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
             >
               History
             </NavLink>

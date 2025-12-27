@@ -13,18 +13,34 @@ export const HistoryProvider = ({ children }) => {
   const [loadingHistory, setLoadingHistory] = useState(false);
 
   const getHistory = async (subjectId) => {
-    if (!user || !subjectId) return;
+    console.log("🟣 getHistory CALLED with subjectId =", subjectId);
+
+    if (!user || !subjectId) {
+      console.log("⛔ Missing user or subjectId");
+      return;
+    }
+
+    console.log("👤 User ID =", user.$id);
 
     const subject = allSubjects.find((s) => s.$id === subjectId);
-    if (!subject) return;
+    console.log("📘 SUBJECT FOUND =", subject);
+
+    if (!subject) {
+      console.log("⛔ No subject found for this ID");
+      return;
+    }
 
     setLoadingHistory(true);
+    console.log("⏳ Loading history = TRUE");
 
     try {
+      console.log("📥 Fetching attendance from service...");
       const attendance = await scheduleService.getAttendanceHistory(
         subjectId,
         user.$id
       );
+
+      console.log("📥 ATTENDANCE RECEIVED =", attendance);
 
       const merged = {
         subjectName: subject.SubjectName,
@@ -33,13 +49,18 @@ export const HistoryProvider = ({ children }) => {
         attendance,
       };
 
+      console.log("🟢 MERGED HISTORY OBJECT =", merged);
+
       setHistoryData((prev) => ({
         ...prev,
         [subjectId]: merged,
       }));
+
+      console.log("📦 historyData UPDATED =", merged);
     } catch (error) {
-      console.error("Error loading history:", error);
+      console.error("❌ Error loading history:", error);
     } finally {
+      console.log("⏹ Loading history = FALSE");
       setLoadingHistory(false);
     }
   };

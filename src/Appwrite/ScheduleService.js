@@ -154,6 +154,8 @@ export class ScheduleService {
   }
 
   async getAttendanceHistory(subjectId, userId) {
+    console.log("📡 getAttendanceHistory called with:", { subjectId, userId });
+
     try {
       const attendanceResponse = await this.databases.listDocuments(
         this.databasesId,
@@ -161,11 +163,17 @@ export class ScheduleService {
         [Query.equal("UserID", userId), Query.equal("SubjectID", subjectId)]
       );
 
-      return attendanceResponse.documents.sort(
+      console.log("📡 RAW ATTENDANCE RESPONSE =", attendanceResponse);
+
+      const sorted = attendanceResponse.documents.sort(
         (a, b) => new Date(b.ClassDate) - new Date(a.ClassDate)
       );
+
+      console.log("🧾 SORTED ATTENDANCE =", sorted);
+
+      return sorted;
     } catch (error) {
-      console.error("Error fetching attendance history:", error);
+      console.error("❌ Error fetching attendance history:", error);
       return [];
     }
   }
