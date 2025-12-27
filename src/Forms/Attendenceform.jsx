@@ -2,21 +2,19 @@ import React, { useEffect, useState } from "react";
 import Input from "../Common_Componenets/Common_Input/Input.jsx";
 import authService from "../Appwrite/AuthService.js";
 import scheduleService from "../Appwrite/ScheduleService.js";
+import "./Attendenceform.css";
+
 export default function Attendencefrom({ onSubjectAdded }) {
   const [subjectName, SetsubjectName] = useState("");
   const [classesPerWeek, setclassesPerWeek] = useState(1);
   const [schedule, setschedule] = useState([{ Day: "", Time: "" }]);
   const [saving, setsaving] = useState(false);
   const [message, setmessage] = useState("");
+
   useEffect(() => {
-    const newSchedule = Array.from(
-      {
-        length: classesPerWeek,
-      },
-      (_, i) => {
-        return schedule[i] || { Day: "", Time: "" };
-      }
-    );
+    const newSchedule = Array.from({ length: classesPerWeek }, (_, i) => {
+      return schedule[i] || { Day: "", Time: "" };
+    });
     setschedule(newSchedule);
   }, [classesPerWeek]);
 
@@ -25,6 +23,7 @@ export default function Attendencefrom({ onSubjectAdded }) {
     newSchedule[index][field] = value;
     setschedule(newSchedule);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setsaving(true);
@@ -50,9 +49,11 @@ export default function Attendencefrom({ onSubjectAdded }) {
     }
     setsaving(false);
   };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="add-subject-form">
       <h2>Add Subject</h2>
+
       <Input
         label="Subject Name : "
         type="text"
@@ -61,6 +62,7 @@ export default function Attendencefrom({ onSubjectAdded }) {
         onChange={(e) => SetsubjectName(e.target.value)}
         required
       />
+
       <Input
         label="Classes per week : "
         type="number"
@@ -69,8 +71,9 @@ export default function Attendencefrom({ onSubjectAdded }) {
         onChange={(e) => setclassesPerWeek(Number(e.target.value))}
         required
       />
+
       {schedule.map((items, index) => (
-        <div key={index}>
+        <div key={index} className="schedule-row">
           <select
             value={items.Day}
             onChange={(e) => handleScheduleChange(index, "Day", e.target.value)}
@@ -85,18 +88,30 @@ export default function Attendencefrom({ onSubjectAdded }) {
             <option>Saturday</option>
             <option>Sunday</option>
           </select>
+
           <Input
             label="Time : "
             type="Time"
             value={items.Time}
-            onChange={(e) => {
-              handleScheduleChange(index, "Time", e.target.value);
-            }}
+            onChange={(e) =>
+              handleScheduleChange(index, "Time", e.target.value)
+            }
             required
           />
         </div>
       ))}
-      <button type="submit">Save Subject</button>
+
+      <button type="submit" disabled={saving}>
+        {saving ? "Saving..." : "Save Subject"}
+      </button>
+
+      {message && (
+        <p
+          className={message.includes("success") ? "success-msg" : "error-msg"}
+        >
+          {message}
+        </p>
+      )}
     </form>
   );
 }

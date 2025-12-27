@@ -1,0 +1,62 @@
+@import url("../index.css");
+
+/* -------- WRAPPER -------- */
+.extra-classes-wrapper {
+  margin-top: 18px;
+}
+
+/* -------- TITLE -------- */
+.extra-classes-wrapper h2 {
+  color: var(--color10);
+  margin-bottom: 10px;
+}
+
+/* -------- EACH CARD -------- */
+.extra-class-card {
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
+  transition: 0.25s ease;
+}
+
+.extra-class-card:hover {
+  transform: scale(1.01);
+}
+
+/* -------- TEXT -------- */
+.extra-class-card p {
+  margin: 4px 0;
+  color: var(--color10);
+}
+
+/* Status highlight */
+.extra-status {
+  font-weight: 700;
+}
+
+.extra-status.present {
+  color: #2e7d32;
+}
+
+.extra-status.absent {
+  color: #c62828;
+}
+
+.extra-status.canceled {
+  color: #ff8f00;
+}
+
+/* -------- BUTTON ROW -------- */
+.mistake-row {
+  margin-top: 6px;
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 480px) {
+  .extra-class-card {
+    padding: 10px 12px;
+  }
+}

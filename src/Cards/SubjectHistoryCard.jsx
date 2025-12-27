@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Button from "../Common_Componenets/Common_Button/Button.jsx";
 import { useHistory } from "../Context/HistoryContext.jsx";
 import { useAttendance } from "../Context/AttendenceContext.jsx";
+import "./SubjectHistoryCard.css";
 
 export default function SubjectHistoryCard({ subjectId, close }) {
   const { getHistory, historyData, loadingHistory } = useHistory();
@@ -9,25 +10,14 @@ export default function SubjectHistoryCard({ subjectId, close }) {
   const history = historyData[subjectId];
 
   useEffect(() => {
-    if (subjectId) {
-      getHistory(subjectId);
-    }
+    if (subjectId) getHistory(subjectId);
   }, [subjectId]);
 
   if (loadingHistory) return <p>Loading history...</p>;
   if (!history) return <p>No history found.</p>;
 
   return (
-    <div
-      style={{
-        maxWidth: "600px",
-        margin: "0 auto",
-        border: "1px solid #ccc",
-        borderRadius: "12px",
-        padding: "20px",
-        background: "#f8f8f8",
-      }}
-    >
+    <div className="history-card">
       <h2>History: {history.subjectName}</h2>
 
       <p>
@@ -40,11 +30,25 @@ export default function SubjectHistoryCard({ subjectId, close }) {
       {history.attendance.length === 0 ? (
         <p>No attendance history yet.</p>
       ) : (
-        <ul>
+        <ul className="history-list">
           {history.attendance.map((rec) => (
-            <li key={rec.$id}>
-              <strong>{rec.ClassDate}</strong> — {rec.ClassDay} @{" "}
-              {rec.ClassTime} → <strong>{rec.Status}</strong>
+            <li key={rec.$id} className="history-item">
+              <span>
+                <strong>{rec.ClassDate}</strong> — {rec.ClassDay} @{" "}
+                {rec.ClassTime}
+              </span>
+
+              <span
+                className={`history-status ${
+                  rec.Status === "Present"
+                    ? "present"
+                    : rec.Status === "Absent"
+                    ? "absent"
+                    : "canceled"
+                }`}
+              >
+                {rec.Status}
+              </span>
             </li>
           ))}
         </ul>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../Common_Componenets/Common_Input/Input";
 import { useUser } from "../Context/UserContext";
 import authInformation from "../Appwrite/AuthInformation";
+import "./UserProfileform.css";
 
 export default function UserProfileform({ onprofileupdate }) {
   const { user, profile } = useUser();
@@ -22,7 +23,6 @@ export default function UserProfileform({ onprofileupdate }) {
   const [loadingStates, setLoadingStates] = useState(false);
   const [loadingCities, setLoadingCities] = useState(false);
 
-  // ------------ LOAD PROFILE DATA ------------
   useEffect(() => {
     if (profile) {
       setForm({
@@ -36,7 +36,6 @@ export default function UserProfileform({ onprofileupdate }) {
     }
   }, [profile]);
 
-  // ------------ LOAD COUNTRIES ------------
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -53,7 +52,6 @@ export default function UserProfileform({ onprofileupdate }) {
     fetchCountries();
   }, []);
 
-  // ------------ LOAD STATES WHEN COUNTRY CHANGES ------------
   useEffect(() => {
     if (!form.country) return;
 
@@ -80,7 +78,6 @@ export default function UserProfileform({ onprofileupdate }) {
     fetchStates();
   }, [form.country]);
 
-  // ------------ LOAD CITIES WHEN STATE CHANGES ------------
   useEffect(() => {
     if (!form.country || !form.state) return;
 
@@ -110,7 +107,6 @@ export default function UserProfileform({ onprofileupdate }) {
     fetchCities();
   }, [form.country, form.state]);
 
-  // ------------ HANDLE INPUT CHANGE ------------
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -122,7 +118,6 @@ export default function UserProfileform({ onprofileupdate }) {
     }));
   };
 
-  // ------------ SAVE PROFILE ------------
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -140,7 +135,7 @@ export default function UserProfileform({ onprofileupdate }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="profile-form">
       <h2>User Profile</h2>
 
       <Input
@@ -163,7 +158,6 @@ export default function UserProfileform({ onprofileupdate }) {
         required
       />
 
-      {/* COUNTRY */}
       <label>Country</label>
       <select
         name="country"
@@ -179,7 +173,6 @@ export default function UserProfileform({ onprofileupdate }) {
         ))}
       </select>
 
-      {/* STATE */}
       <label>State</label>
       <select
         name="state"
@@ -198,7 +191,6 @@ export default function UserProfileform({ onprofileupdate }) {
         ))}
       </select>
 
-      {/* CITY */}
       <label>City</label>
       <select
         name="city"
@@ -215,7 +207,6 @@ export default function UserProfileform({ onprofileupdate }) {
         ))}
       </select>
 
-      {/* COLLEGE */}
       <Input
         label="College"
         type="text"

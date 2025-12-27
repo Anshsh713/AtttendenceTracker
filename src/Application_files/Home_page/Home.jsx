@@ -5,6 +5,7 @@ import Attendencecard from "../../Cards/Attendencecard.jsx";
 import { useSchedule } from "../../Context/ScheduleContext.jsx";
 import Total_Attendence from "../Total_Attendence/Attendence.jsx";
 import ExtraClasscard from "../../Cards/ExtraClassAttendencecard.jsx";
+import "./Home.css";
 
 function Home() {
   const { futureClasses, allSubjects, todayClasses, refreshSchedule } =
@@ -12,25 +13,19 @@ function Home() {
 
   const [addSubject, setaddSubject] = useState(false);
   const [refresh_Attendence, setRefresh_Attendence] = useState(false);
-
   const [dayOffset, setDayOffset] = useState(0);
+
+  // 👉 NEW — tab state
+  const [tab, setTab] = useState("classes"); // "classes" | "attendance"
 
   const handleAttendanceRefresh = () => {
     setRefresh_Attendence((prev) => !prev);
   };
 
-  const toggleshowing = () => {
-    setaddSubject(!addSubject);
-  };
+  const toggleshowing = () => setaddSubject(!addSubject);
 
   const getClassesForDay = () => {
     if (dayOffset === 0) return todayClasses;
-
-    // if (dayOffset < 0) {
-    //return pastClasses.length
-    //  ? pastClasses[Math.abs(dayOffset) - 1]?.classes || []
-    //  : [];
-    // }
 
     return futureClasses.length
       ? futureClasses[dayOffset - 1]?.classes || []
@@ -42,67 +37,78 @@ function Home() {
     const targetDate = new Date(baseDate);
     targetDate.setDate(baseDate.getDate() + dayOffset);
 
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "short",
-    };
+    const options = { weekday: "long", day: "numeric", month: "short" };
 
-    if (dayOffset === 0) {
+    if (dayOffset === 0)
       return `Today · ${targetDate.toLocaleDateString("en-US", options)}`;
-    }
 
     return targetDate.toLocaleDateString("en-US", options);
   };
 
   return (
-    <>
-      {/* Navigation */}
-      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+    <div className="home-container">
+      {/* TAB BUTTONS */}
+      <div className="tab-bar">
         <Button
-          title="⬅ Previous"
-          // NOTE: pastClasses are not loaded, so we stop at 0
-          onClick={() => setDayOffset((d) => Math.max(d - 1, 0))}
+          title="Classes"
+          onClick={() => setTab("classes")}
+          className={`tab-btn ${tab === "classes" ? "active" : ""}`}
         />
 
-        <strong>{getDayLabel()}</strong>
-
         <Button
-          title="Next ➡"
-          // NOTE: Only 2 future days are fetched in ScheduleContext
-          onClick={() => setDayOffset((d) => Math.min(d + 1, 2))}
+          title="Attendance"
+          onClick={() => setTab("attendance")}
+          className={`tab-btn ${tab === "attendance" ? "active" : ""}`}
         />
       </div>
 
-      {/* Attendance */}
-      <Attendencecard
-        subject={getClassesForDay()}
-        onAttendenceMarked={handleAttendanceRefresh}
-      />
+      {tab === "classes" && (
+        <div className="classes-section">
+          <div className="nav-row">
+            <Button
+              title="⬅ Previous"
+              onClick={() => setDayOffset((d) => Math.max(d - 1, 0))}
+            />
+            <strong>{getDayLabel()}</strong>
+            <Button
+              title="Next ➡"
+              onClick={() => setDayOffset((d) => Math.min(d + 1, 2))}
+            />
+          </div>
+          <div className="subjects">
+            <h2>Your Subjects</h2>
+            <Button title="Add" className="Adding" onClick={toggleshowing} />
+          </div>
+          <Attendencecard
+            subject={getClassesForDay()}
+            onAttendenceMarked={handleAttendanceRefresh}
+          />
 
-      <Button title="Add" className="Adding" onClick={toggleshowing} />
-      {addSubject && (
-        <Attendencefrom
-          onSubjectAdded={() => {
-            refreshSchedule();
-            setaddSubject(false);
-          }}
-        />
+          {addSubject && (
+            <Attendencefrom
+              onSubjectAdded={() => {
+                refreshSchedule();
+                setaddSubject(false);
+              }}
+            />
+          )}
+
+          <ExtraClasscard />
+        </div>
       )}
 
-      <ExtraClasscard />
-
-      {/* Total Attendance */}
-      <div>
-        {allSubjects.map((subj) => (
-          <Total_Attendence
-            key={subj.$id}
-            subject={subj}
-            refresh_Trigger={refresh_Attendence}
-          />
-        ))}
-      </div>
-    </>
+      {tab === "attendance" && (
+        <div className="attendance-section">
+          {allSubjects.map((subj) => (
+            <Total_Attendence
+              key={subj.$id}
+              subject={subj}
+              refresh_Trigger={refresh_Attendence}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

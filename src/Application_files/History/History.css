@@ -1,0 +1,81 @@
+@import url("../../index.css");
+
+/* -------- PAGE -------- */
+.history-page {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* -------- PAGE TITLE -------- */
+.history-page h1 {
+  color: var(--color10);
+}
+
+/* -------- SUBJECT SCROLLER -------- */
+.subject-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 12px 4px;
+  scrollbar-width: none;
+}
+
+.subject-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* -------- SUBJECT CARD -------- */
+.subject-chip {
+  min-width: 220px;
+  padding: 14px;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
+  transition: 0.25s ease-in-out;
+}
+
+.subject-chip:hover {
+  transform: scale(1.03);
+}
+
+/* -------- ACTIVE CARD -------- */
+.subject-chip.active {
+  border: 2px solid var(--color4);
+  background: linear-gradient(90deg, var(--color8), var(--color9));
+}
+
+/* -------- SUBJECT NAME -------- */
+.subject-chip h3 {
+  margin: 0 0 8px 0;
+  color: var(--color10);
+}
+
+/* -------- SELECTED TEXT -------- */
+.subject-selected {
+  color: var(--color4);
+  font-weight: 700;
+}
+
+/* -------- EMPTY STATE -------- */
+.select-text {
+  text-align: center;
+  color: var(--color10);
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 480px) {
+  .subject-chip {
+    min-width: 170px;
+    padding: 12px;
+  }
+
+  .history-page {
+    padding: 12px 10px;
+  }
+}

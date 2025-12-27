@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../Common_Componenets/Common_Input/Input.jsx";
 import authService from "../Appwrite/AuthService.js";
 import scheduleService from "../Appwrite/ScheduleService.js";
+import "./UpdateSubjectform.css";
 
 export default function UpdateAttendencefrom({
   onSubjectAdded,
@@ -83,7 +84,7 @@ export default function UpdateAttendencefrom({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="update-subject-form">
       <h2>{editSubject ? "Update Subject" : "Add Subject"}</h2>
 
       <Input
@@ -105,7 +106,7 @@ export default function UpdateAttendencefrom({
       />
 
       {schedule.map((items, index) => (
-        <div key={index}>
+        <div key={index} className="schedule-row">
           <select
             value={items.Day}
             onChange={(e) => handleScheduleChange(index, "Day", e.target.value)}
@@ -141,7 +142,15 @@ export default function UpdateAttendencefrom({
         {saving ? "Saving..." : editSubject ? "Update Subject" : "Save Subject"}
       </button>
 
-      {message && <p>{message}</p>}
+      {message && (
+        <p
+          className={
+            message.includes("success") ? "success-text" : "error-text"
+          }
+        >
+          {message}
+        </p>
+      )}
     </form>
   );
 }

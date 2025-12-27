@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+/* Hide scrollbar but allow scrolling */
+html,
+body {
+  background-color: var(--background);
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow: -moz-scrollbars-none; /* older Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+:root {
+  --text: black;
+  --text2: white;
+  --color1: #95f9e3;
+  --color2: #69ebd0;
+  --color3: #69ebd0;
+  --color4: #558564;
+  --color5: #564946;
+  --color6: #f0ead2;
+  --color7: #dde5b6;
+  --color8: #adc178;
+  --color9: #a98467;
+  --color10: #6c584c;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+}
+/* Animated Background */
+body {
+  margin: 0;
+  background: linear-gradient(
+    -45deg,
+    var(--color4),
+    var(--color7),
+    var(--color8),
+    var(--color9)
+  );
+  background-size: 1000% 1000%;
+  animation: gradientFlow 20s ease infinite;
+}
+
+/* Animation keyframes */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+/* make the page fill the screen height */
+html,
+body {
+  height: 100%;
+}
+
+/* root stays flex column */
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* app container must also stretch */
+.app-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* wrapper also stretches */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* THIS grows to push footer down */
+.main-content {
+  flex: 1;
+}
+
+/* remove this — no longer needed */
+body {
+  padding-bottom: 0;
+}

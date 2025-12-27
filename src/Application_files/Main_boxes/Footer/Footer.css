@@ -1,0 +1,121 @@
+@import url("../../../index.css");
+
+.footer-container {
+  width: 97%;
+  margin: 12px auto;
+
+  background: linear-gradient(90deg, var(--color9), var(--color10));
+  box-shadow: 2px -2px 1px rgba(0, 0, 0, 0.6);
+  border-radius: 50px;
+
+  padding: 14px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.25s ease;
+}
+
+.footer-container:hover {
+  transform: scale(1.01);
+}
+
+/* CONTENT */
+.footer-list {
+  width: 94%;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  color: var(--color7);
+  font-size: 0.95rem;
+}
+
+.footer-item {
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+/* ============================= */
+/* 📱 EXTRA SMALL PHONES (≤380px)*/
+/* ============================= */
+@media (max-width: 380px) {
+  .footer-container {
+    width: 96%;
+    padding: 10px 0;
+    border-radius: 35px;
+  }
+
+  .footer-list {
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================= */
+/* 📱 SMALL PHONES (381–480px)  */
+/* ============================= */
+@media (min-width: 381px) and (max-width: 480px) {
+  .footer-container {
+    width: 96%;
+    padding: 11px 0;
+    border-radius: 40px;
+  }
+
+  .footer-list {
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+}
+
+/* ============================= */
+/* 📲 LARGE PHONES / TABLETS    */
+/* 481–768px                    */
+/* ============================= */
+@media (min-width: 481px) and (max-width: 768px) {
+  .footer-container {
+    width: 96%;
+  }
+
+  .footer-list {
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================= */
+/* 💻 TABLETS 769–1024px        */
+/* ============================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .footer-container {
+    width: 97%;
+  }
+
+  .footer-list {
+    font-size: 0.95rem;
+  }
+}
+
+/* ============================= */
+/* 🖥 DESKTOPS ≥ 1025px         */
+/* ============================= */
+@media (min-width: 1025px) {
+  .footer-container {
+    width: 97%;
+  }
+
+  .footer-list {
+    font-size: 1rem;
+  }
+}

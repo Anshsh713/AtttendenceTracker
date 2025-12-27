@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../Common_Componenets/Common_Button/Button";
 import UpdateAttendenceform from "../Forms/UpdateAttendenceform.jsx";
 import { useAttendance } from "../Context/AttendenceContext.jsx";
+import "./Attendencecard.css";
 
 export default function Attendencecard({ subject = [], onAttendenceMarked }) {
   const {
@@ -35,44 +36,38 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
     }
   };
 
-  if (loading) return <p>Loading attendance...</p>;
+  if (loading) return <p className="loading">Loading attendance...</p>;
   if (!Array.isArray(subject) || subject.length === 0)
-    return <p>No class scheduled for this day</p>;
+    return <p className="empty-message">No class scheduled for this day</p>;
 
   return (
     <div>
-      <h2>Your Subjects</h2>
-
       {subject.map((subj) => (
-        <div
-          key={subj.subjectId}
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            padding: "10px",
-            margin: "10px 0",
-          }}
-        >
+        <div key={subj.subjectId} className="attendance-card">
           <h3>{subj.subjectName}</h3>
 
-          <ul>
+          <ul className="class-list">
             {subj.schedules?.map((schedule, index) => {
               const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
               const record = attendanceRecords?.[key] || null;
 
               return (
-                <li key={index}>
+                <li key={index} className="class-item">
                   <strong>{schedule.day}</strong> — {schedule.time}
-                  <div style={{ marginTop: "6px" }}>
+                  <div className="button-group">
                     {record ? (
                       <>
-                        <span>Your attendance: {record.Status}</span>
+                        <span className="status-label">
+                          Your attendance: {record.Status}
+                        </span>
+
                         <Button
                           title="Mistake?"
                           onClick={() =>
                             setEditingKey((prev) => (prev === key ? null : key))
                           }
                         />
+
                         {editingkey === key && (
                           <UpdateAttendenceform
                             updateClass={async (data) => {
@@ -90,6 +85,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                       <>
                         <Button
                           title="Present"
+                          className="primary"
                           onClick={() =>
                             handleAttendance("Present", subj, schedule)
                           }
@@ -115,8 +111,6 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
           </ul>
         </div>
       ))}
-
-      {lastAction && <p>Last action: {lastAction}</p>}
     </div>
   );
 }

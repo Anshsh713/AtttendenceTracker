@@ -5,6 +5,7 @@ import { useDeleteUpdate } from "../../Context/Delete_UpdateContext";
 import UpdateAttendencefrom from "../../Forms/UpdateSubjectform.jsx";
 import UserProfileform from "../../Forms/UserProfileform";
 import Button from "../../Common_Componenets/Common_Button/Button";
+import "./Profile.css";
 
 export default function Profile() {
   const { user, profile, refreshprofile, loading: userLoading } = useUser();
@@ -26,32 +27,22 @@ export default function Profile() {
     }
   }, []);
 
-  if (userLoading || scheduleLoading) return <p>Loading Profile...</p>;
+  if (userLoading || scheduleLoading)
+    return <p className="loading-text">Loading Profile...</p>;
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-      {/* -------- PROFILE HEADER -------- */}
-      <h1>
+    <div className="profile-container">
+      <h1 className="profile-title">
         {profile?.name
           ? `${profile.name}'s Profile`
           : `Welcome ${user?.name || "User"}`}
       </h1>
 
-      <p>
+      <p className="profile-email">
         <strong>Email:</strong> {user?.email}
       </p>
 
-      {/* -------- PROFILE CARD -------- */}
-      <div
-        style={{
-          border: "1px solid #ddd",
-          borderRadius: "12px",
-          padding: "15px",
-          marginTop: "10px",
-          lineHeight: "1.8",
-          background: "#fafafa",
-        }}
-      >
+      <div className="profile-card">
         <p>
           <strong>Name:</strong> {profile?.name || "-"}
         </p>
@@ -73,10 +64,8 @@ export default function Profile() {
         </p>
       </div>
 
-      {/* EDIT BUTTON */}
       <Button title="Edit Profile" onClick={toggleform} />
 
-      {/* EDIT FORM */}
       {showform && (
         <UserProfileform
           onprofileupdate={async () => {
@@ -86,9 +75,8 @@ export default function Profile() {
         />
       )}
 
-      <hr style={{ margin: "30px 0" }} />
+      <hr className="profile-divider" />
 
-      {/* -------- SUBJECT EDIT MODE -------- */}
       {editingSubject && (
         <>
           <UpdateAttendencefrom
@@ -103,27 +91,18 @@ export default function Profile() {
         </>
       )}
 
-      {/* -------- SUBJECT LIST MODE -------- */}
       {!editingSubject && (
         <>
           <h2>Subjects</h2>
 
           {!allSubjects || allSubjects.length === 0 ? (
-            <p>No subjects found.</p>
+            <p className="empty-text">No subjects found.</p>
           ) : (
             allSubjects.map((subj) => (
-              <div
-                key={subj.$id}
-                style={{
-                  border: "1px solid #ccc",
-                  borderRadius: "10px",
-                  padding: "10px",
-                  margin: "10px 0",
-                }}
-              >
+              <div key={subj.$id} className="subject-card">
                 <h3>{subj.SubjectName}</h3>
 
-                <div style={{ display: "flex", gap: "10px" }}>
+                <div className="subject-actions">
                   <Button
                     title="Edit Subject"
                     onClick={() => setEditingSubject(subj)}
@@ -135,7 +114,7 @@ export default function Profile() {
                 </div>
 
                 <h4>Class Schedule:</h4>
-                <ul>
+                <ul className="schedule-list">
                   {subj.ClassesSchedule?.map((item, index) => {
                     const schedule =
                       typeof item === "string" ? JSON.parse(item) : item;

@@ -11,6 +11,7 @@ function App() {
   const [loading, setloading] = useState(true);
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
+
   useEffect(() => {
     authservice
       .getCurrentUser()
@@ -23,13 +24,16 @@ function App() {
       })
       .finally(() => setloading(false));
   }, [dispatch]);
+
   return !loading ? (
     <div className="app-container">
       <div className="content-wrapper">
-        {authStatus && <Header />}
-        <main className="main-content">
-          <Outlet />
-        </main>
+        <div className="main-content">
+          {authStatus && <Header />}
+          <main className="main-content">
+            <Outlet />
+          </main>
+        </div>
         {authStatus && <Footer />}
       </div>
     </div>

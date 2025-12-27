@@ -1,0 +1,68 @@
+@import url("../index.css");
+
+/* -------- FORM CARD -------- */
+.update-attendance-form {
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  border-radius: 18px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
+  transition: 0.25s ease-in-out;
+}
+
+.update-attendance-form:hover {
+  transform: scale(1.01);
+}
+
+/* -------- TITLE -------- */
+.update-attendance-form h2 {
+  margin: 0 0 10px 0;
+  color: var(--color10);
+  text-align: center;
+}
+
+/* -------- RADIO GROUP -------- */
+.update-radio-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 8px 0 12px 0;
+}
+
+.update-radio-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--color10);
+}
+
+/* -------- SUBMIT BUTTON -------- */
+.update-attendance-form button[type="submit"] {
+  margin-top: 4px;
+  border-radius: 40px;
+  padding: 9px 20px;
+  background: var(--color5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.25s ease-in-out;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.45);
+}
+
+.update-attendance-form button[type="submit"]:hover {
+  transform: scale(1.02);
+  opacity: 0.95;
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 480px) {
+  .update-attendance-form {
+    padding: 12px 14px;
+  }
+
+  .update-radio-group {
+    gap: 10px;
+  }
+}

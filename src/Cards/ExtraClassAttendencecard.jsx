@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useAttendance } from "../Context/AttendenceContext";
 import Button from "../Common_Componenets/Common_Button/Button";
 import UpdateExtraClassAttendenceform from "../Forms/UpdateExtraClassAttendenceform";
+import "./ExtraClassAttendencecard.css";
+
 export default function ExtraClasscard({ subject = [] }) {
   const { fetchExtraClass, extraclassesRecords, UpdateExtraClassAttendence } =
     useAttendance();
+
   const [mistake, setMistake] = useState(null);
+
   const togglemistake = (key) => {
     setMistake((prev) => (prev === key ? null : key));
   };
+
   useEffect(() => {
     fetchExtraClass();
   }, []);
@@ -18,32 +23,42 @@ export default function ExtraClasscard({ subject = [] }) {
   if (record.length === 0) return <p>No Extra Classes Added yet</p>;
 
   return (
-    <div style={{ marginTop: "20px" }}>
+    <div className="extra-classes-wrapper">
       <h2>📚 Extra Classes</h2>
+
       {record.map((rec, index) => (
-        <div
-          key={index}
-          style={{
-            border: "1px solid #ccc",
-            padding: "10px",
-            borderRadius: "8px",
-            marginBottom: "10px",
-          }}
-        >
+        <div key={index} className="extra-class-card">
           <p>
             <strong>{rec.SubjectName}</strong> — {rec.ClassDay} @{" "}
             {rec.ClassTime}
           </p>
-          <p>Status: {rec.Status}</p>
+
+          <p>
+            Status:{" "}
+            <span
+              className={`extra-status ${
+                rec.Status === "Present"
+                  ? "present"
+                  : rec.Status === "Absent"
+                  ? "absent"
+                  : "canceled"
+              }`}
+            >
+              {rec.Status}
+            </span>
+          </p>
+
           <p>Date: {rec.ClassDate}</p>
-          <Button title="Mistake" onClick={() => togglemistake(index)} />
+
+          <div className="mistake-row">
+            <Button title="Mistake" onClick={() => togglemistake(index)} />
+          </div>
+
           {mistake === index && (
             <UpdateExtraClassAttendenceform
               UpdateExtraCLASS={async (data) => {
                 const success = await UpdateExtraClassAttendence(rec, data);
-                if (success) {
-                  setMistake(null);
-                }
+                if (success) setMistake(null);
               }}
             />
           )}

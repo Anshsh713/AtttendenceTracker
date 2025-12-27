@@ -1,0 +1,89 @@
+@import url("../index.css");
+
+/* ---------- CARD WRAPPER ---------- */
+.attendance-card {
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin: 14px 0;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+  transition: 0.25s ease-in-out;
+}
+
+.attendance-card:hover {
+  transform: scale(1.01);
+}
+
+/* ---------- SUBJECT TITLE ---------- */
+.attendance-card h3 {
+  margin: 0 0 10px 0;
+  color: var(--color10);
+}
+
+/* ---------- CLASS LIST ---------- */
+.class-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.class-item {
+  background: var(--color6);
+  border-radius: 14px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- DATE & TIME ---------- */
+.class-item strong {
+  color: var(--color10);
+}
+
+/* ---------- BUTTON GROUP ---------- */
+.button-group {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---------- STATUS LABEL ---------- */
+.status-label {
+  font-weight: 600;
+  color: var(--color5);
+  margin-right: 10px;
+}
+
+/* ---------- MESSAGE ---------- */
+.last-action {
+  margin-top: 10px;
+  color: var(--color10);
+  font-style: italic;
+}
+
+/* ---------- EMPTY STATES ---------- */
+.empty-message {
+  color: var(--color5);
+  font-weight: 500;
+}
+
+/* ---------- LOADING ---------- */
+.loading {
+  color: var(--color10);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 480px) {
+  .attendance-card {
+    padding: 12px;
+  }
+
+  .button-group {
+    gap: 8px;
+  }
+
+  .class-item {
+    padding: 8px;
+  }
+}

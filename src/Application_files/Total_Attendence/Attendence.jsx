@@ -4,6 +4,9 @@ import ExtraClassform from "../../Forms/ExtraClassform.jsx";
 import { useAttendance } from "../../Context/AttendenceContext.jsx";
 import { useUser } from "../../Context/UserContext.jsx";
 
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import "./Attendence.css";
+
 export default function Total_Attendence({ subject, refresh_Trigger }) {
   const { TotalAttendance, totalAttendance, handleExtraClass } =
     useAttendance();
@@ -29,50 +32,65 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
   if (!subject?.$id) return <p>No subject found.</p>;
 
   const stats = totalAttendance[subject.$id] || {};
-
-  const {
-    totalClasses = 0,
-    totalPresent = 0,
-    totalAbsent = 0,
-    attendancePercentage = 0,
-  } = stats;
+  const { totalPresent = 0, totalAbsent = 0, attendancePercentage = 0 } = stats;
 
   const target = profile?.attendence ?? 75;
   const formatted = Number(attendancePercentage).toFixed(2);
 
-  // ---- Classes counted towards attendance ----
+  const COLORS = ["#4CAF50", "#F44336"];
+
+  const data = [
+    { name: "Present", value: totalPresent },
+    { name: "Absent", value: totalAbsent },
+  ];
+
   const effective = totalPresent + totalAbsent;
 
-  // ---- Calculate classes needed ----
-  let classesNeeded = 0;
-
-  if (effective === 0 && target > 0) {
-    classesNeeded = 1;
-  } else {
-    const t = target / 100;
-
-    const required =
-      (t * (totalPresent + totalAbsent) - totalPresent) / (1 - t);
-
-    classesNeeded = Math.max(0, Math.ceil(required));
-  }
+  const t = target / 100;
+  const required = (t * (totalPresent + totalAbsent) - totalPresent) / (1 - t);
+  const classesNeeded =
+    effective === 0 && target > 0 ? 1 : Math.max(0, Math.ceil(required));
 
   const isSafe = Number(attendancePercentage) >= target;
 
   return (
-    <div>
-      <h2>Total Attendance for: {subject.SubjectName}</h2>
+    <div className="attendance-total-card">
+      <h2 className="attendance-total-title">
+        Total Attendance — {subject.SubjectName}
+      </h2>
 
-      <div
-        style={{
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          padding: "10px",
-        }}
-      >
-        <p>
-          <strong>Total Classes:</strong> {totalClasses}
-        </p>
+      <div className="donut-wrapper">
+        <PieChart width={320} height={260}>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={70}
+            outerRadius={100}
+            paddingAngle={3}
+            dataKey="value"
+          >
+            {data.map((entry, index) => (
+              <Cell key={index} fill={COLORS[index]} />
+            ))}
+          </Pie>
+
+          <Tooltip />
+          <Legend />
+
+          <text
+            x="50%"
+            y="50%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            style={{ fontSize: "20px", fontWeight: "bold" }}
+          >
+            {formatted}%
+          </text>
+        </PieChart>
+      </div>
+
+      <div className="attendance-stats">
         <p>
           <strong>Present:</strong> {totalPresent}
         </p>
@@ -80,33 +98,30 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
           <strong>Absent:</strong> {totalAbsent}
         </p>
         <p>
-          <strong>Attendance %:</strong> {formatted}%
-        </p>
-        <p>
           <strong>Target %:</strong> {target}%
         </p>
 
-        <p style={{ marginTop: "10px" }}>
-          <strong>
-            {isSafe
-              ? "✅ You can safely skip the next class."
-              : `⚠️ You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
-          </strong>
+        <p className={`attendance-status ${isSafe ? "safe" : "warn"}`}>
+          {isSafe
+            ? "✅ You can safely skip the next class."
+            : `⚠️ You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
         </p>
       </div>
 
-      <Button title="+ Extra Class" onClick={ExtraClass} />
+      <div className="extra-class-actions">
+        <Button title="+ Extra Class" onClick={ExtraClass} />
 
-      {extraclass && (
-        <div>
-          <ExtraClassform
-            subjectID={subject.$id}
-            subjectName={subject.SubjectName}
-            onextraClass={ExtraClassSubmit}
-          />
-          <Button title="Cancel" onClick={ExtraClass} />
-        </div>
-      )}
+        {extraclass && (
+          <>
+            <ExtraClassform
+              subjectID={subject.$id}
+              subjectName={subject.SubjectName}
+              onextraClass={ExtraClassSubmit}
+            />
+            <Button title="Cancel" onClick={ExtraClass} />
+          </>
+        )}
+      </div>
     </div>
   );
 }

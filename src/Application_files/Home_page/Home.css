@@ -1,0 +1,98 @@
+@import url("../../index.css");
+
+/* -------- PAGE WRAPPER -------- */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 10px 0 20px 0;
+  padding: 8px 12px;
+}
+
+/* -------- TAB BUTTON BAR -------- */
+.tab-bar {
+  margin-top: 1%;
+  margin-left: 2%;
+  display: flex;
+  gap: 30px;
+}
+
+/* -------- TAB BUTTON STYLE (applied via className) -------- */
+.Button-field.tab-btn {
+  background: #444;
+  color: white;
+  border-radius: 40px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover only tabs */
+.Button-field.tab-btn:hover {
+  transform: scale(1.03);
+}
+
+/* Active tab */
+.Button-field.tab-btn.active {
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  color: var(--color5);
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Focus only tabs — NOT arrows */
+.Button-field.tab-btn:focus,
+.Button-field.tab-btn:focus-visible {
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  color: var(--color5);
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.7);
+  outline: none;
+}
+
+/* -------- NAVIGATION ROW -------- */
+.nav-row {
+  display: flex;
+  gap: 20px;
+  margin-left: 2%;
+  margin-top: 4px;
+  align-items: center;
+}
+
+.nav-row strong {
+  color: var(--color10);
+  font-size: 1rem;
+}
+
+/* -------- SUBJECT HEADER -------- */
+.subjects {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+/* -------- ATTENDANCE / CLASSES SECTION -------- */
+.attendance-section,
+.classes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 480px) {
+  .Button-field.tab-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .nav-row strong {
+    font-size: 0.9rem;
+  }
+
+  .home-container {
+    padding: 6px;
+  }
+}

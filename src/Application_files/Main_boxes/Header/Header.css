@@ -1,63 +1,127 @@
-/* Header.css */
+@import url("../../../index.css");
+
+/* HEADER CONTAINER */
 .header-container {
+  margin-left: 2%;
+  margin-top: 1%;
+  width: 30%;
+  min-width: 260px;
+  max-width: 520px;
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  padding: 15px 20px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.6);
+  border-radius: 50px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  background-color: #f8f9fa;
+  transition: 0.3s;
 }
-
+.header-container:hover {
+  transform: scale(1.02);
+}
+/* NAV LIST */
 .nav-list {
-  display: flex;
-  gap: 30px;
   list-style: none;
+  display: flex;
+  gap: 25px;
   margin: 0;
   padding: 0;
+  justify-content: center;
+  align-items: center;
 }
 
+/* NAV LINK (BASE) */
 .nav-link {
   text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  font-size: 16px;
-  padding: 12px 24px;
-  border-radius: 6px;
-  border: 2px solid #e0e0e0;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  display: inline-block;
-  text-align: center;
-  min-width: 100px;
+  color: var(--color5);
+  font-size: 0.9rem;
+
+  padding: 10px 30px;
+  border-radius: 50px;
+
+  transition: all 0.25s ease-in-out;
+  white-space: nowrap;
 }
 
+/* HOVER */
 .nav-link:hover {
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-  border-color: #007bff;
+  background-color: var(--color8);
+  color: var(--color5);
 }
 
+/* ACTIVE */
 .nav-link.active {
-  background-color: #28a745;
+  background-color: var(--color4);
   color: white;
-  border: 2px solid #28a745;
-  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.7);
 }
 
-.nav-link.active:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
-  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
-}
+/* ============================= */
+/* 📱 SMALL PHONES (≤ 480px)     */
+/* ============================= */
+@media (max-width: 480px) {
+  .header-container {
+    width: 85%;
+    margin: 10px auto;
+    padding: 12px 14px;
+    border-radius: 40px;
+  }
 
-/* Responsive design */
-@media (max-width: 768px) {
   .nav-list {
-    flex-direction: column;
-    gap: 15px;
+    gap: 10px;
   }
 
   .nav-link {
-    min-width: 150px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ============================= */
+/* 📲 LARGE PHONES / SMALL TABS  */
+/* 481px–768px                   */
+/* ============================= */
+@media (min-width: 481px) and (max-width: 768px) {
+  .header-container {
+    width: 70%;
+    margin: 12px auto;
+    padding: 14px 18px;
+  }
+
+  .nav-list {
+    gap: 16px;
+  }
+
+  .nav-link {
+    padding: 9px 22px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================= */
+/* 💻 TABLETS 769px–1024px       */
+/* ============================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .header-container {
+    width: 50%;
+  }
+
+  .nav-link {
+    padding: 10px 26px;
+    font-size: 1rem;
+  }
+}
+
+/* ============================= */
+/* 🖥 DESKTOPS (≥ 1025px)        */
+/* ============================= */
+@media (min-width: 1025px) {
+  .header-container {
+    width: 30%;
+  }
+
+  .nav-link {
+    font-size: 1rem;
   }
 }
