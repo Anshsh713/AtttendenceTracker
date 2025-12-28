@@ -69,8 +69,9 @@
 /* -------- SUBJECT HEADER -------- */
 .subjects {
   display: flex;
+  width: 75%;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 50px;
 }
 
 /* -------- ATTENDANCE / CLASSES SECTION -------- */

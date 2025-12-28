@@ -85,12 +85,23 @@ function Home() {
           />
 
           {addSubject && (
-            <Attendencefrom
-              onSubjectAdded={() => {
-                refreshSchedule();
-                setaddSubject(false);
-              }}
-            />
+            <div className="modal-overlay" onClick={() => setaddSubject(false)}>
+              <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                <button
+                  className="modal-close"
+                  onClick={() => setaddSubject(false)}
+                >
+                  Close ✖
+                </button>
+
+                <Attendencefrom
+                  onSubjectAdded={() => {
+                    refreshSchedule();
+                    setaddSubject(false);
+                  }}
+                />
+              </div>
+            </div>
           )}
 
           <ExtraClasscard />

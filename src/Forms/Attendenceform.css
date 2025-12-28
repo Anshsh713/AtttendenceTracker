@@ -22,6 +22,21 @@
   text-align: center;
 }
 
+.schedule-list {
+  max-height: 220px; /* adjust as you like */
+  overflow-y: auto;
+}
+
+/* optional — nicer scroll bar */
+.schedule-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.schedule-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
 /* -------- SELECT & FIELDS -------- */
 .schedule-row {
   margin: 10px 0;

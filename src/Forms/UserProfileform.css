@@ -2,21 +2,15 @@
 
 /* -------- FORM CARD -------- */
 .profile-form {
+  height: 30rem;
   background: linear-gradient(90deg, var(--color7), var(--color8));
-  border-radius: 18px;
-  padding: 18px 20px;
-  margin: 16px 0;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
-  transition: 0.25s ease-in-out;
-}
-
-.profile-form:hover {
-  transform: scale(1.01);
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin: 10px 0;
 }
 
 /* -------- TITLE -------- */
 .profile-form h2 {
-  margin: 0 0 10px 0;
   text-align: center;
   color: var(--color10);
 }
@@ -36,7 +30,7 @@
   font-size: 0.95rem;
   border-radius: 12px;
   border: 1px solid var(--color10);
-  background: var(--color6);
+  background-color: transparent;
   cursor: pointer;
   transition: 0.2s;
   margin-top: 6px;
@@ -64,7 +58,7 @@
   cursor: pointer;
   font-weight: 500;
   transition: 0.25s ease-in-out;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.45);
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.6);
 }
 
 .profile-form button[type="submit"]:hover {

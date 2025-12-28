@@ -1,102 +1,219 @@
-@import url("../../index.css");
-
-/* -------- PAGE WRAPPER -------- */
+/* Page container */
 .profile-container {
+  padding: 30px;
   max-width: 900px;
-  margin: 0 auto;
-  padding: 16px 18px;
+  margin: auto;
+}
+
+/* Header */
+.profile-name {
   display: flex;
-  flex-direction: column;
-  gap: 22px;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  padding: 15px 25px;
+  border-radius: 16px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
-/* -------- HEADER -------- */
 .profile-title {
+  margin: 0;
   color: var(--color10);
-  margin-bottom: 4px;
+  font-weight: 600;
 }
 
-.profile-email {
+/* Card */
+.profile-card {
+  margin-top: 20px;
+  background: var(--color6);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+  color: var(--color10);
+}
+.profile-card p strong {
+  font-size: 1.1rem;
+  background-color: var(--color8);
+  padding: 10px 10px;
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.profile-card p {
+  font-size: 1.1rem;
+  background-color: var(--color7);
+  padding: 0px 150px 0px 0px;
+  margin: 10px 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-email strong {
   color: var(--color5);
 }
-
-/* -------- PROFILE INFO CARD -------- */
-.profile-card {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  border-radius: 18px;
-  padding: 16px 20px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
-  line-height: 1.8;
-}
-
-.profile-card strong {
+.Subjects {
+  display: flex;
+  margin-top: 2%;
   color: var(--color10);
-}
-
-/* -------- SECTION DIVIDER -------- */
-.profile-divider {
-  border: none;
-  border-top: 2px solid rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
-}
-
-/* -------- SUBJECT LIST -------- */
-.subject-card {
-  background: var(--color6);
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  padding: 15px 25px;
   border-radius: 16px;
-  padding: 14px 16px;
-  margin: 10px 0;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.35);
-  transition: 0.25s ease-in-out;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
-
-.subject-card:hover {
-  transform: scale(1.01);
+/* Subjects section */
+.subject-card {
+  margin-top: 20px;
+  padding: 18px;
+  background: var(--color7);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .subject-card h3 {
-  margin: 0 0 10px 0;
+  margin-top: 0;
   color: var(--color10);
 }
 
-/* -------- BUTTON ROW -------- */
+/* Action buttons wrapper */
 .subject-actions {
+  align-items: center;
   display: flex;
-  gap: 10px;
-  margin-bottom: 8px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.subject-action {
+  display: flex;
+  justify-content: space-between;
+  width: 15%;
+}
+.subject-action button {
+  padding: 10px 20px 10px 20px;
 }
 
-/* -------- SCHEDULE LIST -------- */
+.classes {
+  font-size: 1.1rem;
+  margin-left: 10px;
+  color: var(--color10);
+}
 .schedule-list {
-  margin-top: 6px;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 20px;
+  width: 50%;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-left: 50px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.schedule-list p strong {
+  display: block;
+  width: 50%;
+  text-align: center;
+  font-size: 1.1rem;
+  background-color: var(--color8);
+  padding: 7px 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-.schedule-list strong {
-  color: var(--color10);
+.schedule-list p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  border-radius: 10px;
+  padding: 0px 100px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* Buttons (works with your Button component) */
+.Button-field {
+  background: var(--color4);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  font-size: 14px;
 }
 
-/* -------- EMPTY TEXT -------- */
+.Button-field:hover {
+  background: var(--color9);
+  transform: translateY(-1px);
+}
+
+.Button-container {
+  display: inline-block;
+}
+
+/* Loading text */
+.loading-text,
 .empty-text {
+  text-align: center;
+  margin-top: 20px;
   color: var(--color5);
-  font-weight: 500;
 }
 
-/* -------- LOADING -------- */
-.loading-text {
-  color: var(--color10);
+/* Edit icon button special */
+.profile-name .Button-field {
+  background: var(--color9);
+}
+.profile-name .Button-field:hover {
+  background: var(--color10);
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(2px);
 }
 
-/* -------- RESPONSIVE -------- */
-@media (max-width: 480px) {
-  .profile-container {
-    padding: 10px;
-  }
+.modal-content {
+  background: linear-gradient(90deg, var(--color7), var(--color8));
+  border-radius: 18px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.35);
+  animation: popup 0.2s ease-in-out;
+}
 
-  .subject-actions {
-    flex-wrap: wrap;
+@keyframes popup {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
   }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
-  .profile-card {
-    padding: 12px 14px;
-  }
+.close-btn {
+  margin-top: 10px;
+  border-radius: 25px;
+  padding: 8px 18px;
+  border: none;
+  background: var(--color9);
+  color: white;
+  cursor: pointer;
+}
+.close-btn:hover {
+  background: var(--color10);
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 20px;
 }

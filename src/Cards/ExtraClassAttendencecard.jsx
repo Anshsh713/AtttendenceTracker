@@ -24,7 +24,7 @@ export default function ExtraClasscard({ subject = [] }) {
 
   return (
     <div className="extra-classes-wrapper">
-      <h2>📚 Extra Classes</h2>
+      <h2>Extra Classes</h2>
 
       {record.map((rec, index) => (
         <div key={index} className="extra-class-card">
@@ -55,12 +55,23 @@ export default function ExtraClasscard({ subject = [] }) {
           </div>
 
           {mistake === index && (
-            <UpdateExtraClassAttendenceform
-              UpdateExtraCLASS={async (data) => {
-                const success = await UpdateExtraClassAttendence(rec, data);
-                if (success) setMistake(null);
-              }}
-            />
+            <div className="modal-overlay" onClick={() => setMistake(null)}>
+              <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                <button
+                  className="modal-close"
+                  onClick={() => setMistake(null)}
+                >
+                  Close ✖
+                </button>
+
+                <UpdateExtraClassAttendenceform
+                  UpdateExtraCLASS={async (data) => {
+                    const success = await UpdateExtraClassAttendence(rec, data);
+                    if (success) setMistake(null);
+                  }}
+                />
+              </div>
+            </div>
           )}
         </div>
       ))}

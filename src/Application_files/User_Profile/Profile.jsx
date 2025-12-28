@@ -6,9 +6,17 @@ import UpdateAttendencefrom from "../../Forms/UpdateSubjectform.jsx";
 import UserProfileform from "../../Forms/UserProfileform";
 import Button from "../../Common_Componenets/Common_Button/Button";
 import "./Profile.css";
+import authService from "../../Appwrite/AuthService.js";
+import Subjectnotfound from "../images/Subjectnotfound.png";
 
 export default function Profile() {
-  const { user, profile, refreshprofile, loading: userLoading } = useUser();
+  const {
+    user,
+    setUser,
+    profile,
+    refreshprofile,
+    loading: userLoading,
+  } = useUser();
   const {
     allSubjects,
     refreshSchedule,
@@ -20,7 +28,15 @@ export default function Profile() {
   const [editingSubject, setEditingSubject] = useState(null);
 
   const toggleform = () => setshowform(!showform);
-
+  const logout = async () => {
+    try {
+      await authService.logout();
+      setUser(null);
+      localStorage.removeItem("user");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
   useEffect(() => {
     if (!allSubjects || allSubjects.length === 0) {
       refreshSchedule();
@@ -32,96 +48,116 @@ export default function Profile() {
 
   return (
     <div className="profile-container">
-      <h1 className="profile-title">
-        {profile?.name
-          ? `${profile.name}'s Profile`
-          : `Welcome ${user?.name || "User"}`}
-      </h1>
-
-      <p className="profile-email">
-        <strong>Email:</strong> {user?.email}
-      </p>
-
+      <div className="profile-name">
+        <h1 className="profile-title">
+          {profile?.name
+            ? `Welcome ${profile.name}`
+            : `Welcome ${user?.name || "User"}`}
+        </h1>
+        <div className="profile-buttons">
+          <Button
+            className="logout-button"
+            title={<i className="fa-solid fa-arrow-right-from-bracket"></i>}
+            onClick={logout}
+          />
+          <Button
+            title={<i className="fa-solid fa-pen"></i>}
+            onClick={toggleform}
+          />
+        </div>
+      </div>
       <div className="profile-card">
-        <p>
-          <strong>Name:</strong> {profile?.name || "-"}
+        <p className="profile-email">
+          <strong>Email </strong> {user?.email}
         </p>
         <p>
-          <strong>Attendance Target:</strong>{" "}
+          <strong>Attendance Target </strong>{" "}
           {(profile?.attendence ?? 75) + "%"}
         </p>
         <p>
-          <strong>College:</strong> {profile?.college || "-"}
+          <strong>College </strong> {profile?.college || "-"}
         </p>
         <p>
-          <strong>City:</strong> {profile?.city || "-"}
+          <strong>City </strong> {profile?.city || "-"}
         </p>
         <p>
-          <strong>State:</strong> {profile?.state || "-"}
+          <strong>State </strong> {profile?.state || "-"}
         </p>
         <p>
-          <strong>Country:</strong> {profile?.country || "-"}
+          <strong>Country </strong> {profile?.country || "-"}
         </p>
       </div>
 
-      <Button title="Edit Profile" onClick={toggleform} />
-
       {showform && (
-        <UserProfileform
-          onprofileupdate={async () => {
-            await refreshprofile();
-            setshowform(false);
-          }}
-        />
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <UserProfileform
+              onprofileupdate={async () => {
+                await refreshprofile();
+                setshowform(false);
+              }}
+            />
+            <button className="close-btn" onClick={toggleform}>
+              Close
+            </button>
+          </div>
+        </div>
       )}
 
-      <hr className="profile-divider" />
-
       {editingSubject && (
-        <>
-          <UpdateAttendencefrom
-            editSubject={editingSubject}
-            onSubjectAdded={async () => {
-              await refreshSchedule();
-              setEditingSubject(null);
-            }}
-          />
-
-          <Button title="Cancel Edit" onClick={() => setEditingSubject(null)} />
-        </>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <UpdateAttendencefrom
+              editSubject={editingSubject}
+              onSubjectAdded={async () => {
+                await refreshSchedule();
+                setEditingSubject(null);
+              }}
+            />
+            <button
+              className="close-btn"
+              onClick={() => setEditingSubject(null)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
       )}
 
       {!editingSubject && (
         <>
-          <h2>Subjects</h2>
+          <h2 className="Subjects">Subjects</h2>
 
           {!allSubjects || allSubjects.length === 0 ? (
-            <p className="empty-text">No subjects found.</p>
+            <p className="empty-text">Subject Not Found</p>
           ) : (
             allSubjects.map((subj) => (
               <div key={subj.$id} className="subject-card">
-                <h3>{subj.SubjectName}</h3>
-
                 <div className="subject-actions">
-                  <Button
-                    title="Edit Subject"
-                    onClick={() => setEditingSubject(subj)}
-                  />
-                  <Button
-                    title="Delete Subject"
-                    onClick={() => Deleting_the_Subject(subj.$id)}
-                  />
+                  <h3>{subj.SubjectName}</h3>
+                  <div className="subject-action">
+                    <Button
+                      title={<i className="fa-solid fa-pen"></i>}
+                      onClick={() => setEditingSubject(subj)}
+                    />
+                    <Button
+                      title={<i className="fa-solid fa-trash-can"></i>}
+                      onClick={() => Deleting_the_Subject(subj.$id)}
+                    />
+                  </div>
                 </div>
 
-                <h4>Class Schedule:</h4>
+                <h4 className="classes">Class Schedule:</h4>
                 <ul className="schedule-list">
                   {subj.ClassesSchedule?.map((item, index) => {
                     const schedule =
                       typeof item === "string" ? JSON.parse(item) : item;
 
                     return (
-                      <li key={index}>
-                        <strong>{schedule.day}</strong> — {schedule.time}
+                      <li className="subjects-lists" key={index}>
+                        <p>
+                          <strong>{schedule.day}</strong> {schedule.time}
+                        </p>
                       </li>
                     );
                   })}

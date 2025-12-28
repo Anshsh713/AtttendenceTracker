@@ -53,7 +53,9 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
 
               return (
                 <li key={index} className="class-item">
-                  <strong>{schedule.day}</strong> — {schedule.time}
+                  <p>
+                    <strong>{schedule.day}</strong> — {schedule.time}
+                  </p>
                   <div className="button-group">
                     {record ? (
                       <>
@@ -69,16 +71,33 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                         />
 
                         {editingkey === key && (
-                          <UpdateAttendenceform
-                            updateClass={async (data) => {
-                              const success = await UpdateAttendance(
-                                subj,
-                                schedule,
-                                data
-                              );
-                              if (success) setEditingKey(null);
-                            }}
-                          />
+                          <div
+                            className="modal-overlay"
+                            onClick={() => setEditingKey(null)}
+                          >
+                            <div
+                              className="modal-box"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <button
+                                className="modal-close"
+                                onClick={() => setEditingKey(null)}
+                              >
+                                Close ✖
+                              </button>
+
+                              <UpdateAttendenceform
+                                updateClass={async (data) => {
+                                  const success = await UpdateAttendance(
+                                    subj,
+                                    schedule,
+                                    data
+                                  );
+                                  if (success) setEditingKey(null);
+                                }}
+                              />
+                            </div>
+                          </div>
                         )}
                       </>
                     ) : (

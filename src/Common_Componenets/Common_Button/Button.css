@@ -11,12 +11,12 @@
   color: var(--text2);
   border: none;
   border-radius: 50px;
-  padding: 10px 25px;
+  padding: 10px 20px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: 0.25s ease-in-out;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 /* Hover */
@@ -24,12 +24,11 @@
   transform: scale(1.01);
 }
 /* ACTIVE (when you pass className="active") */
-.Button-field.active {
+.Button-field:active {
   background: linear-gradient(90deg, var(--color7), var(--color8));
   color: var(--color5);
   box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5);
 }
-
 /* FOCUS (keyboard accessibility) */
 .Button-field:focus {
   background: linear-gradient(90deg, var(--color7), var(--color8));

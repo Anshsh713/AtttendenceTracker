@@ -72,34 +72,40 @@ export default function Attendencefrom({ onSubjectAdded }) {
         required
       />
 
-      {schedule.map((items, index) => (
-        <div key={index} className="schedule-row">
-          <select
-            value={items.Day}
-            onChange={(e) => handleScheduleChange(index, "Day", e.target.value)}
-            required
-          >
-            <option value="">Select Day</option>
-            <option>Monday</option>
-            <option>Tuesday</option>
-            <option>Wednesday</option>
-            <option>Thursday</option>
-            <option>Friday</option>
-            <option>Saturday</option>
-            <option>Sunday</option>
-          </select>
+      <div className="classesperweek">
+        <div className="schedule-list">
+          {schedule.map((items, index) => (
+            <div key={index} className="schedule-row">
+              <select
+                value={items.Day}
+                onChange={(e) =>
+                  handleScheduleChange(index, "Day", e.target.value)
+                }
+                required
+              >
+                <option value="">Select Day</option>
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+              </select>
 
-          <Input
-            label="Time : "
-            type="Time"
-            value={items.Time}
-            onChange={(e) =>
-              handleScheduleChange(index, "Time", e.target.value)
-            }
-            required
-          />
+              <Input
+                label="Time : "
+                type="time"
+                value={items.Time}
+                onChange={(e) =>
+                  handleScheduleChange(index, "Time", e.target.value)
+                }
+                required
+              />
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
 
       <button type="submit" disabled={saving}>
         {saving ? "Saving..." : "Save Subject"}

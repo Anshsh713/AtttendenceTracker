@@ -5,7 +5,8 @@
   background: linear-gradient(90deg, var(--color7), var(--color8));
   border-radius: 18px;
   padding: 16px 18px;
-  margin: 14px 0;
+  margin: 2px 30px;
+  width: 70%;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
   transition: 0.25s ease-in-out;
 }
@@ -16,7 +17,7 @@
 
 /* ---------- SUBJECT TITLE ---------- */
 .attendance-card h3 {
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;
   color: var(--color10);
 }
 
@@ -28,9 +29,12 @@
 }
 
 .class-item {
+  display: flex;
+  justify-content: space-between;
   background: var(--color6);
   border-radius: 14px;
-  padding: 10px 12px;
+  padding: 20px 20px;
+  align-items: center;
   margin-bottom: 10px;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
 }
