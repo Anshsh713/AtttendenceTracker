@@ -15,9 +15,10 @@
   margin-left: 2%;
   display: flex;
   gap: 30px;
+  flex-wrap: wrap; /* prevents overflow on mobile */
 }
 
-/* -------- TAB BUTTON STYLE (applied via className) -------- */
+/* -------- TAB BUTTON STYLE -------- */
 .Button-field.tab-btn {
   background: #444;
   color: white;
@@ -31,19 +32,19 @@
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
-/* Hover only tabs */
+/* Hover */
 .Button-field.tab-btn:hover {
   transform: scale(1.03);
 }
 
-/* Active tab */
+/* Active */
 .Button-field.tab-btn.active {
   background: linear-gradient(90deg, var(--color7), var(--color8));
   color: var(--color5);
   box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5);
 }
 
-/* Focus only tabs — NOT arrows */
+/* Focus */
 .Button-field.tab-btn:focus,
 .Button-field.tab-btn:focus-visible {
   background: linear-gradient(90deg, var(--color7), var(--color8));
@@ -59,6 +60,7 @@
   margin-left: 2%;
   margin-top: 4px;
   align-items: center;
+  flex-wrap: wrap; /* prevents overflow */
 }
 
 .nav-row strong {
@@ -75,7 +77,6 @@
 }
 
 /* -------- ATTENDANCE / CLASSES SECTION -------- */
-/* GRID LAYOUT FOR ATTENDANCE CARDS */
 .attendance-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -89,7 +90,47 @@
   gap: 30px;
 }
 
-/* -------- RESPONSIVE -------- */
+/* =============================
+   📱 RESPONSIVE BREAKPOINTS
+============================= */
+
+/* Tablets & small laptops */
+@media (max-width: 992px) {
+  .subjects {
+    width: 90%;
+    padding: 0 20px;
+  }
+
+  .tab-bar {
+    gap: 20px;
+  }
+
+  .nav-row strong {
+    font-size: 0.95rem;
+  }
+}
+
+/* Large phones & small tablets */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 8px 10px;
+  }
+
+  .subjects {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .attendance-section {
+    grid-template-columns: 1fr; /* single column cards */
+  }
+
+  .tab-bar {
+    margin-left: 0;
+  }
+}
+
+/* Small phones */
 @media (max-width: 480px) {
   .Button-field.tab-btn {
     padding: 6px 12px;
@@ -102,5 +143,28 @@
 
   .home-container {
     padding: 6px;
+  }
+
+  .tab-bar {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .subjects {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+/* Extra-small screens */
+@media (max-width: 360px) {
+  .Button-field.tab-btn {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  .nav-row strong {
+    font-size: 0.85rem;
   }
 }

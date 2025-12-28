@@ -217,3 +217,124 @@
   display: flex;
   gap: 20px;
 }
+
+/* =============================
+   📱 RESPONSIVE DESIGN ADD-ON
+   (Original code unchanged)
+============================= */
+
+/* Tablets & small laptops */
+@media (max-width: 992px) {
+  .profile-container {
+    padding: 20px;
+  }
+
+  .profile-card p,
+  .schedule-list p {
+    font-size: 1rem;
+  }
+
+  .profile-card p strong {
+    width: auto;
+  }
+}
+
+/* Large phones & small tablets */
+@media (max-width: 768px) {
+  .profile-name,
+  .Subjects {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .profile-card p {
+    padding-right: 20px; /* remove huge right padding */
+    flex-direction: column; /* stack values */
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .profile-card p strong {
+    width: auto;
+  }
+
+  .subject-actions {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .subject-action {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .schedule-list {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .schedule-list p {
+    padding-right: 20px;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .schedule-list p strong {
+    width: 100%;
+  }
+
+  .profile-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 12px;
+  }
+
+  .profile-card,
+  .subject-card {
+    padding: 14px;
+  }
+
+  .Button-field {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .subject-action {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .profile-title {
+    text-align: center;
+  }
+
+  .schedule-list {
+    font-size: 0.95rem;
+  }
+}
+
+/* Extra-small screens */
+@media (max-width: 360px) {
+  .Button-field {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .profile-title {
+    font-size: 1rem;
+  }
+
+  .profile-card p,
+  .schedule-list p {
+    font-size: 0.95rem;
+  }
+}

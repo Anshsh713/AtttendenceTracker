@@ -78,7 +78,7 @@
   color: var(--color10);
 }
 
-/* Style raw input (works with your custom Input component too) */
+/* Input styling */
 .input-group input,
 .login-form input {
   padding: 11px 12px;
@@ -122,13 +122,66 @@
   transform: scale(0.98);
 }
 
-/* Responsive tweaks */
+/* ===========================
+   📱 RESPONSIVENESS
+=========================== */
+
+/* Tablets & small laptops */
+@media (max-width: 992px) {
+  .login-form {
+    max-width: 460px;
+  }
+
+  .login-container h2 {
+    font-size: 30px;
+  }
+}
+
+/* Large phones & small tablets */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 20px;
+  }
+
+  .login-form {
+    padding: 26px 22px;
+    max-width: 400px;
+  }
+
+  .login-container h2 {
+    font-size: 28px;
+  }
+}
+
+/* Small phones */
 @media (max-width: 480px) {
   .login-form {
-    padding: 22px;
+    padding: 22px 18px;
+    border-radius: 16px;
+    max-width: 360px;
   }
 
   .login-container h2 {
     font-size: 26px;
+  }
+
+  .login-button {
+    padding: 11px;
+  }
+}
+
+/* Extra-small screens */
+@media (max-width: 360px) {
+  .login-container {
+    padding: 14px;
+  }
+
+  .login-form {
+    padding: 18px 14px;
+    max-width: 320px;
+  }
+
+  .login-container h2 {
+    font-size: 22px;
   }
 }

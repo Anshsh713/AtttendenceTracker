@@ -51,6 +51,7 @@
   justify-content: center;
   gap: 18px;
   margin-bottom: 32px;
+  flex-wrap: wrap;
 }
 
 /* Common button style */
@@ -122,4 +123,97 @@
   opacity: 0.8;
   font-size: 13px;
   color: var(--color10);
+}
+
+/* ==========================
+   📱 RESPONSIVENESS
+========================== */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .about-card {
+    max-width: 700px;
+    padding: 32px 36px;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+}
+
+/* Large Phones */
+@media (max-width: 768px) {
+  .about-card {
+    padding: 26px 28px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+  }
+
+  .features {
+    gap: 14px;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  .about-container {
+    padding: 12px;
+  }
+
+  .about-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Extra-small devices */
+@media (max-width: 360px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .about-card {
+    padding: 16px;
+  }
 }

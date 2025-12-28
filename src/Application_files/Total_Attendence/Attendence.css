@@ -4,14 +4,10 @@
 .attendance-total-card {
   width: 100%;
   min-height: 380px;
-}
-
-.attendance-total-card {
   background: linear-gradient(90deg, var(--color7), var(--color8));
   border-radius: 18px;
   padding: 16px 20px;
   margin: 16px 0;
-
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
 }
 
@@ -25,6 +21,7 @@
 
 .attendance-header h2 {
   margin: 0;
+  color: var(--color10);
 }
 
 /* -------- DONUT -------- */
@@ -65,7 +62,7 @@
   color: white;
 }
 
-/* WHITE */
+/* NEUTRAL / WHITE */
 .cancel-box {
   background: white;
   color: black;
@@ -79,4 +76,84 @@
 
 .attendance-status.warn {
   color: #c62828;
+}
+
+/* =============================
+   📱 RESPONSIVE BREAKPOINTS
+============================= */
+
+/* Tablets & small laptops */
+@media (max-width: 992px) {
+  .attendance-total-card {
+    padding: 14px 16px;
+  }
+
+  .attendance-colored-stats {
+    font-size: 1rem;
+    gap: 16px;
+  }
+}
+
+/* Large phones & small tablets */
+@media (max-width: 768px) {
+  .attendance-header {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .attendance-total-card {
+    min-height: 340px;
+  }
+
+  .attendance-colored-stats {
+    gap: 12px;
+  }
+
+  .present-box,
+  .absent-box,
+  .cancel-box {
+    padding: 5px 12px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .attendance-total-card {
+    padding: 12px 14px;
+    border-radius: 14px;
+    min-height: 310px;
+  }
+
+  .attendance-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .attendance-colored-stats {
+    font-size: 0.95rem;
+    gap: 10px;
+  }
+
+  .present-box,
+  .absent-box,
+  .cancel-box {
+    padding: 5px 10px;
+    min-width: 40px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .attendance-header h2 {
+    font-size: 1rem;
+  }
+
+  .attendance-colored-stats {
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+
+  .attendance-total-card {
+    min-height: 290px;
+  }
 }
