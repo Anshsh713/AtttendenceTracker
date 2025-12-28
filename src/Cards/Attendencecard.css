@@ -11,10 +11,6 @@
   transition: 0.25s ease-in-out;
 }
 
-.attendance-card:hover {
-  transform: scale(1.01);
-}
-
 /* ---------- SUBJECT TITLE ---------- */
 .attendance-card h3 {
   margin: 0 0 20px 0;
@@ -57,6 +53,25 @@
   font-weight: 600;
   color: var(--color5);
   margin-right: 10px;
+}
+/* -------- MODAL OVERLAY -------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -------- MODAL BOX -------- */
+.modal-box {
+  background: #ffffffdd;
+  border-radius: 16px;
+  padding: 20px 22px;
+  max-width: 420px;
+  width: 95%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
 }
 
 /* ---------- MESSAGE ---------- */

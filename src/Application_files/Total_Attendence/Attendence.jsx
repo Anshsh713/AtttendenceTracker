@@ -4,7 +4,7 @@ import ExtraClassform from "../../Forms/ExtraClassform.jsx";
 import { useAttendance } from "../../Context/AttendenceContext.jsx";
 import { useUser } from "../../Context/UserContext.jsx";
 
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import "./Attendence.css";
 
 export default function Total_Attendence({ subject, refresh_Trigger }) {
@@ -23,7 +23,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
     }
   };
 
-  const ExtraClass = () => setExtraClass((prev) => !prev);
+  const toggleExtraClass = () => setExtraClass((prev) => !prev);
 
   useEffect(() => {
     if (subject?.$id) TotalAttendance(subject.$id);
@@ -32,89 +32,104 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
   if (!subject?.$id) return <p>No subject found.</p>;
 
   const stats = totalAttendance[subject.$id] || {};
-  const { totalPresent = 0, totalAbsent = 0, attendancePercentage = 0 } = stats;
+  const {
+    totalPresent = 0,
+    totalAbsent = 0,
+    totalCancelled = 0,
+    attendancePercentage = 0,
+  } = stats;
 
   const target = profile?.attendence ?? 75;
   const formatted = Number(attendancePercentage).toFixed(2);
 
-  const COLORS = ["#4CAF50", "#F44336"];
+  const COLORS = ["#4CAF50", "#F44336", "#FFFFFF"];
 
   const data = [
     { name: "Present", value: totalPresent },
     { name: "Absent", value: totalAbsent },
+    { name: "Cancelled", value: totalCancelled },
   ];
 
-  const effective = totalPresent + totalAbsent;
-
+  const effective = totalPresent + totalAbsent + totalCancelled;
   const t = target / 100;
-  const required = (t * (totalPresent + totalAbsent) - totalPresent) / (1 - t);
+  const required = (t * effective - totalPresent) / (1 - t);
   const classesNeeded =
     effective === 0 && target > 0 ? 1 : Math.max(0, Math.ceil(required));
 
   const isSafe = Number(attendancePercentage) >= target;
 
   return (
-    <div className="attendance-total-card">
-      <h2 className="attendance-total-title">
-        Total Attendance — {subject.SubjectName}
-      </h2>
+    <div className="total-attendance-container">
+      <div className="attendance-total-card">
+        {/* -------- HEADER -------- */}
+        <div className="attendance-header">
+          <h2>{subject.SubjectName}</h2>
 
-      <div className="donut-wrapper">
-        <PieChart width={320} height={260}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={70}
-            outerRadius={100}
-            paddingAngle={3}
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell key={index} fill={COLORS[index]} />
-            ))}
-          </Pie>
+          <Button title="+ Extra Class" onClick={toggleExtraClass} />
+        </div>
 
-          <Tooltip />
-          <Legend />
+        {/* -------- DONUT CHART -------- */}
+        <div className="donut-wrapper">
+          <PieChart width={320} height={260}>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={70}
+              outerRadius={100}
+              paddingAngle={3}
+              dataKey="value"
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={index}
+                  fill={COLORS[index]}
+                  stroke="#ccc"
+                  strokeWidth={entry.name === "Cancelled" ? 1.5 : 0}
+                />
+              ))}
+            </Pie>
 
-          <text
-            x="50%"
-            y="50%"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            style={{ fontSize: "20px", fontWeight: "bold" }}
-          >
-            {formatted}%
-          </text>
-        </PieChart>
-      </div>
+            <Tooltip />
 
-      <div className="attendance-stats">
-        <p>
-          <strong>Present:</strong> {totalPresent}
-        </p>
-        <p>
-          <strong>Absent:</strong> {totalAbsent}
-        </p>
-        <p>
-          <strong>Target %:</strong> {target}%
-        </p>
+            {/* Percentage text in center */}
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              style={{ fontSize: "20px", fontWeight: "bold" }}
+            >
+              {formatted}%
+            </text>
+          </PieChart>
+        </div>
 
-        <p className={`attendance-status ${isSafe ? "safe" : "warn"}`}>
-          {isSafe
-            ? "✅ You can safely skip the next class."
-            : `⚠️ You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
-        </p>
-      </div>
+        {/* -------- COLOURED NUMBER ROW -------- */}
+        <div className="attendance-colored-stats">
+          <span className="present-box">{totalPresent}</span>
+          <span className="absent-box">{totalAbsent}</span>
+          <span className="cancel-box">{totalCancelled}</span>
+        </div>
 
-      <div className="extra-class-actions">
-        <Button title="+ Extra Class" onClick={ExtraClass} />
+        {/* -------- STATUS -------- */}
+        <div className="attendance-stats">
+          <p>
+            <strong>Target %:</strong> {target}%
+          </p>
 
+          <p className={`attendance-status ${isSafe ? "safe" : "warn"}`}>
+            {isSafe
+              ? "✅ You can safely skip the next class."
+              : `⚠️ You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
+          </p>
+        </div>
+
+        {/* -------- EXTRA CLASS MODAL -------- */}
         {extraclass && (
-          <div className="modal-overlay" onClick={ExtraClass}>
+          <div className="modal-overlay" onClick={toggleExtraClass}>
             <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close" onClick={ExtraClass}>
+              <button className="modal-close" onClick={toggleExtraClass}>
                 Close ✖
               </button>
 

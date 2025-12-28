@@ -1,0 +1,134 @@
+/* ===========================
+   SIGNUP PAGE STYLING
+=========================== */
+
+/* Background layout */
+.signup-container {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--color7),
+    var(--color8),
+    var(--color6)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--color10);
+}
+
+/* Heading */
+.signup-container h2 {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+/* Sub text */
+.signup-container p {
+  margin-bottom: 18px;
+  color: var(--color5);
+}
+
+/* Links */
+.signup-container a {
+  color: var(--color4);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-container a:hover {
+  text-decoration: underline;
+}
+
+/* Error styling */
+.error-message {
+  background: rgba(255, 0, 0, 0.12);
+  color: #8b0000;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 0, 0, 0.25);
+}
+
+/* Signup card */
+.signup-form {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  padding: 30px 28px;
+  border-radius: 20px;
+  max-width: 450px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+}
+
+/* Input group formatting */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.input-group label {
+  font-weight: 600;
+  color: var(--color10);
+}
+
+/* Raw input styling (works with your Input component) */
+.input-group input,
+.signup-form input {
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.9);
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+/* Focus animation */
+.input-group input:focus,
+.signup-form input:focus {
+  border-color: var(--color4);
+  box-shadow: 0 0 0 3px rgba(85, 133, 100, 0.25);
+}
+
+/* Submit button */
+.signup-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  background: var(--color4);
+  color: var(--text2);
+  transition: all 0.25s ease;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+}
+
+/* Button interactions */
+.signup-button:hover {
+  background: var(--color10);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+.signup-button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .signup-form {
+    padding: 22px;
+  }
+
+  .signup-container h2 {
+    font-size: 26px;
+  }
+}

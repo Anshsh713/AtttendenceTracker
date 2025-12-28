@@ -22,10 +22,6 @@
   transition: 0.25s ease;
 }
 
-.extra-class-card:hover {
-  transform: scale(1.01);
-}
-
 /* -------- TEXT -------- */
 .extra-class-card p {
   margin: 4px 0;
@@ -59,4 +55,24 @@
   .extra-class-card {
     padding: 10px 12px;
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.modal-box {
+  background: #ffffffdd;
+  border-radius: 16px;
+  padding: 20px 22px;
+  max-width: 420px;
+  width: 95%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
 }

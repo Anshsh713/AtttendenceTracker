@@ -6,7 +6,7 @@
   flex-direction: column;
   gap: 20px;
   margin: 10px 0 20px 0;
-  padding: 8px 12px;
+  padding: 10px 12px;
 }
 
 /* -------- TAB BUTTON BAR -------- */
@@ -75,7 +75,14 @@
 }
 
 /* -------- ATTENDANCE / CLASSES SECTION -------- */
-.attendance-section,
+/* GRID LAYOUT FOR ATTENDANCE CARDS */
+.attendance-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
 .classes-section {
   display: flex;
   flex-direction: column;

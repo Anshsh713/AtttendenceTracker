@@ -2,6 +2,7 @@
 
 /* -------- FORM CARD -------- */
 .update-attendance-form {
+  text-align: center;
   background: linear-gradient(90deg, var(--color7), var(--color8));
   border-radius: 18px;
   padding: 16px 20px;
