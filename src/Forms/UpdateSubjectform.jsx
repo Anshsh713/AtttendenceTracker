@@ -105,38 +105,42 @@ export default function UpdateAttendencefrom({
         required
       />
 
-      {schedule.map((items, index) => (
-        <div key={index} className="schedule-row">
-          <select
-            value={items.Day}
-            onChange={(e) => handleScheduleChange(index, "Day", e.target.value)}
-            required
-          >
-            <option value="">Select Day</option>
-            {[
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday",
-            ].map((day) => (
-              <option key={day}>{day}</option>
-            ))}
-          </select>
+      <div className="schedule-list">
+        {schedule.map((items, index) => (
+          <div key={index} className="schedule-row">
+            <select
+              value={items.Day}
+              onChange={(e) =>
+                handleScheduleChange(index, "Day", e.target.value)
+              }
+              required
+            >
+              <option value="">Select Day</option>
+              {[
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+              ].map((day) => (
+                <option key={day}>{day}</option>
+              ))}
+            </select>
 
-          <Input
-            label="Time : "
-            type="time"
-            value={items.Time}
-            onChange={(e) =>
-              handleScheduleChange(index, "Time", e.target.value)
-            }
-            required
-          />
-        </div>
-      ))}
+            <Input
+              label="Time : "
+              type="time"
+              value={items.Time}
+              onChange={(e) =>
+                handleScheduleChange(index, "Time", e.target.value)
+              }
+              required
+            />
+          </div>
+        ))}
+      </div>
 
       <button type="submit" disabled={saving}>
         {saving ? "Saving..." : editSubject ? "Update Subject" : "Save Subject"}

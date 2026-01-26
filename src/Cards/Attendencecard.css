@@ -2,19 +2,32 @@
 
 /* ---------- CARD WRAPPER ---------- */
 .attendance-card {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  border-radius: 18px;
-  padding: 16px 18px;
-  margin: 2px 30px;
-  width: 70%;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
-  transition: 0.25s ease-in-out;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.attendance-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 /* ---------- SUBJECT TITLE ---------- */
 .attendance-card h3 {
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
   color: var(--color10);
+  font-size: 1.4rem;
+  font-weight: 800;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 12px;
 }
 
 /* ---------- CLASS LIST ---------- */
@@ -26,23 +39,43 @@
 
 .class-item {
   display: flex;
-  justify-content: space-between;
-  background: var(--color6);
-  border-radius: 14px;
-  padding: 20px 20px;
-  align-items: center;
-  margin-bottom: 10px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  gap: 12px;
+  /* Make it row on larger screens if desired, keeping column for mobile-first feel */
+}
+
+@media (min-width: 600px) {
+  .class-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .class-item p {
+    margin: 0;
+  }
 }
 
 /* ---------- DATE & TIME ---------- */
+.class-item p {
+  color: var(--color5);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
 .class-item strong {
   color: var(--color10);
+  font-size: 1.1rem;
+  display: block;
 }
 
 /* ---------- BUTTON GROUP ---------- */
 .button-group {
-  margin-top: 8px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
@@ -50,59 +83,49 @@
 
 /* ---------- STATUS LABEL ---------- */
 .status-label {
-  font-weight: 600;
-  color: var(--color5);
-  margin-right: 10px;
+  font-weight: 700;
+  color: var(--color4);
+  background: rgba(85, 133, 100, 0.1);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
 }
-/* -------- MODAL OVERLAY -------- */
+
+/* ---------- MODAL OVERLAY ---------- */
 .modal-overlay {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
 }
 
 /* -------- MODAL BOX -------- */
 .modal-box {
-  background: #ffffffdd;
-  border-radius: 16px;
-  padding: 20px 22px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
   max-width: 420px;
-  width: 95%;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-  position: relative;
-}
-
-/* ---------- MESSAGE ---------- */
-.last-action {
-  margin-top: 10px;
-  color: var(--color10);
-  font-style: italic;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* ---------- EMPTY STATES ---------- */
 .empty-message {
   color: var(--color5);
   font-weight: 500;
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
 }
 
 /* ---------- LOADING ---------- */
 .loading {
-  color: var(--color10);
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 480px) {
-  .attendance-card {
-    padding: 12px;
-  }
-
-  .button-group {
-    gap: 8px;
-  }
-
-  .class-item {
-    padding: 8px;
-  }
+  text-align: center;
+  color: var(--color5);
+  font-weight: 600;
 }

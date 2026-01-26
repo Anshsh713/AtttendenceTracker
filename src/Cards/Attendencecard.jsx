@@ -43,92 +43,100 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
   return (
     <div>
       {subject.map((subj) => (
-        <div key={subj.subjectId} className="attendance-card">
-          <h3>{subj.subjectName}</h3>
+        <React.Fragment key={subj.subjectId}>
+          <div className="attendance-card">
+            <h3>{subj.subjectName}</h3>
 
-          <ul className="class-list">
-            {subj.schedules?.map((schedule, index) => {
-              const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
-              const record = attendanceRecords?.[key] || null;
+            <ul className="class-list">
+              {subj.schedules?.map((schedule, index) => {
+                const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
+                const record = attendanceRecords?.[key] || null;
 
-              return (
-                <li key={index} className="class-item">
-                  <p>
-                    <strong>{schedule.day}</strong> — {schedule.time}
-                  </p>
-                  <div className="button-group">
-                    {record ? (
-                      <>
-                        <span className="status-label">
-                          Your attendance: {record.Status}
-                        </span>
+                return (
+                  <li key={index} className="class-item">
+                    <p>
+                      <strong>{schedule.day}</strong> — {schedule.time}
+                    </p>
+                    <div className="button-group">
+                      {record ? (
+                        <>
+                          <span className="status-label">
+                            Your attendance: {record.Status}
+                          </span>
 
-                        <Button
-                          title="Mistake?"
-                          onClick={() =>
-                            setEditingKey((prev) => (prev === key ? null : key))
-                          }
-                        />
+                          <Button
+                            title="Mistake?"
+                            onClick={() =>
+                              setEditingKey((prev) =>
+                                prev === key ? null : key
+                              )
+                            }
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            title="Present"
+                            className="primary"
+                            onClick={() =>
+                              handleAttendance("Present", subj, schedule)
+                            }
+                          />
+                          <Button
+                            title="Absent"
+                            onClick={() =>
+                              handleAttendance("Absent", subj, schedule)
+                            }
+                          />
+                          <Button
+                            title="Canceled"
+                            onClick={() =>
+                              handleAttendance("Canceled", subj, schedule)
+                            }
+                          />
+                        </>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
 
-                        {editingkey === key && (
-                          <div
-                            className="modal-overlay"
-                            onClick={() => setEditingKey(null)}
-                          >
-                            <div
-                              className="modal-box"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <button
-                                className="modal-close"
-                                onClick={() => setEditingKey(null)}
-                              >
-                                Close ✖
-                              </button>
+          {/* Modal rendered outside the transformed card to fix Z-index stacking */}
+          {subj.schedules?.map((schedule) => {
+            const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
+            if (editingkey !== key) return null;
 
-                              <UpdateAttendenceform
-                                updateClass={async (data) => {
-                                  const success = await UpdateAttendance(
-                                    subj,
-                                    schedule,
-                                    data
-                                  );
-                                  if (success) setEditingKey(null);
-                                }}
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <Button
-                          title="Present"
-                          className="primary"
-                          onClick={() =>
-                            handleAttendance("Present", subj, schedule)
-                          }
-                        />
-                        <Button
-                          title="Absent"
-                          onClick={() =>
-                            handleAttendance("Absent", subj, schedule)
-                          }
-                        />
-                        <Button
-                          title="Canceled"
-                          onClick={() =>
-                            handleAttendance("Canceled", subj, schedule)
-                          }
-                        />
-                      </>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+            return (
+              <div
+                key={key}
+                className="modal-overlay"
+                onClick={() => setEditingKey(null)}
+              >
+                <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    className="modal-close"
+                    onClick={() => setEditingKey(null)}
+                  >
+                    Close ✖
+                  </button>
+
+                  <UpdateAttendenceform
+                    updateClass={async (data) => {
+                      const success = await UpdateAttendance(
+                        subj,
+                        schedule,
+                        data
+                      );
+                      if (success) setEditingKey(null);
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </React.Fragment>
       ))}
     </div>
   );

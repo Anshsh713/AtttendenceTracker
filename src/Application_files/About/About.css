@@ -1,196 +1,324 @@
-/* Smooth, soft gradient background */
-.about-container {
-  min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    var(--color7),
-    var(--color8),
-    var(--color6)
-  );
+/* =========================================
+   About Page Layout & Typography
+   ========================================= */
+
+.about-page {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--color10);
+  line-height: 1.6;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Common Section Padding */
+section {
+  padding: 80px 20px;
+  position: relative;
+}
+
+/* =========================================
+   Hero Section
+   ========================================= */
+.hero-section {
+  min-height: 90vh;
+  /* Fill most of the screen */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  color: var(--text);
-  font-family: "Segoe UI", Arial, sans-serif;
-}
-
-/* Glass card with earthy shadow */
-.about-card {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(10px);
-  border-radius: 22px;
-  padding: 40px 50px;
-  max-width: 850px;
-  width: 100%;
   text-align: center;
+  position: relative;
+  /* Optional: soft overlay to make text pop against animated body bg */
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.hero-content {
+  max-width: 900px;
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 25px 45px rgba(108, 88, 76, 0.35);
 }
 
-/* Title */
-.title {
-  font-size: 40px;
-  font-weight: 900;
-  color: var(--color10);
-  margin-bottom: 12px;
+/* Titles */
+.hero-title {
+  font-size: 4rem;
+  /* Huge text */
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: var(--text);
+  letter-spacing: -1px;
 }
 
-/* Subtitle */
-.subtitle {
-  font-size: 17px;
-  max-width: 620px;
-  margin: 0 auto 30px;
-  line-height: 1.6;
+.hero-title .highlight {
+  background: linear-gradient(120deg, var(--color4), var(--color10));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 0 auto 40px;
   color: var(--color5);
+  font-weight: 500;
 }
 
-/* Buttons layout */
-.button-group {
+/* =========================================
+   Buttons
+   ========================================= */
+.cta-group {
   display: flex;
+  gap: 20px;
   justify-content: center;
-  gap: 18px;
-  margin-bottom: 32px;
   flex-wrap: wrap;
 }
 
-/* Common button style */
 .btn {
-  padding: 12px 26px;
-  border-radius: 999px;
-  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 99px;
   text-decoration: none;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
 }
 
-/* Light Button (Login) */
-.btn-light {
-  background: var(--color1);
-  color: var(--color10);
-}
-
-.btn-light:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
-}
-
-/* Dark Button (Signup) */
-.btn-dark {
+.btn-primary {
   background: var(--color4);
-  color: var(--text2);
+  color: white;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(85, 133, 100, 0.3);
 }
 
-.btn-dark:hover {
-  background: var(--color10);
+.btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(85, 133, 100, 0.4);
+  background: var(--color10);
 }
 
-/* Features Grid */
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-  margin-top: 10px;
+.btn-outline {
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--color5);
+  border: 2px solid var(--color5);
 }
 
-/* Feature Card */
-.feature-card {
-  background: rgba(255, 255, 255, 0.5);
-  padding: 18px 16px;
-  border-radius: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+.btn-outline:hover {
+  background: var(--color5);
+  color: white;
+  transform: translateY(-3px);
+}
+
+.btn-glow {
+  background: linear-gradient(135deg, var(--color1), var(--color2));
   color: var(--color10);
+  padding: 16px 48px;
+  font-size: 1.2rem;
+  box-shadow: 0 0 20px rgba(105, 235, 208, 0.4);
+}
+
+.btn-glow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(105, 235, 208, 0.6);
+}
+
+/* =========================================
+   Mission Section
+   ========================================= */
+.mission-section {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mission-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.mission-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--color4);
+}
+
+.mission-text p {
+  font-size: 1.1rem;
+  color: var(--color10);
+}
+
+.mission-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.stat-item {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 24px;
+  border-radius: 16px;
+  flex: 1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+}
+
+.stat-item h3 {
+  font-size: 2rem;
+  color: var(--color4);
+  margin-bottom: 5px;
+}
+
+.stat-item p {
+  font-size: 0.9rem;
+  color: var(--color5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+/* =========================================
+   Features Section
+   ========================================= */
+.features-section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.features-header h2 {
+  font-size: 2.5rem;
+  color: var(--color10);
+  margin-bottom: 10px;
+}
+
+.features-header p {
+  color: var(--color5);
+  font-size: 1.1rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+  text-align: left;
 }
 
 .feature-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.feature-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  display: block;
 }
 
 .feature-card h3 {
-  font-size: 18px;
-  margin-bottom: 6px;
-  color: var(--color5);
-}
-
-/* Footer */
-.footer {
-  margin-top: 28px;
-  opacity: 0.8;
-  font-size: 13px;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
   color: var(--color10);
 }
 
-/* ==========================
-   📱 RESPONSIVENESS
-========================== */
+/* =========================================
+   Bottom CTA & Footer
+   ========================================= */
+.bottom-cta {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2));
+}
 
-/* Tablets */
-@media (max-width: 992px) {
-  .about-card {
-    max-width: 700px;
-    padding: 32px 36px;
+.bottom-cta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: var(--color10);
+}
+
+.about-footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 0.9rem;
+  color: var(--color5);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================
+   Animations & Responsiveness
+   ========================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
 
-  .title {
-    font-size: 34px;
-  }
-
-  .subtitle {
-    font-size: 16px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Large Phones */
 @media (max-width: 768px) {
-  .about-card {
-    padding: 26px 28px;
+  .hero-title {
+    font-size: 2.8rem;
   }
 
-  .title {
-    font-size: 30px;
+  .mission-container {
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  .subtitle {
-    font-size: 15px;
+  .mission-stats {
+    flex-wrap: wrap;
   }
 
-  .btn {
-    padding: 10px 20px;
-  }
-
-  .features {
-    gap: 14px;
+  .stat-item {
+    min-width: 120px;
   }
 }
 
-/* Smartphones */
 @media (max-width: 480px) {
-  .about-container {
-    padding: 12px;
-  }
-
-  .about-card {
-    padding: 22px 18px;
-    border-radius: 16px;
-  }
-
-  .title {
-    font-size: 26px;
-  }
-
-  .subtitle {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-
-  .button-group {
-    flex-direction: column;
-    gap: 10px;
+  .hero-title {
+    font-size: 2.2rem;
   }
 
   .btn {
@@ -198,22 +326,8 @@
     text-align: center;
   }
 
-  .features {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Extra-small devices */
-@media (max-width: 360px) {
-  .title {
-    font-size: 22px;
-  }
-
-  .subtitle {
-    font-size: 13px;
-  }
-
-  .about-card {
-    padding: 16px;
+  .cta-group {
+    flex-direction: column;
+    width: 100%;
   }
 }

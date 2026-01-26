@@ -2,77 +2,110 @@
 
 /* -------- WRAPPER -------- */
 .extra-classes-wrapper {
-  margin-top: 18px;
+  margin-top: 24px;
 }
 
 /* -------- TITLE -------- */
 .extra-classes-wrapper h2 {
   color: var(--color10);
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  padding-left: 4px;
 }
 
 /* -------- EACH CARD -------- */
 .extra-class-card {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 16px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
-  transition: 0.25s ease;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.extra-class-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* -------- TEXT -------- */
 .extra-class-card p {
-  margin: 4px 0;
+  margin: 0;
   color: var(--color10);
+  font-size: 1rem;
+}
+
+.extra-class-card p strong {
+  font-weight: 700;
 }
 
 /* Status highlight */
 .extra-status {
   font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin-top: 4px;
 }
 
 .extra-status.present {
-  color: #2e7d32;
+  color: #1b5e20;
+  background: rgba(76, 175, 80, 0.15);
 }
 
 .extra-status.absent {
-  color: #c62828;
+  color: #b71c1c;
+  background: rgba(244, 67, 54, 0.15);
 }
 
 .extra-status.canceled {
-  color: #ff8f00;
+  color: #e65100;
+  background: rgba(255, 152, 0, 0.15);
 }
 
 /* -------- BUTTON ROW -------- */
 .mistake-row {
-  margin-top: 6px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* -------- MODAL OVERLAY -------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  padding: 24px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 /* -------- RESPONSIVE -------- */
 @media (max-width: 480px) {
   .extra-class-card {
-    padding: 10px 12px;
+    padding: 16px;
   }
-}
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-}
-.modal-box {
-  background: #ffffffdd;
-  border-radius: 16px;
-  padding: 20px 22px;
-  max-width: 420px;
-  width: 95%;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-  position: relative;
 }

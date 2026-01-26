@@ -2,75 +2,99 @@
 
 /* -------- FORM CARD -------- */
 .extra-class-form {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  border-radius: 18px;
-  padding: 18px 20px;
-  margin: 14px 0;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
-  transition: 0.25s ease-in-out;
-}
-
-.extra-class-form:hover {
-  transform: scale(1.01);
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* -------- HEADINGS -------- */
 .extra-class-form h2 {
-  margin: 0 0 10px 0;
+  margin: 0 0 12px 0;
   color: var(--color10);
   text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
 }
 
 .extra-class-form .today-row {
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--color5);
-  margin: 6px 0 12px 0;
+  margin: 8px 0 20px 0;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.4);
+  padding: 8px;
+  border-radius: 12px;
 }
 
 /* -------- RADIO ROW -------- */
 .radio-group {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
-  margin: 10px 0;
+  justify-content: center;
+  margin: 20px 0;
   flex-wrap: wrap;
 }
 
 .radio-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: 500;
+  gap: 8px;
+  font-weight: 600;
   color: var(--color10);
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.radio-item:hover {
+  background: #fff;
+  border-color: var(--color4);
+}
+
+.radio-item input[type="radio"] {
+  accent-color: var(--color4);
+  width: 18px;
+  height: 18px;
 }
 
 /* -------- SUBMIT BUTTON -------- */
 .extra-class-form button[type="submit"] {
-  margin-top: 12px;
-  border-radius: 40px;
-  padding: 10px 22px;
-  background: var(--color5);
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  border-radius: 99px;
+  padding: 14px 24px;
+  background: var(--color4);
   color: white;
   border: none;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.25s ease-in-out;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(85, 133, 100, 0.25);
 }
 
 .extra-class-form button[type="submit"]:hover {
-  transform: scale(1.02);
-  opacity: 0.95;
+  transform: translateY(-2px);
+  background: var(--color10);
+  box-shadow: 0 12px 25px rgba(85, 133, 100, 0.35);
 }
 
 /* -------- RESPONSIVE -------- */
 @media (max-width: 480px) {
   .extra-class-form {
-    padding: 12px 14px;
+    padding: 20px;
   }
 
   .radio-group {
+    flex-direction: column;
     gap: 10px;
   }
 }

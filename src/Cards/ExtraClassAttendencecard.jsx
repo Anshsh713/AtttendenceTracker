@@ -27,31 +27,32 @@ export default function ExtraClasscard({ subject = [] }) {
       <h2>Extra Classes</h2>
 
       {record.map((rec, index) => (
-        <div key={index} className="extra-class-card">
-          <p>
-            <strong>{rec.SubjectName}</strong> — {rec.ClassDay} @{" "}
-            {rec.ClassTime}
-          </p>
+        <React.Fragment key={index}>
+          <div className="extra-class-card">
+            <p>
+              <strong>{rec.SubjectName}</strong> — {rec.ClassDay} @{" "}
+              {rec.ClassTime}
+            </p>
 
-          <p>
-            Status:{" "}
-            <span
-              className={`extra-status ${
-                rec.Status === "Present"
-                  ? "present"
-                  : rec.Status === "Absent"
-                  ? "absent"
-                  : "canceled"
-              }`}
-            >
-              {rec.Status}
-            </span>
-          </p>
+            <p>
+              Status:{" "}
+              <span
+                className={`extra-status ${rec.Status === "Present"
+                    ? "present"
+                    : rec.Status === "Absent"
+                      ? "absent"
+                      : "canceled"
+                  }`}
+              >
+                {rec.Status}
+              </span>
+            </p>
 
-          <p>Date: {rec.ClassDate}</p>
+            <p>Date: {rec.ClassDate}</p>
 
-          <div className="mistake-row">
-            <Button title="Mistake" onClick={() => togglemistake(index)} />
+            <div className="mistake-row">
+              <Button title="Mistake" onClick={() => togglemistake(index)} />
+            </div>
           </div>
 
           {mistake === index && (
@@ -73,7 +74,7 @@ export default function ExtraClasscard({ subject = [] }) {
               </div>
             </div>
           )}
-        </div>
+        </React.Fragment>
       ))}
     </div>
   );

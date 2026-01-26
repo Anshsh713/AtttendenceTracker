@@ -125,23 +125,23 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
           </p>
         </div>
 
-        {/* -------- EXTRA CLASS MODAL -------- */}
-        {extraclass && (
-          <div className="modal-overlay" onClick={toggleExtraClass}>
-            <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close" onClick={toggleExtraClass}>
-                Close ✖
-              </button>
-
-              <ExtraClassform
-                subjectID={subject.$id}
-                subjectName={subject.SubjectName}
-                onextraClass={ExtraClassSubmit}
-              />
-            </div>
-          </div>
-        )}
       </div>
+      {/* -------- EXTRA CLASS MODAL -------- */}
+      {extraclass && (
+        <div className="modal-overlay" onClick={toggleExtraClass}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={toggleExtraClass}>
+              Close ✖
+            </button>
+
+            <ExtraClassform
+              subjectID={subject.$id}
+              subjectName={subject.SubjectName}
+              onextraClass={ExtraClassSubmit}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

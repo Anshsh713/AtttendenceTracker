@@ -4,167 +4,147 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin: 10px 0 20px 0;
-  padding: 10px 12px;
+  gap: 24px;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+  width: 100%;
 }
 
 /* -------- TAB BUTTON BAR -------- */
 .tab-bar {
-  margin-top: 1%;
-  margin-left: 2%;
   display: flex;
-  gap: 30px;
-  flex-wrap: wrap; /* prevents overflow on mobile */
+  gap: 16px;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  padding: 8px;
+  border-radius: 99px;
+  width: fit-content;
+  margin: 0 auto 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* -------- TAB BUTTON STYLE -------- */
 .Button-field.tab-btn {
-  background: #444;
-  color: white;
-  border-radius: 40px;
-  padding: 8px 18px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  background: transparent;
+  color: var(--color5);
+  border-radius: 99px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: 0.25s ease-in-out;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  box-shadow: none;
 }
 
 /* Hover */
 .Button-field.tab-btn:hover {
-  transform: scale(1.03);
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--color10);
 }
 
 /* Active */
 .Button-field.tab-btn.active {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  color: var(--color5);
-  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5);
+  background: var(--color4);
+  /* Using the green accent from design */
+  color: white;
+  box-shadow: 0 4px 10px rgba(85, 133, 100, 0.3);
 }
 
-/* Focus */
-.Button-field.tab-btn:focus,
-.Button-field.tab-btn:focus-visible {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  color: var(--color5);
-  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.7);
-  outline: none;
-}
-
-/* -------- NAVIGATION ROW -------- */
+/* -------- NAVIGATION ROW (Date, Prev, Next) -------- */
 .nav-row {
   display: flex;
-  gap: 20px;
-  margin-left: 2%;
-  margin-top: 4px;
+  gap: 16px;
+  justify-content: center;
+  /* Centered for better aesthetics */
   align-items: center;
-  flex-wrap: wrap; /* prevents overflow */
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  border-radius: 16px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  backdrop-filter: blur(4px);
 }
 
 .nav-row strong {
   color: var(--color10);
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-width: 180px;
+  text-align: center;
 }
 
 /* -------- SUBJECT HEADER -------- */
 .subjects {
   display: flex;
-  width: 75%;
   justify-content: space-between;
-  padding: 0 50px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 0 10px;
 }
 
-/* -------- ATTENDANCE / CLASSES SECTION -------- */
-.attendance-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 16px;
-  margin-top: 10px;
+.subjects h2 {
+  font-size: 1.5rem;
+  color: var(--color10);
+  font-weight: 800;
 }
 
+/* -------- SECTIONS -------- */
 .classes-section {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
+  width: 100%;
 }
 
-/* =============================
+.attendance-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+/* =================____________
    📱 RESPONSIVE BREAKPOINTS
-============================= */
+   ================____________ */
 
-/* Tablets & small laptops */
-@media (max-width: 992px) {
-  .subjects {
-    width: 90%;
-    padding: 0 20px;
-  }
-
-  .tab-bar {
-    gap: 20px;
-  }
-
-  .nav-row strong {
-    font-size: 0.95rem;
-  }
-}
-
-/* Large phones & small tablets */
 @media (max-width: 768px) {
   .home-container {
-    padding: 8px 10px;
+    padding: 16px;
+    margin: 0;
   }
 
   .subjects {
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  .attendance-section {
-    grid-template-columns: 1fr; /* single column cards */
+    padding: 0;
   }
 
   .tab-bar {
-    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
   }
-}
 
-/* Small phones */
-@media (max-width: 480px) {
   .Button-field.tab-btn {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-
-  .nav-row strong {
+    flex: 1;
+    padding: 10px 12px;
     font-size: 0.9rem;
   }
-
-  .home-container {
-    padding: 6px;
-  }
-
-  .tab-bar {
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .subjects {
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-  }
 }
 
-/* Extra-small screens */
-@media (max-width: 360px) {
-  .Button-field.tab-btn {
-    font-size: 0.75rem;
-    padding: 6px 10px;
+@media (max-width: 480px) {
+  .nav-row {
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 8px;
   }
 
   .nav-row strong {
-    font-size: 0.85rem;
+    min-width: auto;
+    font-size: 0.95rem;
   }
 }
