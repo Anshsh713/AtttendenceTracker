@@ -2,6 +2,7 @@ import React from "react"; // calling React components in main.jsx file
 import { createRoot } from "react-dom/client"; // a react-dom component which used to create Routes for web page
 import {
   createBrowserRouter, // use to create router for bowser between files
+  createHashRouter,
   RouterProvider, // a provide to connect router to main file
   Navigate, // as for navigate
 } from "react-router-dom";
@@ -23,74 +24,69 @@ import { DeleteUpdateProvider } from "./Context/Delete_UpdateContext.jsx";
 import { HistoryProvider } from "./Context/HistoryContext.jsx";
 import History from "./Application_files/History/History_Page.jsx";
 
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <App />,
-      children: [
-        // DEFAULT ROUTE (redirect)
-        {
-          index: true,
-          element: <Navigate to="about" replace />,
-        },
-
-        {
-          path: "about",
-          element: (
-            <AuthLayout authentication={false}>
-              <About />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "login",
-          element: (
-            <AuthLayout authentication={false}>
-              <Login />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "signup",
-          element: (
-            <AuthLayout authentication={false}>
-              <Signup />
-            </AuthLayout>
-          ),
-        },
-
-        {
-          path: "home",
-          element: (
-            <AuthLayout authentication={true}>
-              <Home />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "profile",
-          element: (
-            <AuthLayout authentication={true}>
-              <Profile />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "History",
-          element: (
-            <AuthLayout authentication={true}>
-              <History />
-            </AuthLayout>
-          ),
-        },
-      ],
-    },
-  ],
+const router = createHashRouter([
   {
-    basename: "/AtttendenceTracker",
+    path: "/",
+    element: <App />,
+    children: [
+      // DEFAULT ROUTE (redirect)
+      {
+        index: true,
+        element: <Navigate to="about" replace />,
+      },
+
+      {
+        path: "about",
+        element: (
+          <AuthLayout authentication={false}>
+            <About />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "login",
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "signup",
+        element: (
+          <AuthLayout authentication={false}>
+            <Signup />
+          </AuthLayout>
+        ),
+      },
+
+      {
+        path: "home",
+        element: (
+          <AuthLayout authentication={true}>
+            <Home />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <AuthLayout authentication={true}>
+            <Profile />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "History",
+        element: (
+          <AuthLayout authentication={true}>
+            <History />
+          </AuthLayout>
+        ),
+      },
+    ],
   },
-);
+]);
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
