@@ -2,7 +2,8 @@
 .profile-container {
   padding: 30px;
   max-width: 900px;
-  margin: auto;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* Header */
@@ -10,190 +11,201 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  padding: 15px 25px;
-  border-radius: 16px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  padding: 20px 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
 }
 
 .profile-title {
   margin: 0;
   color: var(--color10);
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 1.5rem;
 }
 
 /* Card */
 .profile-card {
-  margin-top: 20px;
-  background: var(--color6);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   color: var(--color10);
-}
-.profile-card p strong {
-  font-size: 1.1rem;
-  background-color: var(--color8);
-  padding: 10px 10px;
-  width: 30%;
-  border-radius: 10px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-.profile-card p {
-  font-size: 1.1rem;
-  background-color: var(--color7);
-  padding: 0px 150px 0px 0px;
-  margin: 10px 0;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin-bottom: 30px;
 }
 
-.profile-email strong {
+.profile-card p {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.05rem;
+}
+
+.profile-card p strong {
+  font-weight: 600;
   color: var(--color5);
 }
+
+/* Subjects Header */
 .Subjects {
   display: flex;
-  margin-top: 2%;
-  color: var(--color10);
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  padding: 15px 25px;
-  border-radius: 16px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  padding: 20px 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  color: var(--color10);
+  margin-bottom: 20px;
 }
+
+.Subjects h3 {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
 /* Subjects section */
 .subject-card {
   margin-top: 20px;
-  padding: 18px;
-  background: var(--color7);
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .subject-card h3 {
   margin-top: 0;
   color: var(--color10);
+  font-weight: 700;
+  font-size: 1.25rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 /* Action buttons wrapper */
 .subject-actions {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.subject-action {
-  display: flex;
-  justify-content: space-between;
-  width: 15%;
-}
-.subject-action button {
-  padding: 10px 20px 10px 20px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.classes {
-  font-size: 1.1rem;
-  margin-left: 10px;
-  color: var(--color10);
+.subject-action {
+  display: flex;
+  gap: 12px;
 }
+
+/* Schedule List */
 .schedule-list {
   list-style: none;
-  padding-left: 0;
-  margin-top: 20px;
-  width: 50%;
-  border-radius: 10px;
-  font-size: 1rem;
-  margin-left: 50px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-.schedule-list p strong {
-  display: block;
-  width: 50%;
-  text-align: center;
-  font-size: 1.1rem;
-  background-color: var(--color8);
-  padding: 7px 20px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  margin-top: 16px;
 }
 
 .schedule-list p {
-  font-size: 1.1rem;
-  margin: 10px 0;
-  border-radius: 10px;
-  padding: 0px 100px 0px 0px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px 16px;
+  border-radius: 12px;
+  margin-bottom: 8px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
 }
-/* Buttons (works with your Button component) */
+
+.schedule-list p strong {
+  color: var(--color4);
+  font-weight: 700;
+}
+
+/* Common Components */
+/* Buttons */
 .Button-field {
   background: var(--color4);
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 25px;
+  padding: 10px 20px;
+  border-radius: 99px;
   cursor: pointer;
-  transition: 0.2s ease-in-out;
-  font-size: 14px;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(85, 133, 100, 0.2);
 }
 
 .Button-field:hover {
-  background: var(--color9);
-  transform: translateY(-1px);
-}
-
-.Button-container {
-  display: inline-block;
-}
-
-/* Loading text */
-.loading-text,
-.empty-text {
-  text-align: center;
-  margin-top: 20px;
-  color: var(--color5);
-}
-
-/* Edit icon button special */
-.profile-name .Button-field {
-  background: var(--color9);
-}
-.profile-name .Button-field:hover {
   background: var(--color10);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(85, 133, 100, 0.3);
 }
+
+/* Edit/Delete variants */
+.profile-name .Button-field {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--color10);
+}
+
+.profile-name .Button-field:hover {
+  background: #fff;
+}
+
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.45);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  border-radius: 18px;
-  padding: 20px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 30px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.35);
-  animation: popup 0.2s ease-in-out;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  animation: popup 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes popup {
   from {
-    transform: scale(0.95);
+    transform: scale(0.9);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -201,67 +213,46 @@
 }
 
 .close-btn {
-  margin-top: 10px;
-  border-radius: 25px;
-  padding: 8px 18px;
+  margin-top: 16px;
+  border-radius: 99px;
+  padding: 10px 24px;
   border: none;
-  background: var(--color9);
+  background: #f44336;
   color: white;
   cursor: pointer;
+  font-weight: 600;
+  width: 100%;
 }
+
 .close-btn:hover {
-  background: var(--color10);
+  background: #d32f2f;
 }
 
-.profile-buttons {
-  display: flex;
-  gap: 20px;
-}
+/* =================____________
+   📱 RESPONSIVE BREAKPOINTS
+   ================____________ */
 
-/* =============================
-   📱 RESPONSIVE DESIGN ADD-ON
-   (Original code unchanged)
-============================= */
-
-/* Tablets & small laptops */
-@media (max-width: 992px) {
-  .profile-container {
-    padding: 20px;
-  }
-
-  .profile-card p,
-  .schedule-list p {
-    font-size: 1rem;
-  }
-
-  .profile-card p strong {
-    width: auto;
-  }
-}
-
-/* Large phones & small tablets */
 @media (max-width: 768px) {
+  .profile-container {
+    padding: 16px;
+  }
+
   .profile-name,
   .Subjects {
+    padding: 16px 20px;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     text-align: center;
   }
 
   .profile-card p {
-    padding-right: 20px; /* remove huge right padding */
-    flex-direction: column; /* stack values */
-    gap: 8px;
+    flex-direction: column;
     align-items: flex-start;
-  }
-
-  .profile-card p strong {
-    width: auto;
+    gap: 4px;
   }
 
   .subject-actions {
     flex-direction: column;
-    gap: 10px;
     align-items: flex-start;
   }
 
@@ -269,72 +260,13 @@
     width: 100%;
     justify-content: space-between;
   }
-
-  .schedule-list {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .schedule-list p {
-    padding-right: 20px;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
-  }
-
-  .schedule-list p strong {
-    width: 100%;
-  }
-
-  .profile-buttons {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
 }
 
-/* Small phones */
 @media (max-width: 480px) {
-  .profile-container {
-    padding: 12px;
-  }
 
-  .profile-card,
-  .subject-card {
-    padding: 14px;
-  }
-
+  .profile-name .Button-field,
   .Button-field {
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-
-  .subject-action {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .profile-title {
+    width: 100%;
     text-align: center;
-  }
-
-  .schedule-list {
-    font-size: 0.95rem;
-  }
-}
-
-/* Extra-small screens */
-@media (max-width: 360px) {
-  .Button-field {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-
-  .profile-title {
-    font-size: 1rem;
-  }
-
-  .profile-card p,
-  .schedule-list p {
-    font-size: 0.95rem;
   }
 }

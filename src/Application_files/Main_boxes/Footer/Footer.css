@@ -1,121 +1,92 @@
 @import url("../../../index.css");
 
+/* FOOTER CONTAINER */
 .footer-container {
-  width: 97%;
-  margin: 12px auto;
+  width: 95%;
+  max-width: 1000px;
+  margin: 20px auto;
 
-  background: linear-gradient(90deg, var(--color9), var(--color10));
-  box-shadow: 2px -2px 1px rgba(0, 0, 0, 0.6);
-  border-radius: 50px;
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
 
-  padding: 14px 0;
+  border-radius: 99px;
+  /* Pill shape */
+  padding: 16px 30px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  transition: 0.25s ease;
+  transition: transform 0.3s ease;
 }
 
 .footer-container:hover {
-  transform: scale(1.01);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* CONTENT */
 .footer-list {
-  width: 94%;
+  width: 100%;
   margin: 0;
   padding: 0;
-
   list-style: none;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  gap: 16px;
 
-  color: var(--color7);
+  color: var(--color10);
   font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .footer-item {
   white-space: nowrap;
-  opacity: 0.9;
+  opacity: 0.8;
+  transition: opacity 0.2s;
 }
 
-/* ============================= */
-/* 📱 EXTRA SMALL PHONES (≤380px)*/
-/* ============================= */
-@media (max-width: 380px) {
+.footer-item:hover {
+  opacity: 1;
+}
+
+/* =================____________
+   📱 RESPONSIVE BREAKPOINTS
+   ================____________ */
+
+/* 📱 SMALL PHONES (≤ 480px) */
+@media (max-width: 480px) {
   .footer-container {
-    width: 96%;
-    padding: 10px 0;
-    border-radius: 35px;
+    width: 92%;
+    padding: 12px 20px;
+    border-radius: 20px;
+    /* softer corners for stacked mobile view */
+    margin-bottom: 20px;
   }
 
   .footer-list {
+    flex-direction: column;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     text-align: center;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
 }
 
-/* ============================= */
-/* 📱 SMALL PHONES (381–480px)  */
-/* ============================= */
-@media (min-width: 381px) and (max-width: 480px) {
-  .footer-container {
-    width: 96%;
-    padding: 11px 0;
-    border-radius: 40px;
-  }
-
-  .footer-list {
-    justify-content: center;
-    gap: 10px;
-    text-align: center;
-    font-size: 0.8rem;
-  }
-}
-
-/* ============================= */
-/* 📲 LARGE PHONES / TABLETS    */
-/* 481–768px                    */
-/* ============================= */
+/* 📲 LARGE PHONES / TABLETS (481–768px) */
 @media (min-width: 481px) and (max-width: 768px) {
   .footer-container {
-    width: 96%;
+    width: 90%;
   }
 
   .footer-list {
-    gap: 12px;
-    font-size: 0.9rem;
-  }
-}
-
-/* ============================= */
-/* 💻 TABLETS 769–1024px        */
-/* ============================= */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .footer-container {
-    width: 97%;
-  }
-
-  .footer-list {
-    font-size: 0.95rem;
-  }
-}
-
-/* ============================= */
-/* 🖥 DESKTOPS ≥ 1025px         */
-/* ============================= */
-@media (min-width: 1025px) {
-  .footer-container {
-    width: 97%;
-  }
-
-  .footer-list {
-    font-size: 1rem;
+    justify-content: space-around;
   }
 }

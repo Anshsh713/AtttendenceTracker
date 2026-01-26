@@ -2,126 +2,116 @@
 
 /* HEADER CONTAINER */
 .header-container {
-  margin-left: 2%;
-  margin-top: 1%;
-  width: 30%;
-  min-width: 260px;
-  max-width: 520px;
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  padding: 15px 20px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.6);
-  border-radius: 50px;
+  /* Positioning */
+  margin: 20px auto;
+  width: 90%;
+  max-width: 600px;
+
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+  border-radius: 99px;
+  /* Pill shape */
+  padding: 10px 20px;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .header-container:hover {
-  transform: scale(1.02);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
+
 /* NAV LIST */
 .nav-list {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  /* Safe wrapping for small screens */
 }
 
 /* NAV LINK (BASE) */
 .nav-link {
   text-decoration: none;
-  color: var(--color5);
-  font-size: 0.9rem;
+  color: var(--color10);
+  font-size: 0.95rem;
+  font-weight: 600;
 
-  padding: 10px 30px;
-  border-radius: 50px;
+  padding: 10px 24px;
+  border-radius: 99px;
 
-  transition: all 0.25s ease-in-out;
+  transition: all 0.3s ease;
   white-space: nowrap;
+  position: relative;
 }
 
 /* HOVER */
 .nav-link:hover {
-  background-color: var(--color8);
-  color: var(--color5);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--color4);
 }
 
 /* ACTIVE */
 .nav-link.active {
   background-color: var(--color4);
   color: white;
-  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 12px rgba(85, 133, 100, 0.3);
 }
 
-/* ============================= */
-/* 📱 SMALL PHONES (≤ 480px)     */
-/* ============================= */
+/* =================____________
+   📱 RESPONSIVE BREAKPOINTS
+   ================____________ */
+
+/* 📱 SMALL PHONES (≤ 480px) */
 @media (max-width: 480px) {
   .header-container {
-    width: 85%;
+    width: 95%;
     margin: 10px auto;
-    padding: 12px 14px;
-    border-radius: 40px;
+    padding: 8px;
+    border-radius: 20px;
+    /* Less round on mobile to save space if needed, or keep pill */
   }
 
   .nav-list {
-    gap: 10px;
+    gap: 4px;
+    width: 100%;
+    justify-content: space-evenly;
   }
 
   .nav-link {
-    padding: 8px 14px;
-    font-size: 0.8rem;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    flex: 1;
+    /* Distribute space evenly */
+    text-align: center;
   }
 }
 
-/* ============================= */
-/* 📲 LARGE PHONES / SMALL TABS  */
-/* 481px–768px                   */
-/* ============================= */
+/* 📲 LARGE PHONES / SMALL TABS (481px–768px) */
 @media (min-width: 481px) and (max-width: 768px) {
   .header-container {
-    width: 70%;
-    margin: 12px auto;
-    padding: 14px 18px;
+    width: 85%;
+    padding: 10px 15px;
   }
 
   .nav-list {
-    gap: 16px;
+    gap: 8px;
   }
 
   .nav-link {
-    padding: 9px 22px;
+    padding: 9px 18px;
     font-size: 0.9rem;
-  }
-}
-
-/* ============================= */
-/* 💻 TABLETS 769px–1024px       */
-/* ============================= */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .header-container {
-    width: 50%;
-  }
-
-  .nav-link {
-    padding: 10px 26px;
-    font-size: 1rem;
-  }
-}
-
-/* ============================= */
-/* 🖥 DESKTOPS (≥ 1025px)        */
-/* ============================= */
-@media (min-width: 1025px) {
-  .header-container {
-    width: 30%;
-  }
-
-  .nav-link {
-    font-size: 1rem;
   }
 }
