@@ -29,13 +29,14 @@ const router = createBrowserRouter(
       path: "/",
       element: <App />,
       children: [
+        // DEFAULT ROUTE (redirect)
         {
-          path: "/",
-          element: <Navigate to="/about" replace />,
+          index: true,
+          element: <Navigate to="about" replace />,
         },
 
         {
-          path: "/about",
+          path: "about",
           element: (
             <AuthLayout authentication={false}>
               <About />
@@ -43,7 +44,7 @@ const router = createBrowserRouter(
           ),
         },
         {
-          path: "/login",
+          path: "login",
           element: (
             <AuthLayout authentication={false}>
               <Login />
@@ -51,7 +52,7 @@ const router = createBrowserRouter(
           ),
         },
         {
-          path: "/signup",
+          path: "signup",
           element: (
             <AuthLayout authentication={false}>
               <Signup />
@@ -60,7 +61,7 @@ const router = createBrowserRouter(
         },
 
         {
-          path: "/home",
+          path: "home",
           element: (
             <AuthLayout authentication={true}>
               <Home />
@@ -68,7 +69,7 @@ const router = createBrowserRouter(
           ),
         },
         {
-          path: "/profile",
+          path: "profile",
           element: (
             <AuthLayout authentication={true}>
               <Profile />
@@ -76,7 +77,7 @@ const router = createBrowserRouter(
           ),
         },
         {
-          path: "/History",
+          path: "History",
           element: (
             <AuthLayout authentication={true}>
               <History />
