@@ -23,68 +23,73 @@ import { DeleteUpdateProvider } from "./Context/Delete_UpdateContext.jsx";
 import { HistoryProvider } from "./Context/HistoryContext.jsx";
 import History from "./Application_files/History/History_Page.jsx";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          path: "/",
+          element: <Navigate to="/about" replace />,
+        },
+
+        {
+          path: "/about",
+          element: (
+            <AuthLayout authentication={false}>
+              <About />
+            </AuthLayout>
+          ),
+        },
+        {
+          path: "/login",
+          element: (
+            <AuthLayout authentication={false}>
+              <Login />
+            </AuthLayout>
+          ),
+        },
+        {
+          path: "/signup",
+          element: (
+            <AuthLayout authentication={false}>
+              <Signup />
+            </AuthLayout>
+          ),
+        },
+
+        {
+          path: "/home",
+          element: (
+            <AuthLayout authentication={true}>
+              <Home />
+            </AuthLayout>
+          ),
+        },
+        {
+          path: "/profile",
+          element: (
+            <AuthLayout authentication={true}>
+              <Profile />
+            </AuthLayout>
+          ),
+        },
+        {
+          path: "/History",
+          element: (
+            <AuthLayout authentication={true}>
+              <History />
+            </AuthLayout>
+          ),
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "/",
-        element: <Navigate to="/about" replace />,
-      },
-
-      {
-        path: "/about",
-        element: (
-          <AuthLayout authentication={false}>
-            <About />
-          </AuthLayout>
-        ),
-      },
-      {
-        path: "/login",
-        element: (
-          <AuthLayout authentication={false}>
-            <Login />
-          </AuthLayout>
-        ),
-      },
-      {
-        path: "/signup",
-        element: (
-          <AuthLayout authentication={false}>
-            <Signup />
-          </AuthLayout>
-        ),
-      },
-
-      {
-        path: "/home",
-        element: (
-          <AuthLayout authentication={true}>
-            <Home />
-          </AuthLayout>
-        ),
-      },
-      {
-        path: "/profile",
-        element: (
-          <AuthLayout authentication={true}>
-            <Profile />
-          </AuthLayout>
-        ),
-      },
-      {
-        path: "/History",
-        element: (
-          <AuthLayout authentication={true}>
-            <History />
-          </AuthLayout>
-        ),
-      },
-    ],
+    basename: "/AtttendenceTracker",
   },
-]);
+);
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -103,5 +108,5 @@ createRoot(document.getElementById("root")).render(
         </LocalStorageProvider>
       </UserProvider>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
