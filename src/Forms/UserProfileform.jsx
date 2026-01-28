@@ -19,7 +19,7 @@ export default function UserProfileform({ onprofileupdate }) {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [loadingStates, setLoadingStates] = useState(false);
   const [loadingCities, setLoadingCities] = useState(false);
 
@@ -40,7 +40,7 @@ export default function UserProfileform({ onprofileupdate }) {
     const fetchCountries = async () => {
       try {
         const res = await fetch(
-          "https://countriesnow.space/api/v0.1/countries/positions"
+          "https://countriesnow.space/api/v0.1/countries/positions",
         );
         const data = await res.json();
         setCountries(data.data || []);
@@ -64,7 +64,7 @@ export default function UserProfileform({ onprofileupdate }) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ country: form.country }),
-          }
+          },
         );
         const data = await res.json();
         setStates(data.data?.states || []);
@@ -93,7 +93,7 @@ export default function UserProfileform({ onprofileupdate }) {
               country: form.country,
               state: form.state,
             }),
-          }
+          },
         );
         const data = await res.json();
         setCities(data.data || []);
@@ -119,6 +119,7 @@ export default function UserProfileform({ onprofileupdate }) {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     await authInformation.createUserandUpdateProfile(user.$id, {
@@ -132,6 +133,7 @@ export default function UserProfileform({ onprofileupdate }) {
     });
 
     if (onprofileupdate) onprofileupdate();
+    setLoading(false);
   };
 
   return (
@@ -215,7 +217,9 @@ export default function UserProfileform({ onprofileupdate }) {
         onChange={handleChange}
       />
 
-      <button type="submit">Save Profile</button>
+      <button type="submit">
+        {loading ? "Saving Profile..." : "Save Profile"}
+      </button>
     </form>
   );
 }

@@ -20,7 +20,12 @@ export default function ExtraClasscard({ subject = [] }) {
 
   const record = Object.values(extraclassesRecords || {});
 
-  if (record.length === 0) return <p>No Extra Classes Added yet</p>;
+  if (record.length === 0)
+    return (
+      <div className="subjectNot">
+        <p className="empty-message">No Extra Classes Added yet</p>
+      </div>
+    );
 
   return (
     <div className="extra-classes-wrapper">
@@ -37,12 +42,13 @@ export default function ExtraClasscard({ subject = [] }) {
             <p>
               Status:{" "}
               <span
-                className={`extra-status ${rec.Status === "Present"
+                className={`extra-status ${
+                  rec.Status === "Present"
                     ? "present"
                     : rec.Status === "Absent"
-                      ? "absent"
-                      : "canceled"
-                  }`}
+                    ? "absent"
+                    : "canceled"
+                }`}
               >
                 {rec.Status}
               </span>

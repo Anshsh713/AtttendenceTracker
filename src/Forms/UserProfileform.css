@@ -4,6 +4,7 @@
 .profile-form {
   /* Removed fixed height */
   min-height: 400px;
+  height: 550px;
   /* Optional min height */
   width: 100%;
   max-width: 500px;
@@ -24,7 +25,7 @@
   text-align: center;
   color: var(--color10);
   font-size: 1.8rem;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   font-weight: 800;
 }
 
@@ -32,7 +33,7 @@
 .profile-form label {
   font-weight: 700;
   color: var(--color10);
-  margin-top: 16px;
+  margin-top: 10px;
   margin-bottom: 6px;
   display: block;
   font-size: 0.95rem;

@@ -228,6 +228,32 @@
   background: #d32f2f;
 }
 
+.notfound {
+  background-color: rgba(255, 255, 255, 0.45);
+  width: 100%;
+  height: 60px;
+  color: var(--color10);
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 20px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+.loading {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  height: 70vh;
+}
+.loading i {
+  font-size: 5rem;
+}
 /* =================____________
    📱 RESPONSIVE BREAKPOINTS
    ================____________ */
@@ -263,7 +289,6 @@
 }
 
 @media (max-width: 480px) {
-
   .profile-name .Button-field,
   .Button-field {
     width: 100%;

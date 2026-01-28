@@ -6,10 +6,11 @@ import UpdateAttendencefrom from "../../Forms/UpdateSubjectform.jsx";
 import UserProfileform from "../../Forms/UserProfileform";
 import Button from "../../Common_Componenets/Common_Button/Button";
 import "./Profile.css";
+import { useNavigate } from "react-router-dom";
 import authService from "../../Appwrite/AuthService.js";
-import Subjectnotfound from "../images/Subjectnotfound.png";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const {
     user,
     setUser,
@@ -31,12 +32,18 @@ export default function Profile() {
   const logout = async () => {
     try {
       await authService.logout();
+
+      localStorage.clear();
       setUser(null);
-      localStorage.removeItem("user");
+
+      navigate("/about", { replace: true });
+
+      window.location.reload();
     } catch (error) {
       console.error("Error during logout:", error);
     }
   };
+
   useEffect(() => {
     if (!allSubjects || allSubjects.length === 0) {
       refreshSchedule();
@@ -44,7 +51,12 @@ export default function Profile() {
   }, []);
 
   if (userLoading || scheduleLoading)
-    return <p className="loading-text">Loading Profile...</p>;
+    return (
+      <div className="loading">
+        <i className="fa-solid fa-spinner fa-spin-pulse"></i>
+        <p>Loading Profile</p>
+      </div>
+    );
 
   return (
     <div className="profile-container">
@@ -129,7 +141,9 @@ export default function Profile() {
           <h2 className="Subjects">Subjects</h2>
 
           {!allSubjects || allSubjects.length === 0 ? (
-            <p className="empty-text">Subject Not Found</p>
+            <div className="notfound">
+              <p className="empty-text">Subject Not Found</p>
+            </div>
           ) : (
             allSubjects.map((subj) => (
               <div key={subj.$id} className="subject-card">

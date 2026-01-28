@@ -29,8 +29,6 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
     if (subject?.$id) TotalAttendance(subject.$id);
   }, [refresh_Trigger, subject, refresh]);
 
-  if (!subject?.$id) return <p>No subject found.</p>;
-
   const stats = totalAttendance[subject.$id] || {};
   const {
     totalPresent = 0,
@@ -61,14 +59,11 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
   return (
     <div className="total-attendance-container">
       <div className="attendance-total-card">
-        {/* -------- HEADER -------- */}
         <div className="attendance-header">
           <h2>{subject.SubjectName}</h2>
 
           <Button title="+ Extra Class" onClick={toggleExtraClass} />
         </div>
-
-        {/* -------- DONUT CHART -------- */}
         <div className="donut-wrapper">
           <PieChart width={320} height={260}>
             <Pie
@@ -124,7 +119,6 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
               : `⚠️ You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
           </p>
         </div>
-
       </div>
       {/* -------- EXTRA CLASS MODAL -------- */}
       {extraclass && (

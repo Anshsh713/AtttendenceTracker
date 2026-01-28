@@ -29,16 +29,25 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
       await markAttendance(status, subj, schedule);
       if (onAttendenceMarked) onAttendenceMarked();
       setLastAction(
-        `Marked "${status}" for ${subj.subjectName} on ${schedule.day} at ${schedule.time}`
+        `Marked "${status}" for ${subj.subjectName} on ${schedule.day} at ${schedule.time}`,
       );
     } catch (error) {
       setLastAction(`Error: ${error.message}`);
     }
   };
 
-  if (loading) return <p className="loading">Loading attendance...</p>;
+  if (loading)
+    return (
+      <div className="notfound">
+        <p className="empty-text">Subject Not Found</p>
+      </div>
+    );
   if (!Array.isArray(subject) || subject.length === 0)
-    return <p className="empty-message">No class scheduled for this day</p>;
+    return (
+      <div className="subjectNot">
+        <p className="empty-message">No class scheduled for this day</p>
+      </div>
+    );
 
   return (
     <div>
@@ -68,7 +77,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                             title="Mistake?"
                             onClick={() =>
                               setEditingKey((prev) =>
-                                prev === key ? null : key
+                                prev === key ? null : key,
                               )
                             }
                           />
@@ -103,7 +112,6 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
             </ul>
           </div>
 
-          {/* Modal rendered outside the transformed card to fix Z-index stacking */}
           {subj.schedules?.map((schedule) => {
             const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
             if (editingkey !== key) return null;
@@ -127,7 +135,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                       const success = await UpdateAttendance(
                         subj,
                         schedule,
-                        data
+                        data,
                       );
                       if (success) setEditingKey(null);
                     }}

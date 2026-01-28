@@ -14,9 +14,7 @@ function Home() {
   const [addSubject, setaddSubject] = useState(false);
   const [refresh_Attendence, setRefresh_Attendence] = useState(false);
   const [dayOffset, setDayOffset] = useState(0);
-
-  // 👉 NEW — tab state
-  const [tab, setTab] = useState("classes"); // "classes" | "attendance"
+  const [tab, setTab] = useState("classes");
 
   const handleAttendanceRefresh = () => {
     setRefresh_Attendence((prev) => !prev);
@@ -47,7 +45,6 @@ function Home() {
 
   return (
     <div className="home-container">
-      {/* TAB BUTTONS */}
       <div className="tab-bar">
         <Button
           title="Classes"
@@ -110,13 +107,19 @@ function Home() {
 
       {tab === "attendance" && (
         <div className="attendance-section">
-          {allSubjects.map((subj) => (
-            <Total_Attendence
-              key={subj.$id}
-              subject={subj}
-              refresh_Trigger={refresh_Attendence}
-            />
-          ))}
+          {allSubjects.length === 0 ? (
+            <div className="notfound">
+              <p className="empty-text">No Subjects Added Yet</p>
+            </div>
+          ) : (
+            allSubjects.map((subj) => (
+              <Total_Attendence
+                key={subj.$id}
+                subject={subj}
+                refresh_Trigger={refresh_Attendence}
+              />
+            ))
+          )}
         </div>
       )}
     </div>

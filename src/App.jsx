@@ -23,7 +23,7 @@ function App() {
         }
       })
       .finally(() => setloading(false));
-  }, [dispatch]);
+  }, []);
 
   return !loading ? (
     <div className="app-container">

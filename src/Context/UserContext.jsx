@@ -1,67 +1,52 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import authService from "../Appwrite/AuthService";
 import authInformation from "../Appwrite/AuthInformation";
+import { useSelector } from "react-redux";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const saveduser = localStorage.getItem("user");
-    return saveduser ? JSON.parse(saveduser) : null;
-  });
-  const [loading, setLoading] = useState(true);
+  const reduxUser = useSelector((state) => state.auth.userData);
+
+  const [user, setUser] = useState(null);
   const [profile, setprofile] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const loadfromcache = (key) => {
     try {
       const cache = JSON.parse(localStorage.getItem(key));
-      if (cache) {
-        setLoading(false);
-        return cache;
-      } else {
-        return null;
-      }
+      return cache || null;
     } catch (error) {
-      console.error("NOt able to get data : ", error);
+      console.error("Not able to get cache:", error);
+      return null;
     }
-    return null;
   };
 
   const saveToCache = (key, data) => {
     try {
-      const cache = {
-        ...data,
-      };
-      localStorage.setItem(key, JSON.stringify(cache));
+      localStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
-      console.error("Unable to get the Data :", error);
+      console.error("Unable to save cache:", error);
     }
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const currentUser = await authService.getCurrentUser();
-        setUser(currentUser);
-        if (currentUser) {
-          localStorage.setItem("user", JSON.stringify(currentUser));
-        } else {
-          localStorage.removeItem("user");
-        }
-      } catch (error) {
-        console.error("Error fetching user : ", error);
-        setUser(null);
-        localStorage.removeItem("user");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, []);
+    if (reduxUser) {
+      setUser(reduxUser);
+    } else {
+      setUser(null);
+      setprofile({});
+      localStorage.removeItem("UserProfile");
+    }
+  }, [reduxUser]);
 
   const fetchProfile = async (forceRefresh = false) => {
-    if (!user) return null;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
+
     const cached = loadfromcache("UserProfile");
     if (!forceRefresh && cached) {
       setprofile(cached);
@@ -86,19 +71,28 @@ export const UserProvider = ({ children }) => {
         saveToCache("UserProfile", normalized);
       }
     } catch (error) {
-      console.log("Not able to get user data ");
+      console.log("Not able to get user data");
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
 
   const refreshprofile = async () => {
     await fetchProfile(true);
   };
 
-  useEffect(() => {
-    if (user) fetchProfile();
-  }, [user]);
   return (
-    <UserContext.Provider value={{ user, setUser, profile, refreshprofile }}>
+    <UserContext.Provider
+      value={{ user, setUser, profile, refreshprofile, loading }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import classAttendService from "../Appwrite/ClassAttendService";
 import { useUser } from "./UserContext";
 import { useLocalStorage } from "./LocalStorageContext";
@@ -56,7 +56,7 @@ export const AttendanceProvider = ({ children }) => {
     try {
       const data = await classAttendService.TotalAttendance(
         user.$id,
-        subjectId
+        subjectId,
       );
       setTotalAttendance((prev) => ({
         ...prev,
@@ -64,7 +64,7 @@ export const AttendanceProvider = ({ children }) => {
       }));
       localStorage.setItem(
         "TotalAttendanceCache",
-        JSON.stringify({ ...cache, [subjectId]: data })
+        JSON.stringify({ ...cache, [subjectId]: data }),
       );
     } catch (error) {
       console.error("❌ Error fetching total attendance:", error);
@@ -83,7 +83,7 @@ export const AttendanceProvider = ({ children }) => {
       const data = await classAttendService.getAttendanceByDate(
         user.$id,
         today,
-        dayName
+        dayName,
       );
 
       const allRecords = {};
@@ -101,7 +101,6 @@ export const AttendanceProvider = ({ children }) => {
     }
   };
 
-  // ✅ Mark Attendance
   const markAttendance = async (status, subj, schedule) => {
     if (!user) return;
     try {
@@ -112,7 +111,7 @@ export const AttendanceProvider = ({ children }) => {
         schedule.day,
         schedule.time,
         today,
-        status
+        status,
       );
 
       const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
@@ -152,7 +151,7 @@ export const AttendanceProvider = ({ children }) => {
     }
     return false;
   };
-  // ✅ Add Extra Class
+
   const handleExtraClass = async (data) => {
     if (!user) return false;
     try {
@@ -163,7 +162,7 @@ export const AttendanceProvider = ({ children }) => {
         data.day,
         data.time,
         data.date,
-        data.status
+        data.status,
       );
 
       const key = `${data.subjectID}_${data.day}_${data.time}`;
@@ -184,7 +183,7 @@ export const AttendanceProvider = ({ children }) => {
         {
           extraclassesRecords: updatedRecords,
         },
-        "ExtraClassCache"
+        "ExtraClassCache",
       );
 
       // Clear total cache for this subject
@@ -209,7 +208,7 @@ export const AttendanceProvider = ({ children }) => {
         rec.ClassDay,
         rec.ClassTime,
         rec.ClassDate || today,
-        data
+        data,
       );
       const key = `${rec.SubjectID}_${rec.ClassDay}_${rec.ClassTime}`;
 
@@ -225,7 +224,7 @@ export const AttendanceProvider = ({ children }) => {
         {
           extraclassesRecords: updatedRecords,
         },
-        "ExtraClassCache"
+        "ExtraClassCache",
       );
       const totalCache =
         JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
@@ -244,7 +243,7 @@ export const AttendanceProvider = ({ children }) => {
         schedule.day,
         schedule.time,
         schedule.date || today,
-        data
+        data,
       );
       const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
       const updatedRecords = {
@@ -280,6 +279,63 @@ export const AttendanceProvider = ({ children }) => {
       return false;
     }
   };
+
+  const getYesterdayInfo = () => {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+
+    const date = d.toISOString().split("T")[0];
+
+    const day = d.toLocaleDateString("en-US", { weekday: "long" });
+
+    return { date, day };
+  };
+
+  const autoMarkNotForYesterday = async () => {
+    if (!user || !allSubjects?.length) return;
+
+    const { date, day } = getYesterdayInfo();
+
+    try {
+      const yesterdayAttendance = await classAttendService.getAttendanceByDate(
+        user.$id,
+        date,
+        day,
+      );
+      const attendanceMap = {};
+
+      yesterdayAttendance.forEach((rec) => {
+        const key = `${rec.SubjectID}_${rec.ClassDay}_${rec.ClassTime}`;
+        attendanceMap[key] = true;
+      });
+      for (const subj of allSubjects) {
+        subj.ClassesSchedule?.forEach(async (schedule) => {
+          if (schedule.day !== day) return;
+
+          const key = `${subj.$id}_${schedule.day}_${schedule.time}`;
+          if (!attendanceMap[key]) {
+            console.log("Auto marking NOT:", subj.SubjectName);
+
+            await classAttendService.markAsNot(
+              user.$id,
+              subj.$id,
+              schedule.day,
+              schedule.time,
+              date,
+            );
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Auto NOT failed:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && allSubjects?.length) {
+      autoMarkNotForYesterday();
+    }
+  }, [user, allSubjects]);
 
   return (
     <AttendanceContext.Provider

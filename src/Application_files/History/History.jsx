@@ -13,7 +13,11 @@ export default function HistoryPage() {
       <h1>Subject History</h1>
 
       <div className="subject-scroll">
-        {allSubjects.length === 0 && <p>No subjects added.</p>}
+        {allSubjects.length === 0 && (
+          <div className="notfound">
+            <p className="empty-text">Subject Not Found</p>
+          </div>
+        )}
 
         {allSubjects.map((subj) => {
           const isActive = selectedId === subj.$id;

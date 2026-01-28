@@ -90,7 +90,10 @@
   border-radius: 8px;
   font-size: 0.9rem;
 }
-
+.empty-message {
+  font-size: 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
 /* ---------- MODAL OVERLAY ---------- */
 .modal-overlay {
   position: fixed;

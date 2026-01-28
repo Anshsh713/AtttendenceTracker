@@ -22,7 +22,7 @@ export class ClassAttendService {
     day,
     time,
     date,
-    status
+    status,
   ) {
     try {
       const existing = await this.databases.listDocuments(
@@ -32,16 +32,16 @@ export class ClassAttendService {
           Query.equal("UserID", userId),
           Query.equal("SubjectID", SubjectId),
           Query.equal("ClassDate", date),
-        ]
+          Query.equal("ClassTime", time),
+          Query.equal("ClassDay", day),
+        ],
       );
+
       if (existing.documents.length > 0) {
-        console.warn("Attendance for this class on this date already marked");
-        return {
-          success: false,
-          message: "Attendance already marked",
-        };
+        return { success: false, message: "Attendance already marked" };
       }
-      const marking_attendance = await this.databases.createDocument(
+
+      const doc = await this.databases.createDocument(
         this.databasesId,
         this.attendClassesCollection,
         "unique()",
@@ -53,15 +53,14 @@ export class ClassAttendService {
           ClassTime: time,
           ClassDate: date,
           Status: status,
-        }
+        },
       );
-      return {
-        success: true,
-        message: "Attendance marked successfully",
-        attendanceRecord: marking_attendance,
-      };
+
+      console.log("Attendance saved:", doc);
+
+      return { success: true, attendanceRecord: doc };
     } catch (error) {
-      console.error("Not able to mark attendance", error.message);
+      console.error("Appwrite create failed:", error.message);
       throw error;
     }
   }
@@ -76,7 +75,7 @@ export class ClassAttendService {
           Query.equal("SubjectID", subjectId),
           Query.equal("ClassDate", date),
           Query.equal("ClassTime", time),
-        ]
+        ],
       );
 
       if (existing.total > 0) {
@@ -96,7 +95,7 @@ export class ClassAttendService {
           ClassTime: time,
           ClassDate: date,
           Status: status,
-        }
+        },
       );
 
       console.log("✅ Extra class added:", result);
@@ -114,7 +113,7 @@ export class ClassAttendService {
     day,
     time,
     date,
-    data
+    data,
   ) {
     try {
       // Find the existing attendance record with all parameters
@@ -128,7 +127,7 @@ export class ClassAttendService {
           Query.equal("ClassDay", day),
           Query.equal("ClassTime", time),
           Query.equal("ClassDate", date), // Optional if you save date in DB
-        ]
+        ],
       );
 
       if (!existing.documents.length) {
@@ -142,7 +141,7 @@ export class ClassAttendService {
         this.databasesId,
         this.attendClassesCollection,
         attendanceId,
-        data
+        data,
       );
 
       return {
@@ -161,7 +160,7 @@ export class ClassAttendService {
       const response = await this.databases.listDocuments(
         this.databasesId,
         this.attendClassesCollection,
-        [Query.equal("UserID", userId)]
+        [Query.equal("UserID", userId)],
       );
       return response.documents;
     } catch (error) {
@@ -175,7 +174,7 @@ export class ClassAttendService {
       return await this.databases.deleteDocument(
         this.databasesId,
         this.attendClassesCollection,
-        attendanceId
+        attendanceId,
       );
     } catch (error) {
       console.error("Not able to Delete your Attendance ", error.message);
@@ -188,7 +187,7 @@ export class ClassAttendService {
       const record = await this.databases.listDocuments(
         this.databasesId,
         this.attendClassesCollection,
-        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)]
+        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)],
       );
       if (record.total === 0) {
         console.log("No attendance records found for this subject to delete.");
@@ -198,7 +197,7 @@ export class ClassAttendService {
         return this.databases.deleteDocument(
           this.databasesId,
           this.attendClassesCollection,
-          doc.$id
+          doc.$id,
         );
       });
       await Promise.all(deleteAttendance);
@@ -212,7 +211,7 @@ export class ClassAttendService {
       const response = await this.databases.listDocuments(
         this.databasesId,
         this.attendClassesCollection,
-        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)]
+        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)],
       );
       return response.documents;
     } catch (error) {
@@ -230,7 +229,7 @@ export class ClassAttendService {
           Query.equal("UserID", userId),
           Query.equal("ClassDate", date),
           Query.equal("ClassDay", day),
-        ]
+        ],
       );
       return response.documents;
     } catch (error) {
@@ -248,7 +247,7 @@ export class ClassAttendService {
           Query.equal("UserID", userId),
           Query.equal("SubjectID", SubjectId),
           Query.equal("ClassDate", date),
-        ]
+        ],
       );
       if (existing.documents.length > 0) {
         console.warn("Attendance for this class on this date already marked");
@@ -269,7 +268,7 @@ export class ClassAttendService {
           Status: "NOT",
           Time: time,
           Day: day,
-        }
+        },
       );
       return {
         success: true,
@@ -279,7 +278,7 @@ export class ClassAttendService {
     } catch (error) {
       console.error(
         "Not able to mark attendance as not present",
-        error.message
+        error.message,
       );
       throw error;
     }
@@ -291,7 +290,7 @@ export class ClassAttendService {
       const response = await this.databases.listDocuments(
         this.databasesId,
         this.attendClassesCollection,
-        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)]
+        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)],
       );
 
       const docs = response.documents;
