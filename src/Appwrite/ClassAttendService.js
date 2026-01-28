@@ -247,42 +247,37 @@ export class ClassAttendService {
           Query.equal("UserID", userId),
           Query.equal("SubjectID", SubjectId),
           Query.equal("ClassDate", date),
+          Query.equal("ClassDay", day),
+          Query.equal("ClassTime", time),
         ],
       );
+
       if (existing.documents.length > 0) {
-        console.warn("Attendance for this class on this date already marked");
-        return {
-          success: false,
-          message: "Attendance already marked",
-        };
+        console.warn("Attendance already exists");
+        return { success: false };
       }
 
-      const marking_not_attendance = await this.databases.createDocument(
+      const res = await this.databases.createDocument(
         this.databasesId,
         this.attendClassesCollection,
         "unique()",
         {
           UserID: userId,
           SubjectID: SubjectId,
+          ClassDay: day,
+          ClassTime: time,
           ClassDate: date,
-          Status: "NOT",
-          Time: time,
-          Day: day,
+          Status: "Absent", // better naming than NOT
         },
       );
-      return {
-        success: true,
-        message: "Attendance marked as not present",
-        attendanceRecord: marking_not_attendance,
-      };
+
+      return { success: true, data: res };
     } catch (error) {
-      console.error(
-        "Not able to mark attendance as not present",
-        error.message,
-      );
+      console.error("Auto NOT error:", error.message);
       throw error;
     }
   }
+
   async TotalAttendance(userId, subjectId) {
     console.log("userid", userId, "and Subject id", subjectId);
 
