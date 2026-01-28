@@ -280,63 +280,6 @@ export const AttendanceProvider = ({ children }) => {
     }
   };
 
-  const getYesterdayInfo = () => {
-    const d = new Date();
-    d.setDate(d.getDate() - 1);
-
-    const date = d.toISOString().split("T")[0];
-
-    const day = d.toLocaleDateString("en-US", { weekday: "long" });
-
-    return { date, day };
-  };
-
-  const autoMarkNotForYesterday = async () => {
-    if (!user || !allSubjects?.length) return;
-
-    const { date, day } = getYesterdayInfo();
-
-    try {
-      const yesterdayAttendance = await classAttendService.getAttendanceByDate(
-        user.$id,
-        date,
-        day,
-      );
-      const attendanceMap = {};
-
-      yesterdayAttendance.forEach((rec) => {
-        const key = `${rec.SubjectID}_${rec.ClassDay}_${rec.ClassTime}`;
-        attendanceMap[key] = true;
-      });
-      for (const subj of allSubjects) {
-        subj.ClassesSchedule?.forEach(async (schedule) => {
-          if (schedule.day !== day) return;
-
-          const key = `${subj.$id}_${schedule.day}_${schedule.time}`;
-          if (!attendanceMap[key]) {
-            console.log("Auto marking NOT:", subj.SubjectName);
-
-            await classAttendService.markAsNot(
-              user.$id,
-              subj.$id,
-              schedule.day,
-              schedule.time,
-              date,
-            );
-          }
-        });
-      }
-    } catch (error) {
-      console.error("Auto NOT failed:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (user && allSubjects?.length) {
-      autoMarkNotForYesterday();
-    }
-  }, [user, allSubjects]);
-
   return (
     <AttendanceContext.Provider
       value={{
