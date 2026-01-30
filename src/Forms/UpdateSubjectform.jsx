@@ -7,6 +7,7 @@ import "./UpdateSubjectform.css";
 export default function UpdateAttendencefrom({
   onSubjectAdded,
   editSubject = null,
+  onstop,
 }) {
   const [subjectName, SetsubjectName] = useState("");
   const [classesPerWeek, setclassesPerWeek] = useState(1);
@@ -20,14 +21,14 @@ export default function UpdateAttendencefrom({
       setclassesPerWeek(editSubject.ClassesSchedule.length);
 
       const parsed = editSubject.ClassesSchedule.map((item) =>
-        typeof item === "string" ? JSON.parse(item) : item
+        typeof item === "string" ? JSON.parse(item) : item,
       );
 
       setschedule(
         parsed.map((s) => ({
           Day: s.day,
           Time: s.time,
-        }))
+        })),
       );
     }
   }, [editSubject]);
@@ -38,7 +39,7 @@ export default function UpdateAttendencefrom({
 
   const setScheduleSafe = (count) => {
     setschedule((prev) =>
-      Array.from({ length: count }, (_, i) => prev[i] || { Day: "", Time: "" })
+      Array.from({ length: count }, (_, i) => prev[i] || { Day: "", Time: "" }),
     );
   };
 
@@ -51,10 +52,11 @@ export default function UpdateAttendencefrom({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setsaving(true);
+    onstop(true);
     setmessage("");
 
     const classesSchedule = schedule.map((item) =>
-      JSON.stringify({ day: item.Day, time: item.Time })
+      JSON.stringify({ day: item.Day, time: item.Time }),
     );
 
     try {
@@ -66,7 +68,7 @@ export default function UpdateAttendencefrom({
           editSubject.$id,
           userid,
           subjectName,
-          classesSchedule
+          classesSchedule,
         );
         setmessage("Subject updated successfully");
       } else {
@@ -81,6 +83,7 @@ export default function UpdateAttendencefrom({
     }
 
     setsaving(false);
+    onstop(false);
   };
 
   return (
@@ -89,6 +92,7 @@ export default function UpdateAttendencefrom({
 
       <Input
         label="Subject Name : "
+        disabled={saving}
         type="text"
         placeholder="Enter the Subject Name"
         value={subjectName}
@@ -99,6 +103,7 @@ export default function UpdateAttendencefrom({
       <Input
         label="Classes per week : "
         type="number"
+        disabled={saving}
         min="1"
         value={classesPerWeek}
         onChange={(e) => setclassesPerWeek(Number(e.target.value))}
@@ -109,6 +114,7 @@ export default function UpdateAttendencefrom({
         {schedule.map((items, index) => (
           <div key={index} className="schedule-row">
             <select
+              disabled={saving}
               value={items.Day}
               onChange={(e) =>
                 handleScheduleChange(index, "Day", e.target.value)
@@ -130,6 +136,7 @@ export default function UpdateAttendencefrom({
             </select>
 
             <Input
+              disabled={saving}
               label="Time : "
               type="time"
               value={items.Time}

@@ -24,7 +24,7 @@ export default function Profile() {
     loading: scheduleLoading,
   } = useSchedule();
   const { Deleting_the_Subject } = useDeleteUpdate();
-
+  const [onloadingform, setOnloadingform] = useState(false);
   const [showform, setshowform] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
 
@@ -110,7 +110,7 @@ export default function Profile() {
               }}
             />
             <button className="close-btn" onClick={toggleform}>
-              Close
+              close
             </button>
           </div>
         </div>
@@ -121,6 +121,7 @@ export default function Profile() {
           <div className="modal-content">
             <UpdateAttendencefrom
               editSubject={editingSubject}
+              onstop={setOnloadingform}
               onSubjectAdded={async () => {
                 await refreshSchedule();
                 setEditingSubject(null);
@@ -128,9 +129,10 @@ export default function Profile() {
             />
             <button
               className="close-btn"
+              disabled={onloadingform}
               onClick={() => setEditingSubject(null)}
             >
-              Close
+              close
             </button>
           </div>
         </div>

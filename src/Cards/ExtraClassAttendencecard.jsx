@@ -9,6 +9,7 @@ export default function ExtraClasscard({ subject = [] }) {
     useAttendance();
 
   const [mistake, setMistake] = useState(null);
+  const [onloadingform, setOnloadingform] = useState(false);
 
   const togglemistake = (key) => {
     setMistake((prev) => (prev === key ? null : key));
@@ -66,18 +67,27 @@ export default function ExtraClasscard({ subject = [] }) {
           </div>
 
           {mistake === index && (
-            <div className="modal-overlay" onClick={() => setMistake(null)}>
+            <div
+              className="modal-overlay"
+              onClick={() => {
+                if (!onloadingform) {
+                  setMistake(null);
+                }
+              }}
+            >
               <div className="modal-box" onClick={(e) => e.stopPropagation()}>
                 <button
                   className="modal-close"
+                  disabled={onloadingform}
                   onClick={() => setMistake(null)}
                 >
-                  Close ✖
+                  ✖
                 </button>
 
                 <UpdateExtraClassAttendenceform
                   UpdateExtraCLASS={async (data) => {
                     const success = await UpdateExtraClassAttendence(rec, data);
+                    onstop = { setOnloadingform };
                     if (success) setMistake(null);
                   }}
                 />

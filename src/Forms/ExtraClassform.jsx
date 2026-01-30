@@ -7,6 +7,7 @@ export default function ExtraClassform({
   subjectID,
   subjectName,
   onextraClass,
+  onstop,
 }) {
   const getDaybyDate = (data) => {
     const date = new Date(data);
@@ -18,8 +19,11 @@ export default function ExtraClassform({
   const [date, setDate] = useState("");
   const [Time, setTime] = useState("");
   const [status, setStatus] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const handleSubmit = async (e) => {
+    setSaving(true);
+    onstop(true);
     e.preventDefault();
 
     const data = {
@@ -33,6 +37,8 @@ export default function ExtraClassform({
 
     const success = await onextraClass(data);
     if (success) {
+      setSaving(false);
+      onstop(false);
       setDay("");
       setDate("");
       setTime("");
@@ -49,6 +55,7 @@ export default function ExtraClassform({
         type="date"
         required
         value={date}
+        disabled={saving}
         onChange={(e) => setDate(e.target.value)}
       />
 
@@ -57,6 +64,7 @@ export default function ExtraClassform({
         type="Time"
         required
         value={Time}
+        disabled={saving}
         onChange={(e) => setTime(e.target.value)}
       />
 
@@ -66,6 +74,7 @@ export default function ExtraClassform({
             type="radio"
             name="status"
             value="Present"
+            disabled={saving}
             checked={status === "Present"}
             onChange={(e) => setStatus(e.target.value)}
           />
@@ -76,6 +85,7 @@ export default function ExtraClassform({
           <Input
             type="radio"
             name="status"
+            disabled={saving}
             value="Absent"
             checked={status === "Absent"}
             onChange={(e) => setStatus(e.target.value)}
@@ -84,7 +94,7 @@ export default function ExtraClassform({
         </label>
       </div>
 
-      <Button type="submit" title="Submit" />
+      <Button type={saving ? "Adding..." : "Add"} title="Submit" />
     </form>
   );
 }

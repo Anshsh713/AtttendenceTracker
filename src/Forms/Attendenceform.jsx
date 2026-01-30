@@ -60,6 +60,7 @@ export default function Attendencefrom({ onSubjectAdded, setParentLoading }) {
         label="Subject Name : "
         type="text"
         placeholder="Enter the Subject Name"
+        disabled={saving}
         value={subjectName}
         onChange={(e) => SetsubjectName(e.target.value)}
         required
@@ -69,6 +70,7 @@ export default function Attendencefrom({ onSubjectAdded, setParentLoading }) {
         label="Classes per week : "
         type="number"
         min="1"
+        disabled={saving}
         value={classesPerWeek}
         onChange={(e) => setclassesPerWeek(Number(e.target.value))}
         required
@@ -79,6 +81,7 @@ export default function Attendencefrom({ onSubjectAdded, setParentLoading }) {
           {schedule.map((items, index) => (
             <div key={index} className="schedule-row">
               <select
+                disabled={saving}
                 value={items.Day}
                 onChange={(e) =>
                   handleScheduleChange(index, "Day", e.target.value)
@@ -96,6 +99,7 @@ export default function Attendencefrom({ onSubjectAdded, setParentLoading }) {
               </select>
 
               <Input
+                disabled={saving}
                 label="Time : "
                 type="time"
                 value={items.Time}

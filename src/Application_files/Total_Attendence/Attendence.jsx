@@ -14,6 +14,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
 
   const [extraclass, setExtraClass] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [onloadingform, setOnloadingform] = useState(false);
 
   const ExtraClassSubmit = async (formData) => {
     const success = await handleExtraClass(formData);
@@ -118,16 +119,28 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
         </div>
       </div>
       {extraclass && (
-        <div className="modal-overlay" onClick={toggleExtraClass}>
+        <div
+          className="modal-overlay"
+          onClick={() => {
+            if (!onloadingform) toggleExtraClass();
+          }}
+        >
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={toggleExtraClass}>
-              Close ✖
+            <button
+              className="modal-close"
+              disabled={onloadingform}
+              onClick={() => {
+                toggleExtraClass();
+              }}
+            >
+              ✖
             </button>
 
             <ExtraClassform
               subjectID={subject.$id}
               subjectName={subject.SubjectName}
               onextraClass={ExtraClassSubmit}
+              onstop={setOnloadingform}
             />
           </div>
         </div>

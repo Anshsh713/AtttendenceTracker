@@ -16,8 +16,9 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
 
   const [lastAction, setLastAction] = useState("");
   const [editingkey, setEditingKey] = useState(null);
-  const [attending, setAttending] = useState(false);
-  const [attend, setAttend] = useState("");
+  const [activeKey, setActiveKey] = useState(null);
+  const [activeStatus, setActiveStatus] = useState("");
+  const [formLoading, setFormLoading] = useState(false);
 
   useEffect(() => {
     setEditingKey(null);
@@ -27,9 +28,10 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
     }
   }, [subject]);
 
-  const handleAttendance = async (status, subj, schedule) => {
+  const handleAttendance = async (status, subj, schedule, key) => {
     try {
-      setAttending(true);
+      setActiveKey(key);
+      setActiveStatus(status);
       await markAttendance(status, subj, schedule);
       if (onAttendenceMarked) onAttendenceMarked();
       setLastAction(
@@ -38,14 +40,15 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
     } catch (error) {
       setLastAction(`Error: ${error.message}`);
     } finally {
-      setAttending(false);
+      setActiveKey(null);
+      setActiveStatus("");
     }
   };
 
-  const AttendingStatus = (status) => {
-    if (!attending) return status;
+  const AttendingStatus = (status, key) => {
+    if (activeKey !== key) return status;
 
-    return attend === status ? `${status} Today...` : status;
+    return activeStatus === status ? `${status} Today...` : status;
   };
 
   if (loading)
@@ -97,28 +100,27 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                       ) : (
                         <>
                           <Button
-                            title={AttendingStatus("Present")}
-                            disabled={attending}
-                            onClick={() => {
-                              setAttend("Present");
-                              handleAttendance("Present", subj, schedule);
-                            }}
+                            title={AttendingStatus("Present", key)}
+                            disabled={activeKey === key}
+                            onClick={() =>
+                              handleAttendance("Present", subj, schedule, key)
+                            }
                           />
+
                           <Button
-                            title={AttendingStatus("Absent")}
-                            disabled={attending}
-                            onClick={() => {
-                              setAttend("Absent");
-                              handleAttendance("Absent", subj, schedule);
-                            }}
+                            title={AttendingStatus("Absent", key)}
+                            disabled={activeKey === key}
+                            onClick={() =>
+                              handleAttendance("Absent", subj, schedule, key)
+                            }
                           />
+
                           <Button
-                            title={AttendingStatus("Canceled")}
-                            disabled={attending}
-                            onClick={() => {
-                              setAttend("Canceled");
-                              handleAttendance("Canceled", subj, schedule);
-                            }}
+                            title={AttendingStatus("Canceled", key)}
+                            disabled={activeKey === key}
+                            onClick={() =>
+                              handleAttendance("Canceled", subj, schedule, key)
+                            }
                           />
                         </>
                       )}
@@ -137,14 +139,17 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
               <div
                 key={key}
                 className="modal-overlay"
-                onClick={() => setEditingKey(null)}
+                onClick={() => {
+                  if (!formLoading) setEditingKey(null);
+                }}
               >
                 <div className="modal-box" onClick={(e) => e.stopPropagation()}>
                   <button
                     className="modal-close"
+                    disabled={formLoading}
                     onClick={() => setEditingKey(null)}
                   >
-                    Close ✖
+                    ✖
                   </button>
 
                   <UpdateAttendenceform
@@ -156,6 +161,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                       );
                       if (success) setEditingKey(null);
                     }}
+                    onstop={setFormLoading}
                   />
                 </div>
               </div>

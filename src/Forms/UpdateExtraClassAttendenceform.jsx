@@ -3,13 +3,21 @@ import Input from "../Common_Componenets/Common_Input/Input";
 import Button from "../Common_Componenets/Common_Button/Button";
 import "./UpdateExtraClassAttendenceform.css";
 
-export default function UpdateExtraClassAttendenceform({ UpdateExtraCLASS }) {
+export default function UpdateExtraClassAttendenceform({
+  UpdateExtraCLASS,
+  onstop,
+}) {
   const [status, setStatus] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const handleUpdate = async (e) => {
+    setSaving(true);
+    onstop(true);
     e.preventDefault();
     if (!status) return alert("Please select a status");
     const success = await UpdateExtraCLASS({ Status: status });
+    setSaving(false);
+    onstop(true);
     if (success) setStatus("");
   };
 
@@ -22,6 +30,7 @@ export default function UpdateExtraClassAttendenceform({ UpdateExtraCLASS }) {
           <Input
             type="radio"
             name="status"
+            disabled={saving}
             value="Present"
             checked={status === "Present"}
             onChange={(e) => setStatus(e.target.value)}
@@ -34,6 +43,7 @@ export default function UpdateExtraClassAttendenceform({ UpdateExtraCLASS }) {
             type="radio"
             name="status"
             value="Absent"
+            disabled={saving}
             checked={status === "Absent"}
             onChange={(e) => setStatus(e.target.value)}
           />
@@ -45,6 +55,7 @@ export default function UpdateExtraClassAttendenceform({ UpdateExtraCLASS }) {
             type="radio"
             name="status"
             value="Canceled"
+            disabled={saving}
             checked={status === "Canceled"}
             onChange={(e) => setStatus(e.target.value)}
           />
@@ -52,7 +63,7 @@ export default function UpdateExtraClassAttendenceform({ UpdateExtraCLASS }) {
         </label>
       </div>
 
-      <Button type="submit" title="Update" />
+      <Button type={saving ? "submiting..." : "submit"} title="Update" />
     </form>
   );
 }

@@ -4,9 +4,8 @@ import { useUser } from "../Context/UserContext";
 import authInformation from "../Appwrite/AuthInformation";
 import "./UserProfileform.css";
 
-export default function UserProfileform({ onprofileupdate }) {
+export default function UserProfileform({ onprofileupdate, onstop }) {
   const { user, profile } = useUser();
-
   const [form, setForm] = useState({
     name: "",
     attendence: 75,
@@ -119,6 +118,7 @@ export default function UserProfileform({ onprofileupdate }) {
   };
 
   const handleSubmit = async (e) => {
+    onstop(true);
     setLoading(true);
     e.preventDefault();
 
@@ -134,6 +134,7 @@ export default function UserProfileform({ onprofileupdate }) {
 
     if (onprofileupdate) onprofileupdate();
     setLoading(false);
+    onstop(true);
   };
 
   return (
@@ -143,6 +144,7 @@ export default function UserProfileform({ onprofileupdate }) {
       <Input
         label="Name"
         type="text"
+        disabled={loading}
         name="name"
         value={form.name}
         onChange={handleChange}
@@ -153,6 +155,7 @@ export default function UserProfileform({ onprofileupdate }) {
         label="Attendance"
         type="number"
         name="attendence"
+        disabled={loading}
         min="0"
         max="100"
         value={form.attendence}
@@ -213,6 +216,7 @@ export default function UserProfileform({ onprofileupdate }) {
         label="College"
         type="text"
         name="college"
+        disabled={loading}
         value={form.college}
         onChange={handleChange}
       />
