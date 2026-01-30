@@ -4,7 +4,7 @@ import authService from "../Appwrite/AuthService.js";
 import scheduleService from "../Appwrite/ScheduleService.js";
 import "./Attendenceform.css";
 
-export default function Attendencefrom({ onSubjectAdded }) {
+export default function Attendencefrom({ onSubjectAdded, setParentLoading }) {
   const [subjectName, SetsubjectName] = useState("");
   const [classesPerWeek, setclassesPerWeek] = useState(1);
   const [schedule, setschedule] = useState([{ Day: "", Time: "" }]);
@@ -27,10 +27,11 @@ export default function Attendencefrom({ onSubjectAdded }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setsaving(true);
+    setParentLoading(true);
     setmessage("");
 
     const classesSchedule = schedule.map((item) =>
-      JSON.stringify({ day: item.Day, time: item.Time })
+      JSON.stringify({ day: item.Day, time: item.Time }),
     );
 
     try {
@@ -48,6 +49,7 @@ export default function Attendencefrom({ onSubjectAdded }) {
       setmessage("Error in saving the subject");
     }
     setsaving(false);
+    setParentLoading(false);
   };
 
   return (

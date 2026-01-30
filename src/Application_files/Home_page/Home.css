@@ -10,7 +10,11 @@
   max-width: 1200px;
   width: 100%;
 }
-
+.home-button {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+}
 /* -------- TAB BUTTON BAR -------- */
 .tab-bar {
   display: flex;

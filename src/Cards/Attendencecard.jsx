@@ -3,6 +3,7 @@ import Button from "../Common_Componenets/Common_Button/Button";
 import UpdateAttendenceform from "../Forms/UpdateAttendenceform.jsx";
 import { useAttendance } from "../Context/AttendenceContext.jsx";
 import "./Attendencecard.css";
+import { Flag } from "appwrite";
 
 export default function Attendencecard({ subject = [], onAttendenceMarked }) {
   const {
@@ -15,6 +16,8 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
 
   const [lastAction, setLastAction] = useState("");
   const [editingkey, setEditingKey] = useState(null);
+  const [attending, setAttending] = useState(false);
+  const [attend, setAttend] = useState("");
 
   useEffect(() => {
     setEditingKey(null);
@@ -26,6 +29,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
 
   const handleAttendance = async (status, subj, schedule) => {
     try {
+      setAttending(true);
       await markAttendance(status, subj, schedule);
       if (onAttendenceMarked) onAttendenceMarked();
       setLastAction(
@@ -33,7 +37,15 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
       );
     } catch (error) {
       setLastAction(`Error: ${error.message}`);
+    } finally {
+      setAttending(false);
     }
+  };
+
+  const AttendingStatus = (status) => {
+    if (!attending) return status;
+
+    return attend === status ? `${status} Today...` : status;
   };
 
   if (loading)
@@ -85,23 +97,28 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                       ) : (
                         <>
                           <Button
-                            title="Present"
-                            className="primary"
-                            onClick={() =>
-                              handleAttendance("Present", subj, schedule)
-                            }
+                            title={AttendingStatus("Present")}
+                            disabled={attending}
+                            onClick={() => {
+                              setAttend("Present");
+                              handleAttendance("Present", subj, schedule);
+                            }}
                           />
                           <Button
-                            title="Absent"
-                            onClick={() =>
-                              handleAttendance("Absent", subj, schedule)
-                            }
+                            title={AttendingStatus("Absent")}
+                            disabled={attending}
+                            onClick={() => {
+                              setAttend("Absent");
+                              handleAttendance("Absent", subj, schedule);
+                            }}
                           />
                           <Button
-                            title="Canceled"
-                            onClick={() =>
-                              handleAttendance("Canceled", subj, schedule)
-                            }
+                            title={AttendingStatus("Canceled")}
+                            disabled={attending}
+                            onClick={() => {
+                              setAttend("Canceled");
+                              handleAttendance("Canceled", subj, schedule);
+                            }}
                           />
                         </>
                       )}

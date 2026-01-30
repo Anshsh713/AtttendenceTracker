@@ -12,6 +12,7 @@ function Home() {
     useSchedule();
 
   const [addSubject, setaddSubject] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   const [refresh_Attendence, setRefresh_Attendence] = useState(false);
   const [dayOffset, setDayOffset] = useState(0);
   const [tab, setTab] = useState("classes");
@@ -74,7 +75,10 @@ function Home() {
           </div>
           <div className="subjects">
             <h2>Your Subjects</h2>
-            <Button title="Add" className="Adding" onClick={toggleshowing} />
+            <div className="home-button">
+              <Button title="Add" className="Adding" onClick={toggleshowing} />
+              <Button title="Quick Attendance" className="Adding" />
+            </div>
           </div>
           <Attendencecard
             subject={getClassesForDay()}
@@ -82,16 +86,23 @@ function Home() {
           />
 
           {addSubject && (
-            <div className="modal-overlay" onClick={() => setaddSubject(false)}>
+            <div
+              className="modal-overlay"
+              onClick={() => {
+                if (!formLoading) setaddSubject(false);
+              }}
+            >
               <div className="modal-box" onClick={(e) => e.stopPropagation()}>
                 <button
                   className="modal-close"
+                  disabled={formLoading}
                   onClick={() => setaddSubject(false)}
                 >
-                  Close ✖
+                  ✖
                 </button>
 
                 <Attendencefrom
+                  setParentLoading={setFormLoading}
                   onSubjectAdded={() => {
                     refreshSchedule();
                     setaddSubject(false);

@@ -8,7 +8,11 @@ export default function ExtraClassform({
   subjectName,
   onextraClass,
 }) {
-  const Today = new Date().toLocaleDateString("en-US", { weekday: "long" });
+  const getDaybyDate = (data) => {
+    const date = new Date(data);
+
+    return date.toLocaleDateString("en-US", { weekday: "long" });
+  };
 
   const [Day, setDay] = useState("");
   const [date, setDate] = useState("");
@@ -21,7 +25,7 @@ export default function ExtraClassform({
     const data = {
       subjectID,
       subjectName,
-      day: Today,
+      day: getDaybyDate(date),
       date: date,
       time: Time,
       status: status,
@@ -39,8 +43,6 @@ export default function ExtraClassform({
   return (
     <form onSubmit={handleSubmit} className="extra-class-form">
       <h2>Add Extra Class</h2>
-
-      <div className="today-row">Day: {Today}</div>
 
       <Input
         label="Class Date : "

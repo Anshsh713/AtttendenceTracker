@@ -87,7 +87,6 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
 
             <Tooltip />
 
-            {/* Percentage text in center */}
             <text
               x="50%"
               y="50%"
@@ -100,14 +99,12 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
           </PieChart>
         </div>
 
-        {/* -------- COLOURED NUMBER ROW -------- */}
         <div className="attendance-colored-stats">
           <span className="present-box">{totalPresent}</span>
           <span className="absent-box">{totalAbsent}</span>
           <span className="cancel-box">{totalCancelled}</span>
         </div>
 
-        {/* -------- STATUS -------- */}
         <div className="attendance-stats">
           <p>
             <strong>Target %:</strong> {target}%
@@ -115,12 +112,11 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
 
           <p className={`attendance-status ${isSafe ? "safe" : "warn"}`}>
             {isSafe
-              ? "✅ You can safely skip the next class."
-              : `⚠️ You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
+              ? " You can safely skip the next class."
+              : ` You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
           </p>
         </div>
       </div>
-      {/* -------- EXTRA CLASS MODAL -------- */}
       {extraclass && (
         <div className="modal-overlay" onClick={toggleExtraClass}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>

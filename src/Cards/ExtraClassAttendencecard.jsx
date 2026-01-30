@@ -18,12 +18,16 @@ export default function ExtraClasscard({ subject = [] }) {
     fetchExtraClass();
   }, []);
 
-  const record = Object.values(extraclassesRecords || {});
+  const todayDate = new Date().toISOString().split("T")[0];
+
+  const record = Object.values(extraclassesRecords || {}).filter(
+    (rec) => rec.ClassDate === todayDate,
+  );
 
   if (record.length === 0)
     return (
       <div className="subjectNot">
-        <p className="empty-message">No Extra Classes Added yet</p>
+        <p className="empty-message">No Extra Classes for Today</p>
       </div>
     );
 
