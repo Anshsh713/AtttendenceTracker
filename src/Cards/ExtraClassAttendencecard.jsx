@@ -69,8 +69,8 @@ export default function ExtraClasscard({ selectedDate }) {
           {mistake === index && (
             <div
               className="modal-overlay"
-              onClick={() => {
-                if (!onloadingform) {
+              onClick={(e) => {
+                if (e.target === e.currentTarget && !onloadingform) {
                   setMistake(null);
                 }
               }}
@@ -79,16 +79,22 @@ export default function ExtraClasscard({ selectedDate }) {
                 <button
                   className="modal-close"
                   disabled={onloadingform}
-                  onClick={() => setMistake(null)}
+                  onClick={(e) => {
+                    if (e.target === e.currentTarget && !onloadingform) {
+                      setMistake(null);
+                    }
+                  }}
                 >
                   ✖
                 </button>
 
                 <UpdateExtraClassAttendenceform
+                  onstop={setOnloadingform}
                   UpdateExtraCLASS={async (data) => {
                     const success = await UpdateExtraClassAttendence(rec, data);
-                    onstop = { setOnloadingform };
-                    if (success) setMistake(null);
+                    if (success) {
+                      setMistake(null);
+                    }
                   }}
                 />
               </div>

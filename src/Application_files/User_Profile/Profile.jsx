@@ -104,6 +104,7 @@ export default function Profile() {
         <div className="modal-overlay">
           <div className="modal-content">
             <UserProfileform
+              onstop={setOnloadingform}
               onprofileupdate={async () => {
                 await refreshprofile();
                 setshowform(false);

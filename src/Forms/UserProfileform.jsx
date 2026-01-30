@@ -118,9 +118,10 @@ export default function UserProfileform({ onprofileupdate, onstop }) {
   };
 
   const handleSubmit = async (e) => {
-    onstop(true);
-    setLoading(true);
     e.preventDefault();
+
+    setLoading(true);
+    onstop(true);
 
     await authInformation.createUserandUpdateProfile(user.$id, {
       UserID: user.$id,
@@ -132,9 +133,10 @@ export default function UserProfileform({ onprofileupdate, onstop }) {
       attendence: form.attendence,
     });
 
-    if (onprofileupdate) onprofileupdate();
     setLoading(false);
-    onstop(true);
+    onstop(false);
+
+    if (onprofileupdate) onprofileupdate();
   };
 
   return (

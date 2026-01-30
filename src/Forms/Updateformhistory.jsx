@@ -1,42 +1,41 @@
 import React, { useState } from "react";
 import Input from "../Common_Componenets/Common_Input/Input";
 import Button from "../Common_Componenets/Common_Button/Button";
-import "./UpdateExtraClassAttendenceform.css";
+import { useAttendance } from "../Context/AttendenceContext";
 
-export default function UpdateExtraClassAttendenceform({
-  UpdateExtraCLASS,
-  onstop,
-}) {
+export default function Updateformhistory({ record, onSuccess }) {
+  const { updateAttendance_by_History } = useAttendance();
+
   const [status, setStatus] = useState("");
   const [saving, setSaving] = useState(false);
 
-  const handleUpdate = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (saving) return;
-
     if (!status) {
-      alert("Please select a status");
+      alert("Select status");
       return;
     }
 
     setSaving(true);
-    onstop(true);
 
-    const success = await UpdateExtraCLASS({ Status: status });
+    const success = await updateAttendance_by_History(record, {
+      Status: status,
+    });
 
     setSaving(false);
-    onstop(false);
 
-    if (success) setStatus("");
+    if (success && onSuccess) {
+      onSuccess();
+    }
   };
 
   return (
-    <form onSubmit={handleUpdate} className="update-extra-form">
+    <form onSubmit={handleSubmit}>
       <h2>Update Attendance</h2>
 
-      <div className="extra-radio-group">
-        <label className="extra-radio-item">
+      <div>
+        <label>
           <Input
             type="radio"
             name="status"
@@ -48,24 +47,24 @@ export default function UpdateExtraClassAttendenceform({
           Present
         </label>
 
-        <label className="extra-radio-item">
+        <label>
           <Input
             type="radio"
             name="status"
-            value="Absent"
             disabled={saving}
+            value="Absent"
             checked={status === "Absent"}
             onChange={(e) => setStatus(e.target.value)}
           />
           Absent
         </label>
 
-        <label className="extra-radio-item">
+        <label>
           <Input
             type="radio"
             name="status"
-            value="Canceled"
             disabled={saving}
+            value="Canceled"
             checked={status === "Canceled"}
             onChange={(e) => setStatus(e.target.value)}
           />

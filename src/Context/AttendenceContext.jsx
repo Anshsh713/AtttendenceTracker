@@ -14,7 +14,6 @@ export const AttendanceProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [attendanceRecords, setAttendanceRecords] = useState({});
   const [totalAttendance, setTotalAttendance] = useState({});
-
   const today = new Date().toISOString().split("T")[0];
   const dayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
@@ -231,8 +230,12 @@ export const AttendanceProvider = ({ children }) => {
       delete totalCache[rec.SubjectID];
       localStorage.setItem("TotalAttendanceCache", JSON.stringify(totalCache));
 
-      await TotalAttendance(subj.subjectId);
-    } catch (error) {}
+      await TotalAttendance(rec.subjectID);
+      return true;
+    } catch (error) {
+      console.error("❌ Update extra class failed:", error);
+      return false;
+    }
   };
   const UpdateAttendance = async (subj, schedule, data) => {
     try {
@@ -280,6 +283,52 @@ export const AttendanceProvider = ({ children }) => {
     }
   };
 
+  const updateAttendance_by_History = async (rec, data) => {
+    if (!user) return false;
+    try {
+      await classAttendService.updateAttendance(
+        user.$id,
+        rec.SubjectID,
+        rec.SubjectName,
+        rec.ClassDay,
+        rec.ClassTime,
+        rec.ClassDate || today,
+        data,
+      );
+
+      const key = `${rec.SubjectID}_${rec.ClassDay}_${rec.ClassTime}`;
+
+      const updatedAttendance = {
+        ...attendanceRecords,
+        [key]: {
+          Status: data.Status,
+          ClassDay: rec.ClassDay,
+          ClassTime: rec.ClassTime,
+          ClassDate: rec.ClassDate,
+        },
+      };
+
+      setAttendanceRecords(updatedAttendance);
+
+      SaveData("AttendClassesCache", {
+        timestamp: today,
+        attendancerecords: updatedAttendance,
+      });
+
+      const totalCache =
+        JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
+      delete totalCache[rec.SubjectID];
+      localStorage.setItem("TotalAttendanceCache", JSON.stringify(totalCache));
+
+      await TotalAttendance(rec.SubjectID);
+      window.location.reload();
+      return true;
+    } catch (error) {
+      console.error("❌ Update extra class failed:", error);
+      return false;
+    }
+  };
+
   return (
     <AttendanceContext.Provider
       value={{
@@ -294,6 +343,7 @@ export const AttendanceProvider = ({ children }) => {
         fetchExtraClass,
         extraclassesRecords,
         UpdateExtraClassAttendence,
+        updateAttendance_by_History,
       }}
     >
       {children}
