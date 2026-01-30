@@ -44,6 +44,14 @@ function Home() {
     return targetDate.toLocaleDateString("en-US", options);
   };
 
+  const getSelectedISODate = () => {
+    const baseDate = new Date();
+    const targetDate = new Date(baseDate);
+    targetDate.setDate(baseDate.getDate() + dayOffset);
+
+    return targetDate.toLocaleDateString("en-CA"); // YYYY-MM-DD
+  };
+
   return (
     <div className="home-container">
       <div className="tab-bar">
@@ -112,7 +120,7 @@ function Home() {
             </div>
           )}
 
-          <ExtraClasscard />
+          <ExtraClasscard selectedDate={getSelectedISODate()} />
         </div>
       )}
 

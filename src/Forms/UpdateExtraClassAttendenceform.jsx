@@ -63,7 +63,11 @@ export default function UpdateExtraClassAttendenceform({
         </label>
       </div>
 
-      <Button type={saving ? "submiting..." : "submit"} title="Update" />
+      <Button
+        type="submit"
+        title={saving ? "Updating..." : "Update"}
+        disabled={saving}
+      />
     </form>
   );
 }

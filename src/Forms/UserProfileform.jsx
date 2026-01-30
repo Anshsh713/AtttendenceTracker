@@ -221,7 +221,7 @@ export default function UserProfileform({ onprofileupdate, onstop }) {
         onChange={handleChange}
       />
 
-      <button type="submit">
+      <button type="submit" disabled={loading}>
         {loading ? "Saving Profile..." : "Save Profile"}
       </button>
     </form>

@@ -60,7 +60,11 @@ export default function UpdateAttendenceform({ updateClass, onstop }) {
         </label>
       </div>
 
-      <Button type="submit" title={saving ? "Updating" : "Update"} />
+      <Button
+        type="submit"
+        title={saving ? "Updating" : "Update"}
+        disabled={saving}
+      />
     </form>
   );
 }

@@ -4,7 +4,7 @@ import Button from "../Common_Componenets/Common_Button/Button";
 import UpdateExtraClassAttendenceform from "../Forms/UpdateExtraClassAttendenceform";
 import "./ExtraClassAttendencecard.css";
 
-export default function ExtraClasscard({ subject = [] }) {
+export default function ExtraClasscard({ selectedDate }) {
   const { fetchExtraClass, extraclassesRecords, UpdateExtraClassAttendence } =
     useAttendance();
 
@@ -19,16 +19,16 @@ export default function ExtraClasscard({ subject = [] }) {
     fetchExtraClass();
   }, []);
 
-  const todayDate = new Date().toISOString().split("T")[0];
+  const filterDate = selectedDate;
 
   const record = Object.values(extraclassesRecords || {}).filter(
-    (rec) => rec.ClassDate === todayDate,
+    (rec) => rec.ClassDate === filterDate,
   );
 
   if (record.length === 0)
     return (
       <div className="subjectNot">
-        <p className="empty-message">No Extra Classes for Today</p>
+        <p className="empty-message">No Extra Classes for {filterDate}</p>
       </div>
     );
 

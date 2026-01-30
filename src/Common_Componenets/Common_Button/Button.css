@@ -29,9 +29,3 @@
   color: var(--color5);
   box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5);
 }
-/* FOCUS (keyboard accessibility) */
-.Button-field:focus {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  color: var(--color5);
-  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.7);
-}

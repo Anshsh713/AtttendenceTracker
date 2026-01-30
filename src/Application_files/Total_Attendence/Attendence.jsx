@@ -34,7 +34,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
   const {
     totalPresent = 0,
     totalAbsent = 0,
-    totalCancelled = 0,
+    totalCanceled = 0,
     attendancePercentage = 0,
   } = stats;
 
@@ -46,16 +46,49 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
   const data = [
     { name: "Present", value: totalPresent },
     { name: "Absent", value: totalAbsent },
-    { name: "Cancelled", value: totalCancelled },
   ];
 
-  const effective = totalPresent + totalAbsent + totalCancelled;
+  const effective = totalPresent + totalAbsent + totalCanceled;
   const t = target / 100;
   const required = (t * effective - totalPresent) / (1 - t);
   const classesNeeded =
     effective === 0 && target > 0 ? 1 : Math.max(0, Math.ceil(required));
 
   const isSafe = Number(attendancePercentage) >= target;
+
+  const getAttendanceMessage = (percent) => {
+    if (percent < target) {
+      return {
+        text: ` You need to attend ${classesNeeded} more class(es) to reach ${target}%.`,
+        type: "warn",
+      };
+    }
+
+    if (percent >= 75 && percent < 80) {
+      return {
+        text: " You can't skip classes. Keep attending regularly.",
+        type: "warn",
+      };
+    }
+
+    if (percent >= 80 && percent < 90) {
+      return {
+        text: " You can skip occasionally, but be careful.",
+        type: "mid",
+      };
+    }
+
+    if (percent >= 90) {
+      return {
+        text: " You are safe to skip classes 👍",
+        type: "safe",
+      };
+    }
+
+    return { text: "", type: "" };
+  };
+
+  const statusMessage = getAttendanceMessage(Number(attendancePercentage));
 
   return (
     <div className="total-attendance-container">
@@ -103,7 +136,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
         <div className="attendance-colored-stats">
           <span className="present-box">{totalPresent}</span>
           <span className="absent-box">{totalAbsent}</span>
-          <span className="cancel-box">{totalCancelled}</span>
+          <span className="cancel-box">{totalCanceled}</span>
         </div>
 
         <div className="attendance-stats">
@@ -111,10 +144,8 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
             <strong>Target %:</strong> {target}%
           </p>
 
-          <p className={`attendance-status ${isSafe ? "safe" : "warn"}`}>
-            {isSafe
-              ? " You can safely skip the next class."
-              : ` You need to attend ${classesNeeded} more class(es) to reach ${target}%.`}
+          <p className={`attendance-status ${statusMessage.type}`}>
+            {statusMessage.text}
           </p>
         </div>
       </div>
@@ -122,7 +153,10 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
         <div
           className="modal-overlay"
           onClick={() => {
-            if (!onloadingform) toggleExtraClass();
+            if (!onloadingform) {
+              setOnloadingform(false);
+              toggleExtraClass();
+            }
           }}
         >
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
@@ -130,6 +164,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
               className="modal-close"
               disabled={onloadingform}
               onClick={() => {
+                setOnloadingform(false);
                 toggleExtraClass();
               }}
             >

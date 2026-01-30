@@ -279,8 +279,6 @@ export class ClassAttendService {
   }
 
   async TotalAttendance(userId, subjectId) {
-    console.log("userid", userId, "and Subject id", subjectId);
-
     try {
       const response = await this.databases.listDocuments(
         this.databasesId,

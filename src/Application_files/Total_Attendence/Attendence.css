@@ -58,6 +58,18 @@
   font-weight: 700;
 }
 
+.attendance-status.safe {
+  color: #4caf50;
+}
+
+.attendance-status.mid {
+  color: orange;
+}
+
+.attendance-status.warn {
+  color: red;
+}
+
 .present-box,
 .absent-box,
 .cancel-box {

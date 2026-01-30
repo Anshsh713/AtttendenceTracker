@@ -22,9 +22,10 @@ export default function ExtraClassform({
   const [saving, setSaving] = useState(false);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setSaving(true);
     onstop(true);
-    e.preventDefault();
 
     const data = {
       subjectID,
@@ -35,14 +36,18 @@ export default function ExtraClassform({
       status: status,
     };
 
-    const success = await onextraClass(data);
-    if (success) {
+    try {
+      const success = await onextraClass(data);
+
+      if (success) {
+        setDay("");
+        setDate("");
+        setTime("");
+        setStatus("");
+      }
+    } finally {
       setSaving(false);
       onstop(false);
-      setDay("");
-      setDate("");
-      setTime("");
-      setStatus("");
     }
   };
 
@@ -94,7 +99,11 @@ export default function ExtraClassform({
         </label>
       </div>
 
-      <Button type={saving ? "Adding..." : "Add"} title="Submit" />
+      <Button
+        type="Submit"
+        title={saving ? "Adding..." : "Add"}
+        disabled={saving}
+      />
     </form>
   );
 }
