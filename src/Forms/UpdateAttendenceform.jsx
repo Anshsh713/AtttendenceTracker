@@ -62,7 +62,7 @@ export default function UpdateAttendenceform({ updateClass, onstop }) {
 
       <Button
         type="submit"
-        title={saving ? "Updating" : "Update"}
+        title={saving ? "Updating..." : "Update"}
         disabled={saving}
       />
     </form>

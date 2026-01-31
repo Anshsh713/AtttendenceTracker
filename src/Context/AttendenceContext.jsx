@@ -137,6 +137,27 @@ export const AttendanceProvider = ({ children }) => {
     }
   };
 
+  const QuickAttendance = async (status, subj, schedule) => {
+    if (!user) return;
+    try {
+      await classAttendService.markAttendance(
+        user.$id,
+        subj.subjectName,
+        subj.subjectId,
+        schedule.day,
+        schedule.time,
+        schedule.date,
+        status,
+      );
+      const totalCache =
+        JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
+      delete totalCache[subj.subjectId];
+      localStorage.setItem("TotalAttendanceCache", JSON.stringify(totalCache));
+    } catch (error) {
+      console.log("❌ Failed to mark attendance:", error);
+    }
+  };
+
   const fetchExtraClass = () => {
     try {
       const cache = LoadData("ExtraClassCache");
@@ -185,7 +206,6 @@ export const AttendanceProvider = ({ children }) => {
         "ExtraClassCache",
       );
 
-      // Clear total cache for this subject
       const totalCache =
         JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
       delete totalCache[data.subjectID];
@@ -230,7 +250,7 @@ export const AttendanceProvider = ({ children }) => {
       delete totalCache[rec.SubjectID];
       localStorage.setItem("TotalAttendanceCache", JSON.stringify(totalCache));
 
-      await TotalAttendance(rec.subjectID);
+      await TotalAttendance(rec.SubjectID);
       return true;
     } catch (error) {
       console.error("❌ Update extra class failed:", error);
@@ -315,6 +335,22 @@ export const AttendanceProvider = ({ children }) => {
         attendancerecords: updatedAttendance,
       });
 
+      if (extraclassesRecords[key]) {
+        const updatedExtra = {
+          [key]: {
+            ...extraclassesRecords[key],
+            Status: data.Status,
+          },
+        };
+
+        setExtraClassesRecords(updatedExtra);
+
+        SaveData("ExtraClassCache", {
+          timestamp: today,
+          extraclassesRecords: updatedExtra,
+        });
+      }
+
       const totalCache =
         JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
       delete totalCache[rec.SubjectID];
@@ -344,6 +380,7 @@ export const AttendanceProvider = ({ children }) => {
         extraclassesRecords,
         UpdateExtraClassAttendence,
         updateAttendance_by_History,
+        QuickAttendance,
       }}
     >
       {children}

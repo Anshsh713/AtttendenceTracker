@@ -8,6 +8,7 @@ import Button from "../../Common_Componenets/Common_Button/Button";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 import authService from "../../Appwrite/AuthService.js";
+import QuickAttendanceForm from "../../Forms/QuickAttendanceform.jsx";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function Profile() {
   const [onloadingform, setOnloadingform] = useState(false);
   const [showform, setshowform] = useState(false);
   const [editingSubject, setEditingSubject] = useState(null);
+  const [quickSubject, setQuickSubject] = useState(null);
 
   const toggleform = () => setshowform(!showform);
   const logout = async () => {
@@ -161,6 +163,10 @@ export default function Profile() {
                       title={<i className="fa-solid fa-trash-can"></i>}
                       onClick={() => Deleting_the_Subject(subj.$id)}
                     />
+                    <Button
+                      title={<i className="fa-solid fa-truck-fast"></i>}
+                      onClick={() => setQuickSubject(subj)}
+                    />
                   </div>
                 </div>
 
@@ -183,6 +189,20 @@ export default function Profile() {
             ))
           )}
         </>
+      )}
+      {quickSubject && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <QuickAttendanceForm
+              subject={quickSubject}
+              onClose={() => setQuickSubject(null)}
+            />
+
+            <button className="close-btn" onClick={() => setQuickSubject(null)}>
+              close
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

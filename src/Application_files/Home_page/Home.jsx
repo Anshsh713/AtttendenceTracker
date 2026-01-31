@@ -83,10 +83,8 @@ function Home() {
           </div>
           <div className="subjects">
             <h2>Your Subjects</h2>
-            <div className="home-button">
-              <Button title="Add" className="Adding" onClick={toggleshowing} />
-              <Button title="Quick Attendance" className="Adding" />
-            </div>
+
+            <Button title="Add" className="Adding" onClick={toggleshowing} />
           </div>
           <Attendencecard
             subject={getClassesForDay()}
