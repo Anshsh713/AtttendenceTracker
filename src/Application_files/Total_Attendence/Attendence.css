@@ -1,7 +1,5 @@
 @import url("../../index.css");
 
-@import url("../../index.css");
-
 .attendance-total-card {
   width: 100%;
   min-height: 420px;
@@ -10,6 +8,8 @@
   -webkit-backdrop-filter: var(--glass-blur);
   border-radius: 1.5rem;
   padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--glass-border);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

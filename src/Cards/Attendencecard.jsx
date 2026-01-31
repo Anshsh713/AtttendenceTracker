@@ -3,7 +3,6 @@ import Button from "../Common_Componenets/Common_Button/Button";
 import UpdateAttendenceform from "../Forms/UpdateAttendenceform.jsx";
 import { useAttendance } from "../Context/AttendenceContext.jsx";
 import "./Attendencecard.css";
-import { Flag } from "appwrite";
 
 export default function Attendencecard({ subject = [], onAttendenceMarked }) {
   const {

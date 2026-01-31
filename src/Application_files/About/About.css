@@ -1,324 +1,508 @@
 /* =========================================
-   About Page Layout & Typography
+   Professional About Page Design
    ========================================= */
 
+:root {
+  --primary-color: #10b981;
+  --primary-hover: #059669;
+  --bg-dark: #011f19;
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+  /* Brightened for better visibility */
+  --glass-white: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  /* Slightly more visible */
+  --container-width: 1240px;
+}
+
 .about-page {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  color: var(--color10);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--text-main);
+  background: var(--bg-dark);
   line-height: 1.6;
-  width: 100%;
   overflow-x: hidden;
 }
 
-/* Common Section Padding */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Base Section Styling */
 section {
-  padding: 80px 20px;
-  position: relative;
+  padding: 100px 0;
 }
 
 /* =========================================
    Hero Section
    ========================================= */
 .hero-section {
-  min-height: 90vh;
-  /* Fill most of the screen */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  /* Optional: soft overlay to make text pop against animated body bg */
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+  padding: 140px 0 100px;
+  background: radial-gradient(
+      circle at top left,
+      rgba(16, 185, 129, 0.15),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(16, 185, 129, 0.1),
+      transparent 40%
+    );
 }
 
-.hero-content {
-  max-width: 900px;
-  animation: fadeInUp 1s ease-out;
+.hero-text-content {
+  max-width: 800px;
 }
 
-/* Badge */
+.brand-logo-container {
+  margin-bottom: 30px;
+}
+
+.brand-logo {
+  height: 80px;
+  border-radius: 50px;
+  width: auto;
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.3));
+}
+
 .badge {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--primary-color);
   padding: 8px 16px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color4);
+  border-radius: 99px;
+  font-size: 0.875rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
   margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-/* Titles */
 .hero-title {
-  font-size: 4rem;
-  /* Huge text */
+  font-size: clamp(3rem, 8vw, 5rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 24px;
-  color: var(--text);
-  letter-spacing: -1px;
+  letter-spacing: -2px;
+  color: #ffffff;
+  /* Explicitly white */
 }
 
 .hero-title .highlight {
-  background: linear-gradient(120deg, var(--color4), var(--color10));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
+  color: var(--primary-color);
 }
 
-.hero-subtitle {
+.hero-description {
   font-size: 1.25rem;
+  color: #e2e8f0;
+  /* Brighter for visibility */
+  margin-bottom: 40px;
   max-width: 600px;
-  margin: 0 auto 40px;
-  color: var(--color5);
-  font-weight: 500;
 }
 
-/* =========================================
-   Buttons
-   ========================================= */
-.cta-group {
+.hero-actions {
   display: flex;
-  gap: 20px;
-  justify-content: center;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
+/* =========================================
+   Common Buttons
+   ========================================= */
 .btn {
-  padding: 14px 32px;
-  border-radius: 99px;
-  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 12px;
   font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  transition: all 0.3s ease;
   display: inline-block;
 }
 
 .btn-primary {
-  background: var(--color4);
-  color: white;
-  border: 2px solid transparent;
-  box-shadow: 0 4px 15px rgba(85, 133, 100, 0.3);
+  background: var(--primary-color);
+  color: var(--bg-dark);
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(85, 133, 100, 0.4);
-  background: var(--color10);
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
 }
 
 .btn-outline {
-  background: rgba(255, 255, 255, 0.3);
-  color: var(--color5);
-  border: 2px solid var(--color5);
+  background: transparent;
+  color: white;
+  border: 1px solid var(--glass-border);
 }
 
 .btn-outline:hover {
-  background: var(--color5);
-  color: white;
-  transform: translateY(-3px);
+  background: var(--glass-white);
+  border-color: white;
+  transform: translateY(-2px);
 }
 
-.btn-glow {
-  background: linear-gradient(135deg, var(--color1), var(--color2));
-  color: var(--color10);
-  padding: 16px 48px;
-  font-size: 1.2rem;
-  box-shadow: 0 0 20px rgba(105, 235, 208, 0.4);
-}
-
-.btn-glow:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(105, 235, 208, 0.6);
+.btn.large {
+  padding: 18px 40px;
+  font-size: 1.1rem;
 }
 
 /* =========================================
-   Mission Section
+   Experience Section
    ========================================= */
-.mission-section {
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+.experience-section {
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.mission-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.experience-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
   align-items: center;
 }
 
-.mission-text h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: var(--color4);
+.image-wrapper {
+  position: relative;
 }
 
-.mission-text p {
-  font-size: 1.1rem;
-  color: var(--color10);
+.main-image {
+  width: 100%;
+  border-radius: 24px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--glass-border);
 }
 
-.mission-stats {
-  display: flex;
-  justify-content: space-around;
-  gap: 20px;
-}
-
-.stat-item {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.5);
+.image-overlay-card {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  background: rgba(1, 31, 25, 0.95);
+  /* More opaque for better readability */
+  backdrop-filter: blur(20px);
   padding: 24px;
-  border-radius: 16px;
-  flex: 1;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  max-width: 240px;
 }
 
-.stat-item:hover {
-  transform: translateY(-5px);
+.image-overlay-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 4px;
+  font-size: 1.25rem;
 }
 
-.stat-item h3 {
-  font-size: 2rem;
-  color: var(--color4);
-  margin-bottom: 5px;
+.image-overlay-card p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin: 0;
 }
 
-.stat-item p {
-  font-size: 0.9rem;
-  color: var(--color5);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.section-title {
+  font-size: 2.5rem;
   font-weight: 700;
+  margin-bottom: 24px;
+  color: #ffffff;
+  /* Explicitly white */
+}
+
+.section-text {
+  color: #e2e8f0;
+  /* Brighter neutral for visibility */
+  font-size: 1.125rem;
+  margin-bottom: 32px;
+}
+
+.benefit-list {
+  list-style: none;
+  padding: 0;
+}
+
+.benefit-list li {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  /* Explicitly white */
+}
+
+.check {
+  color: var(--primary-color);
+  font-weight: 800;
 }
 
 /* =========================================
    Features Section
    ========================================= */
-.features-section {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.features-header {
+.center-header {
   text-align: center;
-  margin-bottom: 60px;
+  max-width: 700px;
+  margin: 0 auto 64px auto;
 }
 
-.features-header h2 {
-  font-size: 2.5rem;
-  color: var(--color10);
-  margin-bottom: 10px;
-}
-
-.features-header p {
-  color: var(--color5);
-  font-size: 1.1rem;
+.section-subtitle {
+  color: #e2e8f0;
+  /* Brighter neutral for visibility */
+  font-size: 1.125rem;
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(12px);
-  padding: 30px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: var(--glass-white);
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
-  text-align: left;
 }
 
 .feature-card:hover {
-  background: rgba(255, 255, 255, 0.6);
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--primary-color);
+  transform: translateY(-8px);
 }
 
-.feature-card .icon {
+.feature-icon-box {
   font-size: 2.5rem;
-  margin-bottom: 20px;
-  display: block;
+  margin-bottom: 24px;
+  display: inline-block;
+  padding: 16px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 16px;
 }
 
 .feature-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-  color: var(--color10);
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #ffffff;
+  /* Explicitly white */
+}
+
+.feature-card p {
+  color: #e2e8f0;
+  /* Even brighter for feature descriptions */
+  margin: 0;
 }
 
 /* =========================================
-   Bottom CTA & Footer
+   Mission Section
    ========================================= */
-.bottom-cta {
+.mission-box {
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.1),
+    rgba(2, 44, 34, 0.2)
+  );
+  padding: 80px;
+  border-radius: 40px;
   text-align: center;
-  padding: 100px 20px;
-  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2));
+  border: 1px solid var(--glass-border);
 }
 
-.bottom-cta h2 {
-  font-size: 2.5rem;
+.mission-box .section-title {
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1rem;
+}
+
+.mission-box p {
+  font-size: 2rem;
+  font-weight: 600;
+  max-width: 800px;
+  margin: 24px auto 40px;
+  line-height: 1.4;
+  color: #ffffff;
+  /* Explicitly white */
+}
+
+.brand-name {
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+/* =========================================
+   CTA Section
+   ========================================= */
+.cta-box {
+  background: var(--primary-color);
+  padding: 80px;
+  border-radius: 40px;
+  text-align: center;
+  color: var(--bg-dark);
+}
+
+.cta-box h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.cta-box p {
+  font-size: 1.25rem;
   margin-bottom: 40px;
-  color: var(--color10);
+  font-weight: 500;
+  opacity: 0.9;
 }
 
-.about-footer {
-  text-align: center;
-  padding: 40px 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  font-size: 0.9rem;
-  color: var(--color5);
-  background: rgba(255, 255, 255, 0.15);
+.cta-box .btn-primary {
+  background: var(--bg-dark);
+  color: white;
+}
+
+.cta-box .btn-primary:hover {
+  background: #000;
 }
 
 /* =========================================
-   Animations & Responsiveness
+   Footer
    ========================================= */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+.professional-footer {
+  padding: 60px 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+.footer-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-weight: 600;
+  /* Bolder links for better visibility */
+}
+
+.footer-links a:hover {
+  color: white;
+  /* Hover to white for clarity */
+}
+
+/* =========================================
+   Responsive Design
+   ========================================= */
+@media (max-width: 1024px) {
+  .experience-grid {
+    grid-template-columns: 1fr;
+    gap: 100px;
+    text-align: center;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .benefit-list li {
+    justify-content: center;
+  }
+
+  .image-overlay-card {
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    bottom: -40px;
+  }
+
+  .mission-box {
+    padding: 40px;
   }
 }
 
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 3.5rem;
   }
 
-  .mission-container {
-    grid-template-columns: 1fr;
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .mission-box p {
+    font-size: 1.5rem;
+  }
+
+  .cta-box {
+    padding: 40px;
+  }
+
+  .cta-box h2 {
+    font-size: 2.25rem;
+  }
+
+  .footer-flex {
+    flex-direction: column;
+    gap: 32px;
     text-align: center;
-  }
-
-  .mission-stats {
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    min-width: 120px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-title {
+    font-size: 2.75rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+@media (max-width: 320px) {
+  section {
+    padding: 60px 0;
+  }
+
+  .hero-title {
     font-size: 2.2rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .brand-logo {
+    height: 60px;
+  }
+
+  .btn {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+
+  .mission-box {
+    padding: 30px 20px;
+  }
+
+  .cta-box {
+    padding: 30px 20px;
+  }
+}
+@media (max-width: 425px) {
+  section {
+    padding: 70px 0;
+  }
+
+  .hero-title {
+    font-size: 2.6rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
   }
 
   .btn {
@@ -326,8 +510,59 @@ section {
     text-align: center;
   }
 
-  .cta-group {
-    flex-direction: column;
-    width: 100%;
+  .feature-card {
+    padding: 24px;
+  }
+
+  .mission-box p {
+    font-size: 1.3rem;
+  }
+}
+@media (max-width: 768px) {
+  .experience-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 60px;
+  }
+
+  .benefit-list li {
+    justify-content: center;
+  }
+
+  .image-overlay-card {
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    bottom: -25px;
+  }
+
+  .hero-title {
+    font-size: 3.2rem;
+  }
+
+  .cta-box h2 {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 1024px) {
+  .experience-grid {
+    gap: 50px;
+  }
+
+  .mission-box {
+    padding: 50px;
+  }
+
+  .cta-box {
+    padding: 50px;
+  }
+}
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1300px;
+  }
+
+  .hero-text-content {
+    max-width: 900px;
   }
 }

@@ -103,7 +103,7 @@ export const AttendanceProvider = ({ children }) => {
   const markAttendance = async (status, subj, schedule) => {
     if (!user) return;
     try {
-      await classAttendService.markAttendance(
+      const response = await classAttendService.markAttendance(
         user.$id,
         subj.subjectName,
         subj.subjectId,
@@ -112,6 +112,10 @@ export const AttendanceProvider = ({ children }) => {
         today,
         status,
       );
+
+      if (!response) {
+        return false;
+      }
 
       const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
       const updatedRecords = {
@@ -139,8 +143,14 @@ export const AttendanceProvider = ({ children }) => {
 
   const QuickAttendance = async (status, subj, schedule) => {
     if (!user) return;
+
+    const key = `${subj.subjectId}_${schedule.day}_${schedule.time}_${schedule.date}`;
+    if (attendanceRecords[key]) {
+      alert("Attendance already marked for this class.");
+      return;
+    }
     try {
-      await classAttendService.markAttendance(
+      const response = await classAttendService.markAttendance(
         user.$id,
         subj.subjectName,
         subj.subjectId,
@@ -149,6 +159,11 @@ export const AttendanceProvider = ({ children }) => {
         schedule.date,
         status,
       );
+
+      if (!response) {
+        return false;
+      }
+
       const totalCache =
         JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
       delete totalCache[subj.subjectId];
@@ -175,7 +190,7 @@ export const AttendanceProvider = ({ children }) => {
   const handleExtraClass = async (data) => {
     if (!user) return false;
     try {
-      await classAttendService.addExtraClass(
+      const response = await classAttendService.addExtraClass(
         user.$id,
         data.subjectName,
         data.subjectID,
@@ -184,6 +199,10 @@ export const AttendanceProvider = ({ children }) => {
         data.date,
         data.status,
       );
+
+      if (!response) {
+        return false;
+      }
 
       const key = `${data.subjectID}_${data.day}_${data.time}`;
       const updatedRecords = {

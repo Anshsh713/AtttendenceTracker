@@ -79,6 +79,9 @@
   margin-top: 3rem;
   background: var(--glass-bg);
   padding: 3rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
   border-radius: 1.5rem;
   border: 1px solid var(--glass-border);
 }
