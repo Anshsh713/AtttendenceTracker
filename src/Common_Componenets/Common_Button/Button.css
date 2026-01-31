@@ -1,31 +1,47 @@
 @import url("../../index.css");
 
-/* Wrapper (keeps layout clean — optional) */
+@import url("../../index.css");
+
 .Button-container {
   display: inline-flex;
 }
 
-/* BASE BUTTON */
 .Button-field {
-  background: var(--color5);
-  color: var(--text2);
+  background: var(--primary-600);
+  color: white;
   border: none;
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.25s ease-in-out;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
+  letter-spacing: 0.025em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-/* Hover */
 .Button-field:hover {
-  transform: scale(1.01);
+  background: var(--primary-700);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
-/* ACTIVE (when you pass className="active") */
+
 .Button-field:active {
-  background: linear-gradient(90deg, var(--color7), var(--color8));
-  color: var(--color5);
-  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5);
+  transform: translateY(0);
+}
+
+.Button-field.active {
+  background: var(--primary-100);
+  color: var(--primary-700);
+  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+}
+
+.Button-field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }

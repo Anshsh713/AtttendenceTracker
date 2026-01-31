@@ -364,7 +364,6 @@ export const AttendanceProvider = ({ children }) => {
       return false;
     }
   };
-
   return (
     <AttendanceContext.Provider
       value={{

@@ -1,141 +1,144 @@
 @import url("../index.css");
 
-/* -------- FORM CARD -------- */
+@import url("../index.css");
+
 .add-subject-form {
-  background: rgba(255, 255, 255, 0.85);
-  /* Slightly more opaque for legibility */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 24px;
-  padding: 24px 28px;
-  margin: 20px 0;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  transition: transform 0.25s ease;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--glass-border);
+  animation: slideUp 0.4s ease-out;
 }
 
-.add-subject-form:hover {
-  transform: translateY(-2px);
-}
-
-/* -------- FORM HEADER -------- */
 .add-subject-form h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: var(--color10);
+  margin: 0 0 1.5rem 0;
+  color: var(--primary-900);
   text-align: center;
   font-size: 1.5rem;
   font-weight: 800;
+  letter-spacing: -0.025em;
 }
 
-/* -------- SCROLL AREA -------- */
 .schedule-list {
-  max-height: 250px;
+  max-height: 300px;
   overflow-y: auto;
-  padding-right: 8px;
-  /* space for scrollbar */
+  padding-right: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
-/* scroll bar */
 .schedule-list::-webkit-scrollbar {
   width: 6px;
 }
 
 .schedule-list::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--primary-50);
   border-radius: 10px;
 }
 
 .schedule-list::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--primary-200);
   border-radius: 10px;
 }
 
-/* -------- SELECT & FIELDS -------- */
 .schedule-row {
-  margin: 14px 0;
+  margin-bottom: 1rem;
   display: flex;
-  gap: 16px;
+  gap: 1rem;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   background: rgba(255, 255, 255, 0.5);
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--primary-100);
+  transition: all 0.2s ease;
+}
+
+.schedule-row:hover {
+  background: white;
+  border-color: var(--primary-200);
 }
 
 .schedule-row select {
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fff;
-  font-size: 0.95rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--primary-200);
+  background: white;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
   flex: 1;
-  min-width: 120px;
-  color: var(--color10);
-  transition: border 0.2s ease;
+  min-width: 140px;
+  color: var(--primary-900);
+  transition: all 0.2s ease;
+  outline: none;
 }
 
 .schedule-row select:focus {
-  outline: none;
-  border-color: var(--color4);
-  box-shadow: 0 0 0 2px rgba(85, 133, 100, 0.15);
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-100);
 }
 
-/* ---------- SAVE BUTTON ---------- */
 .add-subject-form button[type="submit"] {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  margin-top: 24px;
-  border-radius: 99px;
-  padding: 14px 24px;
-  background: var(--color4);
+  margin-top: 1.5rem;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: var(--primary-600);
   color: white;
   border: none;
   cursor: pointer;
   font-weight: 700;
   font-size: 1rem;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 20px rgba(85, 133, 100, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
 }
 
 .add-subject-form button[type="submit"]:hover {
-  background: var(--color10);
+  background: var(--primary-700);
   transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(85, 133, 100, 0.35);
+  box-shadow: var(--shadow-lg);
 }
 
-/* ---------- MESSAGE STYLES ---------- */
+.add-subject-form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .success-msg {
-  color: #2e7d32;
-  background: rgba(46, 125, 50, 0.1);
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 16px;
+  color: var(--primary-700);
+  background: var(--primary-100);
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
   text-align: center;
   font-weight: 600;
+  font-size: 0.875rem;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .error-msg {
-  color: #c62828;
-  background: rgba(198, 40, 40, 0.1);
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 16px;
+  color: #b91c1c;
+  background: #fee2e2;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
   text-align: center;
   font-weight: 600;
+  font-size: 0.875rem;
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 480px) {
-  .add-subject-form {
-    padding: 18px;
-  }
-
   .schedule-row {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
   }
 }

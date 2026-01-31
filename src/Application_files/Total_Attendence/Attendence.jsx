@@ -41,7 +41,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
   const target = profile?.attendence ?? 75;
   const formatted = Number(attendancePercentage).toFixed(2);
 
-  const COLORS = ["#4CAF50", "#F44336", "#FFFFFF"];
+  const COLORS = ["#10b981", "#ef4444", "#f1f5f9"];
 
   const data = [
     { name: "Present", value: totalPresent },
@@ -104,34 +104,48 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={70}
+              innerRadius={75}
               outerRadius={100}
-              paddingAngle={3}
+              paddingAngle={5}
               dataKey="value"
+              stroke="none"
+              animationBegin={0}
+              animationDuration={1500}
             >
               {data.map((entry, index) => (
                 <Cell
                   key={index}
                   fill={COLORS[index]}
-                  stroke="#ccc"
-                  strokeWidth={entry.name === "Cancelled" ? 1.5 : 0}
+                  className="recharts-sector"
                 />
               ))}
             </Pie>
 
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                borderRadius: '12px',
+                border: 'none',
+                boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'
+              }}
+            />
 
             <text
               x="50%"
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
-              style={{ fontSize: "20px", fontWeight: "bold" }}
+              style={{
+                fontSize: "24px",
+                fontWeight: "800",
+                fill: "var(--primary-900)",
+                fontFamily: "inherit"
+              }}
             >
               {formatted}%
             </text>
           </PieChart>
         </div>
+
 
         <div className="attendance-colored-stats">
           <span className="present-box">{totalPresent}</span>

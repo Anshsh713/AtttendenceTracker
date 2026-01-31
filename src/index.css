@@ -1,155 +1,179 @@
 * {
   box-sizing: border-box;
   margin: 0;
-}
-/* Hide scrollbar but allow scrolling */
-html,
-body {
-  background-color: var(--background);
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-  overflow: -moz-scrollbars-none; /* older Firefox */
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+  padding: 0;
 }
 
 :root {
-  --text: black;
-  --text2: white;
-  --color1: #95f9e3;
-  --color2: #69ebd0;
-  --color3: #69ebd0;
-  --color4: #558564;
-  --color5: #564946;
-  --color6: #f0ead2;
-  --color7: #dde5b6;
-  --color8: #adc178;
-  --color9: #a98467;
-  --color10: #6c584c;
+  /* Emerald Palette */
+  --primary-50: #ecfdf5;
+  --primary-100: #d1fae5;
+  --primary-200: #a7f3d0;
+  --primary-300: #6ee7b7;
+  --primary-400: #34d399;
+  --primary-500: #10b981;
+  --primary-600: #059669;
+  --primary-700: #047857;
+  --primary-800: #065f46;
+  --primary-900: #064e3b;
+  --primary-950: #022c22;
+
+  --text-main: var(--primary-950);
+  --text-muted: var(--primary-800);
+  --text-light: #ffffff;
+
+  --bg-gradient-1: #064e3b;
+  --bg-gradient-2: #065f46;
+  --bg-gradient-3: #047857;
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-blur: blur(12px);
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
-body {
-  margin: 0;
-  font-family: system-ui, Arial, sans-serif;
-}
-/* Animated Background */
-body {
-  margin: 0;
-  background: linear-gradient(
-    -45deg,
-    var(--color4),
-    var(--color7),
-    var(--color8),
-    var(--color9)
-  );
-  background-size: 1000% 1000%;
-  animation: gradientFlow 20s ease infinite;
-}
-
-/* Animation keyframes */
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-/* make the page fill the screen height */
 html,
 body {
   height: 100%;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-main);
+  background: radial-gradient(circle at top left, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3));
+  background-attachment: fixed;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* root stays flex column */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
 #root {
   min-height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* app container must also stretch */
 .app-container {
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
-/* wrapper also stretches */
 .content-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-/* THIS grows to push footer down */
 .main-content {
   flex: 1;
+  padding: 2rem 1rem;
 }
 
-/* remove this — no longer needed */
-body {
-  padding-bottom: 0;
+/* Glassmorphism Utility */
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
 }
-/* -------- MODAL OVERLAY -------- */
+
+/* Modal Styling */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
-
+  inset: 0;
+  background: rgba(2, 44, 34, 0.6);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  z-index: 9999; /* <-- IMPORTANT */
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* -------- MODAL BOX -------- */
 .modal-box {
-  background: var(--color6); /* <-- add a bg so it's visible */
-  border-radius: 14px;
-  padding: 16px 20px;
-
-  width: 95%;
-  max-width: 450px;
-
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-
-  animation: popup 0.2s ease-in-out;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* animation */
-@keyframes popup {
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary-100);
+  color: var(--primary-700);
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: var(--primary-200);
+  transform: rotate(90deg);
+}
+
+/* Base Animations */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
   }
+
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
-/* CLOSE BUTTON */
-.modal-close {
-  display: block;
-  margin-left: auto;
-  margin-bottom: 8px;
-  border-radius: 40px;
-  padding: 6px 14px;
-  border: none;
-  background: crimson;
-  color: white;
-  cursor: pointer;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gradientBg {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

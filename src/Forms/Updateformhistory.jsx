@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../Common_Componenets/Common_Input/Input";
 import Button from "../Common_Componenets/Common_Button/Button";
 import { useAttendance } from "../Context/AttendenceContext";
+import "./Updateformhistory.css";
 
 export default function Updateformhistory({ record, onSuccess }) {
   const { updateAttendance_by_History } = useAttendance();
@@ -31,11 +32,11 @@ export default function Updateformhistory({ record, onSuccess }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="update-history-form">
       <h2>Update Attendance</h2>
 
-      <div>
-        <label>
+      <div className="radio-group">
+        <label className="radio-item">
           <Input
             type="radio"
             name="status"
@@ -47,7 +48,7 @@ export default function Updateformhistory({ record, onSuccess }) {
           Present
         </label>
 
-        <label>
+        <label className="radio-item">
           <Input
             type="radio"
             name="status"
@@ -59,7 +60,7 @@ export default function Updateformhistory({ record, onSuccess }) {
           Absent
         </label>
 
-        <label>
+        <label className="radio-item">
           <Input
             type="radio"
             name="status"
@@ -80,3 +81,4 @@ export default function Updateformhistory({ record, onSuccess }) {
     </form>
   );
 }
+

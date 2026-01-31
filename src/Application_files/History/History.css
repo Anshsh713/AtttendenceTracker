@@ -1,118 +1,95 @@
 @import url("../../index.css");
 
-/* -------- PAGE -------- */
 .history-page {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  animation: fadeIn 0.6s ease-out;
 }
 
-/* -------- PAGE TITLE -------- */
 .history-page h1 {
-  color: var(--color10);
+  color: white;
   font-size: 2rem;
-  margin-bottom: 8px;
-  padding-left: 8px;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* -------- SUBJECT SCROLLER -------- */
 .subject-scroll {
   display: flex;
-  gap: 16px;
+  gap: 1.5rem;
   overflow-x: auto;
-  padding: 8px 4px 16px;
-  /* Removed scrollbar styling to let browser decide or keep hidden */
+  padding: 0.5rem 0.5rem 1.5rem;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  /* smooth scrolling on iOS */
 }
 
 .subject-scroll::-webkit-scrollbar {
   display: none;
 }
 
-/* -------- SUBJECT CARD -------- */
 .subject-chip {
-  min-width: 200px;
-  padding: 20px;
-  border-radius: 20px;
+  min-width: 220px;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
   text-align: center;
   cursor: pointer;
   flex-shrink: 0;
-
-  /* Modern Glass Effect */
-  background: rgba(255, 255, 255, 0.4);
-  /* Reduced blur for performance */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: all 0.25s ease;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .subject-chip:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-lg);
 }
 
-/* -------- ACTIVE CARD -------- */
 .subject-chip.active {
-  border: 2px solid var(--color4);
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 8px 25px rgba(85, 133, 100, 0.2);
+  border: 2px solid var(--primary-500);
+  background: white;
+  box-shadow: 0 0 0 4px var(--primary-100);
 }
 
-/* -------- SUBJECT NAME -------- */
 .subject-chip h3 {
-  margin: 0 0 12px 0;
-  color: var(--color10);
-  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+  color: var(--primary-900);
+  font-size: 1.125rem;
+  font-weight: 800;
 }
 
-/* -------- SELECTED TEXT -------- */
 .subject-selected {
-  color: var(--color4);
+  color: var(--primary-600);
   font-weight: 700;
   margin: 0;
-  padding: 8px;
-  background: rgba(85, 133, 100, 0.1);
-  border-radius: 8px;
+  padding: 0.5rem;
+  background: var(--primary-50);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
 }
 
-/* -------- EMPTY STATE -------- */
 .select-text {
   text-align: center;
-  color: var(--color5);
-  font-size: 1.1rem;
-  margin-top: 40px;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 30px;
-  border-radius: 20px;
-}
-
-/* =================____________
-   📱 RESPONSIVENESS
-   ================____________ */
-
-@media (max-width: 768px) {
-  .history-page {
-    padding: 16px;
-    gap: 16px;
-  }
+  color: var(--primary-800);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 3rem;
+  background: var(--glass-bg);
+  padding: 3rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--glass-border);
 }
 
 @media (max-width: 480px) {
   .subject-chip {
-    min-width: 160px;
-    padding: 16px;
+    min-width: 200px;
+    padding: 1.25rem;
   }
 
   .history-page h1 {
-    font-size: 1.6rem;
+    font-size: 1.75rem;
   }
 }

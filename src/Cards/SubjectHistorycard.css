@@ -1,74 +1,77 @@
 @import url("../index.css");
 
-/* -------- CARD -------- */
 .history-card {
-  max-width: 700px;
-  margin: 20px auto;
-  padding: 24px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: transform 0.25s ease;
+  max-width: 800px;
+  margin: 1.5rem auto;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 0.5s ease-out;
 }
 
 .history-card:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-lg);
 }
 
-/* -------- TITLES -------- */
 .history-card h2 {
-  margin: 0 0 8px 0;
-  color: var(--color10);
-  font-size: 1.6rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--primary-900);
+  font-size: 1.75rem;
   font-weight: 800;
+  letter-spacing: -0.025em;
 }
 
 .history-card h3 {
-  margin: 16px 0 8px 0;
-  color: var(--color10);
-  font-size: 1.2rem;
-  font-weight: 700;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  padding-bottom: 8px;
+  margin: 2rem 0 1rem 0;
+  color: var(--primary-900);
+  font-size: 1.25rem;
+  font-weight: 800;
+  border-bottom: 2px solid var(--primary-100);
+  padding-bottom: 0.75rem;
 }
 
-/* -------- META TEXT -------- */
 .history-card p {
-  margin: 6px 0;
-  color: var(--color5);
-  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: var(--primary-700);
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 
 .history-card p strong {
-  color: var(--color10);
+  color: var(--primary-950);
+  font-weight: 700;
 }
 
-/* -------- LIST -------- */
 .history-list {
   list-style: none;
   padding: 0;
-  margin-top: 16px;
+  margin-top: 1.25rem;
 }
 
 .history-item {
   background: rgba(255, 255, 255, 0.5);
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--primary-50);
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: background 0.2s ease;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
 }
 
 .history-item:hover {
-  background: rgba(255, 255, 255, 0.75);
+  background: white;
+  border-color: var(--primary-200);
+  box-shadow: var(--shadow-sm);
+  transform: scale(1.01);
 }
 
 @media (min-width: 600px) {
@@ -79,38 +82,40 @@
   }
 }
 
-/* status highlight */
 .history-status {
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 99px;
-  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 0.375rem 1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
   text-align: center;
-  min-width: 80px;
+  min-width: 90px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .history-status.present {
-  color: #1b5e20;
-  background: rgba(76, 175, 80, 0.15);
+  color: var(--primary-700);
+  background: var(--primary-100);
 }
 
 .history-status.absent {
-  color: #b71c1c;
-  background: rgba(244, 67, 54, 0.15);
+  color: #dc2626;
+  background: #fee2e2;
 }
 
 .history-status.canceled {
-  color: #e65100;
-  background: rgba(255, 152, 0, 0.15);
+  color: #d97706;
+  background: #fef3c7;
 }
 
-/* -------- RESPONSIVE -------- */
 @media (max-width: 480px) {
   .history-card {
-    padding: 16px;
+    padding: 1.25rem;
+    border-radius: 1rem;
   }
 
   .history-item {
-    font-size: 0.95rem;
+    font-size: 0.875rem;
+    padding: 1rem;
   }
 }

@@ -1,0 +1,64 @@
+@import url("../index.css");
+
+.update-history-form {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.update-history-form h2 {
+    margin: 0 0 1.5rem 0;
+    color: var(--primary-900);
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem 0 2rem 0;
+    flex-wrap: wrap;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--primary-800);
+    padding: 0.625rem 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 0.75rem;
+    border: 1px solid var(--primary-50);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.875rem;
+}
+
+.radio-item:hover {
+    background: white;
+    border-color: var(--primary-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.radio-item input[type="radio"] {
+    accent-color: var(--primary-600);
+    width: 1rem;
+    height: 1rem;
+}
+
+@media (max-width: 480px) {
+    .radio-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .radio-item {
+        justify-content: center;
+    }
+}

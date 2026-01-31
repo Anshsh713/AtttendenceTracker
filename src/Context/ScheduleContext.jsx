@@ -50,7 +50,7 @@ export const ScheduleProvider = ({ children }) => {
       const subjects = await scheduleService.getUserSubject(user.$id);
       const todayclass = await scheduleService.getTodayClasses(
         user.$id,
-        new Date(baseDate)
+        new Date(baseDate),
       );
       //const past = [];
       const future = [];
@@ -69,7 +69,7 @@ export const ScheduleProvider = ({ children }) => {
 
         const futureClasses = await scheduleService.getTodayClasses(
           user.$id,
-          futureDate
+          futureDate,
         );
 
         //  past.push({
@@ -82,6 +82,7 @@ export const ScheduleProvider = ({ children }) => {
           classes: futureClasses,
         });
       }
+
       console.log(subjects);
       setTodayClasses(todayclass || []);
       //setPastClasses(past || []);

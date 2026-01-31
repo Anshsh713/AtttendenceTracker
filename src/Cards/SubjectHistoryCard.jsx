@@ -45,13 +45,12 @@ export default function SubjectHistoryCard({ subjectId, close }) {
                 </span>
 
                 <span
-                  className={`history-status ${
-                    rec.Status === "Present"
-                      ? "present"
-                      : rec.Status === "Absent"
+                  className={`history-status ${rec.Status === "Present"
+                    ? "present"
+                    : rec.Status === "Absent"
                       ? "absent"
                       : "canceled"
-                  }`}
+                    }`}
                 >
                   {rec.Status}
                 </span>

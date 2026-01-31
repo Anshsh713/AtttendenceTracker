@@ -1,53 +1,62 @@
 @import url("../../index.css");
 
-/* -------- INPUT WRAPPER -------- */
+@import url("../../index.css");
+
 .input-container {
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-  margin: 10px 0;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 1rem 0;
 }
 
-/* -------- LABEL -------- */
 .input-label {
-  font-size: 1rem;
-  color: var(--color10);
+  font-size: 0.875rem;
+  color: var(--primary-800);
   font-weight: 600;
+  margin-left: 0.25rem;
 }
 
-/* -------- INPUT FIELD -------- */
 .input-field {
   width: 100%;
-  padding: 5px 14px;
-  border: none;
-  background-color: transparent;
-  color: var(--text);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--primary-200);
+  background: white;
+  color: var(--primary-950);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
-  font-size: 1rem;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Focus */
 .input-field:focus {
-  border-color: var(--color8);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-100);
+  background: white;
 }
 
-/* Disabled */
+.input-field::placeholder {
+  color: var(--primary-300);
+}
+
 .input-field:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  background: var(--primary-50);
 }
 
-/* Error state (optional — add className="error" when needed) */
 .input-field.error {
-  border-color: #c62828;
+  border-color: #ef4444;
 }
 
-/* Responsive */
+.input-field.error:focus {
+  box-shadow: 0 0 0 3px #fee2e2;
+}
+
 @media (max-width: 480px) {
   .input-field {
-    font-size: 0.9rem;
-    padding: 8px 12px;
+    padding: 0.625rem 0.875rem;
   }
 }
