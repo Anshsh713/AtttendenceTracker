@@ -364,6 +364,78 @@ export const AttendanceProvider = ({ children }) => {
       return false;
     }
   };
+
+  const autoMarkYesterdayMissedClasses = async () => {
+    if (!user || !allSubjects?.length) return;
+
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let anyMarked = false;
+    const subjectsToRefresh = new Set();
+
+    try {
+      const pastDate = new Date();
+      pastDate.setDate(pastDate.getDate() - 1); // Only Yesterday
+      const dateString = pastDate.toISOString().split("T")[0];
+      const dayName = dayNames[pastDate.getDay()];
+      const dayNameLower = dayName.toLowerCase();
+
+      for (const subject of allSubjects) {
+        if (!subject.ClassesSchedule) continue;
+
+        for (const scheduleStr of subject.ClassesSchedule) {
+          try {
+            const schedule = JSON.parse(scheduleStr);
+            if (schedule.day.toLowerCase() === dayNameLower) {
+              const response = await classAttendService.getAttendanceByDate(
+                user.$id,
+                dateString,
+                dayName
+              );
+
+              const alreadyMarked = response.some(rec =>
+                rec.SubjectID === subject.$id &&
+                rec.ClassTime === schedule.time
+              );
+
+              if (!alreadyMarked) {
+                console.log(`Auto-marking missed class from YESTERDAY: ${subject.SubjectName} on ${dateString}`);
+                await classAttendService.markAsNot(
+                  user.$id,
+                  subject.$id,
+                  subject.SubjectName,
+                  dayName,
+                  schedule.time,
+                  dateString
+                );
+                anyMarked = true;
+                subjectsToRefresh.add(subject.$id);
+              }
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+      }
+
+      if (anyMarked) {
+        const totalCache = JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
+        subjectsToRefresh.forEach(id => {
+          delete totalCache[id];
+          TotalAttendance(id);
+        });
+        localStorage.setItem("TotalAttendanceCache", JSON.stringify(totalCache));
+      }
+    } catch (error) {
+      console.error("❌ Auto-marking yesterday's missed classes failed:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && allSubjects?.length) {
+      autoMarkYesterdayMissedClasses();
+    }
+  }, [user, allSubjects]);
+
   return (
     <AttendanceContext.Provider
       value={{

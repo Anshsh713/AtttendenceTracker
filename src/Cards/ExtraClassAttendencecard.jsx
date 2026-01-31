@@ -47,13 +47,12 @@ export default function ExtraClasscard({ selectedDate }) {
             <p>
               Status:{" "}
               <span
-                className={`extra-status ${
-                  rec.Status === "Present"
+                className={`extra-status ${rec.Status === "Present"
                     ? "present"
                     : rec.Status === "Absent"
-                    ? "absent"
-                    : "canceled"
-                }`}
+                      ? "absent"
+                      : "canceled"
+                  }`}
               >
                 {rec.Status}
               </span>
@@ -79,11 +78,7 @@ export default function ExtraClasscard({ selectedDate }) {
                 <button
                   className="modal-close"
                   disabled={onloadingform}
-                  onClick={(e) => {
-                    if (e.target === e.currentTarget && !onloadingform) {
-                      setMistake(null);
-                    }
-                  }}
+                  onClick={() => setMistake(null)}
                 >
                   ✖
                 </button>

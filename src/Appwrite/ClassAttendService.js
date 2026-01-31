@@ -238,6 +238,47 @@ export class ClassAttendService {
     }
   }
 
+  async markAsNot(userId, SubjectId, SubjectName, day, time, date) {
+    try {
+      const existing = await this.databases.listDocuments(
+        this.databasesId,
+        this.attendClassesCollection,
+        [
+          Query.equal("UserID", userId),
+          Query.equal("SubjectID", SubjectId),
+          Query.equal("ClassDate", date),
+          Query.equal("ClassDay", day),
+          Query.equal("ClassTime", time),
+        ],
+      );
+
+      if (existing.documents.length > 0) {
+        console.warn("Attendance already exists");
+        return { success: false };
+      }
+
+      const res = await this.databases.createDocument(
+        this.databasesId,
+        this.attendClassesCollection,
+        "unique()",
+        {
+          UserID: userId,
+          SubjectID: SubjectId,
+          SubjectName: SubjectName,
+          ClassDay: day,
+          ClassTime: time,
+          ClassDate: date,
+          Status: "NOT",
+        },
+      );
+
+      return { success: true, data: res };
+    } catch (error) {
+      console.error("Auto NOT error:", error.message);
+      throw error;
+    }
+  }
+
   async TotalAttendance(userId, subjectId) {
     try {
       const response = await this.databases.listDocuments(
@@ -251,7 +292,9 @@ export class ClassAttendService {
       const totalClasses = docs.length;
 
       const totalPresent = docs.filter((d) => d.Status === "Present").length;
-      const totalAbsent = docs.filter((d) => d.Status === "Absent").length;
+      const totalAbsent = docs.filter(
+        (d) => d.Status === "Absent" || d.Status === "NOT",
+      ).length;
       const totalCanceled = docs.filter((d) => d.Status === "Canceled").length;
 
       // Classes that actually count toward attendance

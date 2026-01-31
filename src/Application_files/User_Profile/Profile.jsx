@@ -56,7 +56,7 @@ export default function Profile() {
     return (
       <div className="loading">
         <i className="fa-solid fa-spinner fa-spin-pulse"></i>
-        <p>Loading Profile</p>
+        <p>Loading Profile...</p>
       </div>
     );
 
@@ -103,8 +103,17 @@ export default function Profile() {
       </div>
 
       {showform && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div
+          className="modal-overlay"
+          onClick={() => !onloadingform && setshowform(false)}
+        >
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setshowform(false)}
+            >
+              ✖
+            </button>
             <UserProfileform
               onstop={setOnloadingform}
               onprofileupdate={async () => {
@@ -112,16 +121,23 @@ export default function Profile() {
                 setshowform(false);
               }}
             />
-            <button className="close-btn" onClick={toggleform}>
-              close
-            </button>
           </div>
         </div>
       )}
 
       {editingSubject && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div
+          className="modal-overlay"
+          onClick={() => !onloadingform && setEditingSubject(null)}
+        >
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              disabled={onloadingform}
+              onClick={() => setEditingSubject(null)}
+            >
+              ✖
+            </button>
             <UpdateAttendencefrom
               editSubject={editingSubject}
               onstop={setOnloadingform}
@@ -130,13 +146,6 @@ export default function Profile() {
                 setEditingSubject(null);
               }}
             />
-            <button
-              className="close-btn"
-              disabled={onloadingform}
-              onClick={() => setEditingSubject(null)}
-            >
-              close
-            </button>
           </div>
         </div>
       )}
@@ -147,7 +156,7 @@ export default function Profile() {
 
           {!allSubjects || allSubjects.length === 0 ? (
             <div className="notfound">
-              <p className="empty-text">Subject Not Found</p>
+              <p className="empty-text">Add a Subject</p>
             </div>
           ) : (
             allSubjects.map((subj) => (
@@ -191,16 +200,21 @@ export default function Profile() {
         </>
       )}
       {quickSubject && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div
+          className="modal-overlay"
+          onClick={() => setQuickSubject(null)}
+        >
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setQuickSubject(null)}
+            >
+              ✖
+            </button>
             <QuickAttendanceForm
               subject={quickSubject}
               onClose={() => setQuickSubject(null)}
             />
-
-            <button className="close-btn" onClick={() => setQuickSubject(null)}>
-              close
-            </button>
           </div>
         </div>
       )}

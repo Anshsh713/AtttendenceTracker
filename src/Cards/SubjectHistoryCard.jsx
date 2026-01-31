@@ -47,7 +47,7 @@ export default function SubjectHistoryCard({ subjectId, close }) {
                 <span
                   className={`history-status ${rec.Status === "Present"
                     ? "present"
-                    : rec.Status === "Absent"
+                    : rec.Status === "Absent" || rec.Status === "NOT"
                       ? "absent"
                       : "canceled"
                     }`}
