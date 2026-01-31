@@ -365,19 +365,46 @@ export const AttendanceProvider = ({ children }) => {
     }
   };
 
-  const autoMarkYesterdayMissedClasses = async () => {
-    if (!user || !allSubjects?.length) return;
+  const todayKey = `autoMarked_${today}`;
+  const [hasMarkedYesterday, setHasMarkedYesterday] = useState(
+    localStorage.getItem(todayKey) === "true",
+  );
 
-    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const autoMarkYesterdayMissedClasses = async () => {
+    if (!user || !allSubjects?.length || hasMarkedYesterday) return;
+    setHasMarkedYesterday(true);
+    localStorage.setItem(todayKey, "true");
+
+    const dayNames = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     let anyMarked = false;
     const subjectsToRefresh = new Set();
 
     try {
       const pastDate = new Date();
-      pastDate.setDate(pastDate.getDate() - 1); // Only Yesterday
+      pastDate.setDate(pastDate.getDate() - 1);
       const dateString = pastDate.toISOString().split("T")[0];
       const dayName = dayNames[pastDate.getDay()];
       const dayNameLower = dayName.toLowerCase();
+
+      // Fetch ALL attendance records for yesterday once
+      const yesterdayAttendance = await classAttendService.getAttendanceByDate(
+        user.$id,
+        dateString,
+        dayName,
+      );
+
+      // Create a lookup set for efficiency: "SubjectID_Time"
+      const markedSet = new Set(
+        yesterdayAttendance.map((rec) => `${rec.SubjectID}_${rec.ClassTime}`),
+      );
 
       for (const subject of allSubjects) {
         if (!subject.ClassesSchedule) continue;
@@ -386,27 +413,22 @@ export const AttendanceProvider = ({ children }) => {
           try {
             const schedule = JSON.parse(scheduleStr);
             if (schedule.day.toLowerCase() === dayNameLower) {
-              const response = await classAttendService.getAttendanceByDate(
-                user.$id,
-                dateString,
-                dayName
-              );
+              const lookupKey = `${subject.$id}_${schedule.time}`;
 
-              const alreadyMarked = response.some(rec =>
-                rec.SubjectID === subject.$id &&
-                rec.ClassTime === schedule.time
-              );
+              if (!markedSet.has(lookupKey)) {
+                console.log(
+                  `Auto-marking NOT for: ${subject.SubjectName} at ${schedule.time} on ${dateString}`,
+                );
 
-              if (!alreadyMarked) {
-                console.log(`Auto-marking missed class from YESTERDAY: ${subject.SubjectName} on ${dateString}`);
                 await classAttendService.markAsNot(
                   user.$id,
                   subject.$id,
                   subject.SubjectName,
                   dayName,
                   schedule.time,
-                  dateString
+                  dateString,
                 );
+
                 anyMarked = true;
                 subjectsToRefresh.add(subject.$id);
               }
@@ -418,15 +440,20 @@ export const AttendanceProvider = ({ children }) => {
       }
 
       if (anyMarked) {
-        const totalCache = JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
-        subjectsToRefresh.forEach(id => {
+        const totalCache =
+          JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
+        subjectsToRefresh.forEach((id) => {
           delete totalCache[id];
-          TotalAttendance(id);
+          TotalAttendance(id); // Trigger refresh
         });
-        localStorage.setItem("TotalAttendanceCache", JSON.stringify(totalCache));
+        localStorage.setItem(
+          "TotalAttendanceCache",
+          JSON.stringify(totalCache),
+        );
       }
     } catch (error) {
-      console.error("❌ Auto-marking yesterday's missed classes failed:", error);
+      console.error("❌ Auto-marking failed:", error);
+      setHasMarkedYesterday(false); // Reset on error to allow retry
     }
   };
 

@@ -35,6 +35,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
     totalPresent = 0,
     totalAbsent = 0,
     totalCanceled = 0,
+    totalNot = 0,
     attendancePercentage = 0,
   } = stats;
 
@@ -123,9 +124,9 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
 
             <Tooltip
               contentStyle={{
-                borderRadius: '12px',
-                border: 'none',
-                boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'
+                borderRadius: "12px",
+                border: "none",
+                boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
               }}
             />
 
@@ -138,7 +139,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
                 fontSize: "24px",
                 fontWeight: "800",
                 fill: "var(--primary-900)",
-                fontFamily: "inherit"
+                fontFamily: "inherit",
               }}
             >
               {formatted}%
@@ -146,11 +147,11 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
           </PieChart>
         </div>
 
-
         <div className="attendance-colored-stats">
           <span className="present-box">{totalPresent}</span>
           <span className="absent-box">{totalAbsent}</span>
           <span className="cancel-box">{totalCanceled}</span>
+          <span className="not-box">{totalNot}</span>
         </div>
 
         <div className="attendance-stats">

@@ -56,7 +56,8 @@
 
 .present-box,
 .absent-box,
-.cancel-box {
+.cancel-box,
+.not-box {
   padding: 0.5rem 1rem;
   border-radius: 999px;
   min-width: 70px;
@@ -80,6 +81,11 @@
   background: var(--primary-50);
   color: var(--primary-700);
   border: 1px solid var(--primary-200);
+}
+
+.not-box {
+  background-color: rgb(253, 195, 88);
+  color: white;
 }
 
 .attendance-stats {

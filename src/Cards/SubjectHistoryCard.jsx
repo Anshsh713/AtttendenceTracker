@@ -18,8 +18,19 @@ export default function SubjectHistoryCard({ subjectId, close }) {
     if (subjectId) getHistory(subjectId);
   }, [subjectId]);
 
-  if (loadingHistory) return <p>Loading history...</p>;
-  if (!history) return <p>No history found.</p>;
+  if (loadingHistory)
+    return (
+      <div className="load">
+        <i className="fa-solid fa-spinner fa-spin-pulse"></i>
+        <p>Loading History...</p>
+      </div>
+    );
+  if (!history)
+    return (
+      <div className="subjectNot">
+        <p>No history found.</p>
+      </div>
+    );
 
   return (
     <div className="history-card">
@@ -39,18 +50,22 @@ export default function SubjectHistoryCard({ subjectId, close }) {
           {history.attendance.map((rec, index) => (
             <li key={rec.$id} className="history-item">
               <span>
-                <strong>{rec.ClassDate}</strong> — {rec.ClassDay} {rec.ClassTime}
+                <strong>{rec.ClassDate}</strong> — {rec.ClassDay}{" "}
+                {rec.ClassTime}
               </span>
 
               <span
-                className={`history-status ${rec.Status === "Present"
+                className={`history-status ${
+                  rec.Status === "Present"
                     ? "present"
-                    : rec.Status === "Absent" || rec.Status === "NOT"
-                      ? "absent"
-                      : "canceled"
-                  }`}
+                    : rec.Status === "Absent"
+                    ? "absent"
+                    : rec.Status === "NOT"
+                    ? "not"
+                    : "canceled"
+                }`}
               >
-                {rec.Status}
+                {rec.Status === "NOT" ? "Missed (Auto)" : rec.Status}
               </span>
 
               <Button title="Mistake" onClick={() => setMistake(rec)} />
@@ -60,10 +75,7 @@ export default function SubjectHistoryCard({ subjectId, close }) {
       )}
 
       {mistake && (
-        <div
-          className="modal-overlay"
-          onClick={() => setMistake(null)}
-        >
+        <div className="modal-overlay" onClick={() => setMistake(null)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setMistake(null)}>
               ✖

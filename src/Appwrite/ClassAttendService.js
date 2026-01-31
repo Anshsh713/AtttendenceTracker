@@ -292,14 +292,12 @@ export class ClassAttendService {
       const totalClasses = docs.length;
 
       const totalPresent = docs.filter((d) => d.Status === "Present").length;
-      const totalAbsent = docs.filter(
-        (d) => d.Status === "Absent" || d.Status === "NOT",
-      ).length;
+      const totalAbsent = docs.filter((d) => d.Status === "Absent").length;
       const totalCanceled = docs.filter((d) => d.Status === "Canceled").length;
+      const totalNot = docs.filter((d) => d.Status === "NOT").length;
 
       // Classes that actually count toward attendance
       const effectiveClasses = totalPresent + totalAbsent;
-
 
       const attendancePercentage =
         effectiveClasses === 0
@@ -311,6 +309,7 @@ export class ClassAttendService {
         totalPresent,
         totalAbsent,
         totalCanceled,
+        totalNot,
         attendancePercentage,
       };
     } catch (error) {
@@ -321,6 +320,7 @@ export class ClassAttendService {
         totalPresent: 0,
         totalAbsent: 0,
         totalCanceled: 0,
+        totalNot: 0,
         attendancePercentage: 0,
       };
     }
