@@ -57,13 +57,24 @@
 
 @media (max-width: 480px) {
   .header-container {
-    width: 90%;
+    width: 95%;
     top: 1rem;
-    padding: 0.375rem;
+    padding: 0.25rem;
   }
 
   .nav-link {
-    padding: 0.5rem 1rem;
-    font-size: 0.8125rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .nav-link {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .nav-list {
+    gap: 0.25rem;
   }
 }

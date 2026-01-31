@@ -41,12 +41,10 @@ body {
   height: 100%;
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   color: var(--text-main);
-  background: radial-gradient(
-    circle at top left,
-    var(--bg-gradient-1),
-    var(--bg-gradient-2),
-    var(--bg-gradient-3)
-  );
+  background: radial-gradient(circle at top left,
+      var(--bg-gradient-1),
+      var(--bg-gradient-2),
+      var(--bg-gradient-3));
   background-attachment: fixed;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -91,6 +89,18 @@ body {
   padding: 2rem 1rem;
 }
 
+@media (max-width: 640px) {
+  .main-content {
+    padding: 1.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .main-content {
+    padding: 1rem 0.5rem;
+  }
+}
+
 /* Glassmorphism Utility */
 .glass-effect {
   background: var(--glass-bg);
@@ -121,6 +131,14 @@ body {
   max-width: 500px;
   position: relative;
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 480px) {
+  .modal-box {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: 95%;
+  }
 }
 
 .modal-close {

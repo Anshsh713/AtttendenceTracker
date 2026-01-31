@@ -4,9 +4,11 @@
   margin-top: 2rem;
   animation: fadeIn 0.5s ease-out;
 }
+
 .subjectNot {
   margin-top: 2rem;
 }
+
 .extra-classes-wrapper h2 {
   color: var(--primary-900);
   margin-bottom: 1.25rem;
@@ -14,6 +16,13 @@
   font-weight: 800;
   letter-spacing: -0.025em;
   padding-left: 0.25rem;
+}
+
+@media (max-width: 480px) {
+  .extra-classes-wrapper h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .extra-class-card {
@@ -83,7 +92,12 @@
 
 @media (max-width: 480px) {
   .extra-class-card {
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 1rem;
+    gap: 0.5rem;
+  }
+
+  .extra-class-card p {
+    font-size: 0.875rem;
   }
 }

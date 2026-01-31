@@ -13,6 +13,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: fadeIn 0.5s ease-out;
 }
+
 .load {
   width: 100%;
   height: 20vh;
@@ -23,6 +24,7 @@
   color: rgba(255, 255, 255, 0.603);
   gap: 10px;
 }
+
 .load i {
   font-size: 5rem;
 }
@@ -44,6 +46,19 @@
   font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: -0.025em;
+}
+
+@media (max-width: 480px) {
+  .history-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .history-card h3 {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
 }
 
 .history-card h3 {

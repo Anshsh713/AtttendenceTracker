@@ -101,6 +101,21 @@
 /* -------- RESPONSIVE -------- */
 @media (max-width: 480px) {
   .update-attendance-form {
-    padding: 20px;
+    padding: 0.5rem;
+  }
+
+  .update-attendance-form h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .update-radio-group {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .update-radio-item {
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
   }
 }

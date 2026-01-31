@@ -2,10 +2,7 @@
 
 /* -------- FORM CARD -------- */
 .profile-form {
-  /* Removed fixed height */
   min-height: 400px;
-  height: 550px;
-  /* Optional min height */
   width: 100%;
   max-width: 500px;
   margin: 20px auto;
@@ -18,6 +15,20 @@
 
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 480px) {
+  .profile-form {
+    padding: 1.5rem;
+    margin: 10px auto;
+    border-radius: 1.25rem;
+    min-height: auto;
+  }
+
+  .profile-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 }
 
 /* -------- TITLE -------- */
