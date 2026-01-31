@@ -32,15 +32,21 @@
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 html,
 body {
   height: 100%;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   color: var(--text-main);
-  background: radial-gradient(circle at top left, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3));
+  background: radial-gradient(
+    circle at top left,
+    var(--bg-gradient-1),
+    var(--bg-gradient-2),
+    var(--bg-gradient-3)
+  );
   background-attachment: fixed;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -113,15 +119,14 @@ body {
   padding: 2.5rem;
   width: 90%;
   max-width: 500px;
-  box-shadow: var(--shadow-lg);
   position: relative;
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 1.2rem;
+  right: 0.1rem;
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;

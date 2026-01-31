@@ -37,60 +37,47 @@ export default function SubjectHistoryCard({ subjectId, close }) {
       ) : (
         <ul className="history-list">
           {history.attendance.map((rec, index) => (
-            <React.Fragment key={rec.$id}>
-              <li className="history-item">
-                <span>
-                  <strong>{rec.ClassDate}</strong> — {rec.ClassDay}{" "}
-                  {rec.ClassTime}
-                </span>
+            <li key={rec.$id} className="history-item">
+              <span>
+                <strong>{rec.ClassDate}</strong> — {rec.ClassDay} {rec.ClassTime}
+              </span>
 
-                <span
-                  className={`history-status ${rec.Status === "Present"
+              <span
+                className={`history-status ${rec.Status === "Present"
                     ? "present"
                     : rec.Status === "Absent" || rec.Status === "NOT"
                       ? "absent"
                       : "canceled"
-                    }`}
-                >
-                  {rec.Status}
-                </span>
+                  }`}
+              >
+                {rec.Status}
+              </span>
 
-                <Button title="Mistake" onClick={() => togglemistake(index)} />
-              </li>
-
-              {mistake === index && (
-                <div
-                  className="modal-overlay"
-                  onClick={(e) => {
-                    if (e.target === e.currentTarget) {
-                      setMistake(null);
-                    }
-                  }}
-                >
-                  <div
-                    className="modal-box"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <button
-                      className="modal-close"
-                      onClick={() => setMistake(null)}
-                    >
-                      ✖
-                    </button>
-
-                    <Updateformhistory
-                      record={rec}
-                      onSuccess={async (data) => {
-                        const success = await getHistory(subjectId);
-                        setMistake(null);
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-            </React.Fragment>
+              <Button title="Mistake" onClick={() => setMistake(rec)} />
+            </li>
           ))}
         </ul>
+      )}
+
+      {mistake && (
+        <div
+          className="modal-overlay"
+          onClick={() => setMistake(null)}
+        >
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setMistake(null)}>
+              ✖
+            </button>
+
+            <Updateformhistory
+              record={mistake}
+              onSuccess={async () => {
+                await getHistory(subjectId);
+                setMistake(null);
+              }}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

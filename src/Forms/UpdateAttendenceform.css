@@ -83,7 +83,7 @@
   width: 100%;
   border-radius: 99px;
   padding: 12px 24px;
-  background: var(--color4);
+  background: var(--primary-600);
   color: white;
   border: none;
   cursor: pointer;

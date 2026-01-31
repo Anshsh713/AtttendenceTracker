@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../Common_Componenets/Common_Input/Input";
 import Button from "../Common_Componenets/Common_Button/Button";
 import { useAttendance } from "../Context/AttendenceContext";
+import "./Attendenceform.css";
 
 export default function QuickAttendanceForm({ subject, onClose }) {
   const { QuickAttendance } = useAttendance();
@@ -41,6 +42,7 @@ export default function QuickAttendanceForm({ subject, onClose }) {
 
     for (let item of entries) {
       if (item.date >= today) {
+        alert("Date must be in the past!");
         return;
       }
     }
@@ -72,9 +74,11 @@ export default function QuickAttendanceForm({ subject, onClose }) {
     <form onSubmit={handleSubmit} className="add-subject-form">
       <h2>Quick Attendance</h2>
 
-      <p>
-        <strong>{subject.SubjectName}</strong>
-      </p>
+      <div className="subject-info" style={{ textAlign: 'center', marginBottom: '1rem' }}>
+        <p style={{ color: 'var(--primary-700)', fontWeight: '800', fontSize: '1.2rem' }}>
+          {subject.SubjectName}
+        </p>
+      </div>
 
       <Input
         label="Number of Classes"
@@ -84,39 +88,42 @@ export default function QuickAttendanceForm({ subject, onClose }) {
         onChange={(e) => handleCountChange(Number(e.target.value))}
       />
 
-      {entries.map((item, index) => (
-        <div key={index} className="schedule-row">
-          <Input
-            type="date"
-            value={item.date}
-            max={new Date(Date.now() - 86400000).toISOString().split("T")[0]}
-            onChange={(e) => handleChange(index, "date", e.target.value)}
-            required
-          />
+      <div className="schedule-list">
+        {entries.map((item, index) => (
+          <div key={index} className="schedule-row">
+            <Input
+              type="date"
+              value={item.date}
+              max={new Date(Date.now() - 86400000).toISOString().split("T")[0]}
+              onChange={(e) => handleChange(index, "date", e.target.value)}
+              required
+            />
 
-          <Input
-            type="time"
-            value={item.time}
-            onChange={(e) => handleChange(index, "time", e.target.value)}
-            required
-          />
+            <Input
+              type="time"
+              value={item.time}
+              onChange={(e) => handleChange(index, "time", e.target.value)}
+              required
+            />
 
-          <select
-            value={item.status}
-            onChange={(e) => handleChange(index, "status", e.target.value)}
-          >
-            <option>Present</option>
-            <option>Absent</option>
-            <option>Canceled</option>
-          </select>
-        </div>
-      ))}
+            <select
+              value={item.status}
+              onChange={(e) => handleChange(index, "status", e.target.value)}
+            >
+              <option>Present</option>
+              <option>Absent</option>
+              <option>Canceled</option>
+            </select>
+          </div>
+        ))}
+      </div>
 
-      <Button
+      <button
         type="submit"
-        title={saving ? "Saving..." : "Mark Attendance"}
         disabled={saving}
-      />
+      >
+        {saving ? "Saving..." : "Mark Attendance"}
+      </button>
     </form>
   );
 }
