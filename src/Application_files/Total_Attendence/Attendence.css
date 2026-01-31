@@ -128,3 +128,107 @@
     text-align: center;
   }
 }
+@media (max-width: 425px) {
+  .attendance-total-card {
+    padding: 1.1rem;
+    border-radius: 1.2rem;
+    min-height: auto;
+  }
+
+  .attendance-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .donut-wrapper {
+    margin: 0.5rem 0;
+  }
+
+  .attendance-colored-stats {
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .present-box,
+  .absent-box,
+  .cancel-box,
+  .not-box {
+    min-width: 60px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 375px) {
+  .attendance-total-card {
+    padding: 1rem;
+  }
+
+  .attendance-header h2 {
+    font-size: 1rem;
+  }
+
+  .attendance-stats {
+    padding: 0.75rem;
+  }
+
+  .attendance-stats p {
+    font-size: 0.8rem;
+  }
+
+  .attendance-status {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 320px) {
+  .attendance-total-card {
+    padding: 0.8rem;
+    border-radius: 1rem;
+  }
+
+  .attendance-header h2 {
+    font-size: 0.95rem;
+  }
+
+  .attendance-colored-stats {
+    gap: 0.4rem;
+  }
+
+  .present-box,
+  .absent-box,
+  .cancel-box,
+  .not-box {
+    min-width: 48%;
+    font-size: 0.7rem;
+  }
+
+  .attendance-status {
+    font-size: 0.75rem;
+  }
+}
+.attendance-chart {
+  max-width: 100%;
+}
+
+@media (max-width: 425px) {
+  .attendance-chart {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 320px) {
+  .attendance-chart {
+    transform: scale(0.85);
+  }
+}
+@media (max-width: 375px) {
+  .modal-box {
+    padding: 1rem;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .modal-close {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+}

@@ -13,9 +13,12 @@
 /* -------- TITLE -------- */
 .update-extra-form h2 {
   margin: 0 0 20px 0;
-  color: var(--color10);
   font-size: 1.4rem;
   font-weight: 800;
+}
+
+.modal-box .update-extra-form h2 {
+  color: var(--primary-900);
 }
 
 /* -------- RADIO GROUP -------- */
@@ -65,7 +68,7 @@
   width: 100%;
   border-radius: 99px;
   padding: 12px 24px;
-  background: var(--color4);
+  background: var(--primary-600);
   color: white;
   border: none;
   cursor: pointer;
@@ -84,5 +87,15 @@
 @media (max-width: 480px) {
   .update-extra-form {
     padding: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .modal-box .update-extra-form h2 {
+    font-size: 1.1rem;
+  }
+}
+@media (max-width: 320px) {
+  .modal-box .update-extra-form h2 {
+    font-size: 1rem;
   }
 }

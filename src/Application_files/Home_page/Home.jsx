@@ -72,12 +72,12 @@ function Home() {
         <div className="classes-section">
           <div className="nav-row">
             <Button
-              title="⬅ Previous"
+              title="⬅"
               onClick={() => setDayOffset((d) => Math.max(d - 1, 0))}
             />
             <strong>{getDayLabel()}</strong>
             <Button
-              title="Next ➡"
+              title="➡"
               onClick={() => setDayOffset((d) => Math.min(d + 1, 2))}
             />
           </div>

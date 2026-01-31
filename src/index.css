@@ -41,10 +41,12 @@ body {
   height: 100%;
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   color: var(--text-main);
-  background: radial-gradient(circle at top left,
-      var(--bg-gradient-1),
-      var(--bg-gradient-2),
-      var(--bg-gradient-3));
+  background: radial-gradient(
+    circle at top left,
+    var(--bg-gradient-1),
+    var(--bg-gradient-2),
+    var(--bg-gradient-3)
+  );
   background-attachment: fixed;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -157,6 +159,7 @@ body {
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  z-index: 1000;
 }
 
 .modal-close:hover {
@@ -198,5 +201,19 @@ body {
 
   100% {
     background-position: 0% 50%;
+  }
+}
+
+@media (max-width: 375px) {
+  .modal-box {
+    padding: 1rem;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .modal-close {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
   }
 }

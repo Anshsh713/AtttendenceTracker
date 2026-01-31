@@ -100,7 +100,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
           <Button title="+ Extra Class" onClick={toggleExtraClass} />
         </div>
         <div className="donut-wrapper">
-          <PieChart width={320} height={260}>
+          <PieChart width={260} height={230}>
             <Pie
               data={data}
               cx="50%"

@@ -79,25 +79,27 @@
 
 /* -------- SUBMIT BUTTON -------- */
 .profile-form button[type="submit"] {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  margin-top: 32px;
-  border-radius: 99px;
-  padding: 14px 24px;
-  background: var(--color4);
+  margin-top: 1.5rem;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: var(--primary-600);
   color: white;
   border: none;
   cursor: pointer;
   font-weight: 700;
-  font-size: 1.1rem;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 25px rgba(85, 133, 100, 0.3);
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
 }
 
 .profile-form button[type="submit"]:hover {
+  background: var(--primary-700);
   transform: translateY(-2px);
-  background: var(--color10);
-  box-shadow: 0 12px 30px rgba(85, 133, 100, 0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 /* -------- RESPONSIVE -------- */
@@ -106,4 +108,92 @@
     padding: 20px;
     border-radius: 20px;
   }
+}
+@media (max-width: 425px) {
+  .profile-form {
+    padding: 1.2rem;
+    border-radius: 1.2rem;
+  }
+
+  .profile-form h2 {
+    font-size: 1.35rem;
+  }
+
+  .profile-form label {
+    font-size: 0.85rem;
+  }
+
+  .profile-form select,
+  .profile-form input {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  .profile-form button[type="submit"] {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}
+@media (max-width: 375px) {
+  .profile-form {
+    padding: 1rem;
+  }
+
+  .profile-form h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .profile-form label {
+    font-size: 0.8rem;
+  }
+
+  .profile-form select,
+  .profile-form input {
+    padding: 9px 12px;
+    font-size: 0.85rem;
+  }
+
+  .profile-form button[type="submit"] {
+    font-size: 0.95rem;
+    padding: 11px 18px;
+  }
+}
+@media (max-width: 320px) {
+  .profile-form {
+    padding: 0.8rem;
+    border-radius: 1rem;
+  }
+
+  .profile-form h2 {
+    font-size: 1.05rem;
+  }
+
+  .profile-form label {
+    font-size: 0.75rem;
+  }
+
+  .profile-form select,
+  .profile-form input {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .profile-form button[type="submit"] {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+  }
+}
+.profile-form input,
+.profile-form select {
+  font-size: 16px;
+}
+.profile-form button,
+.profile-form select {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.profile-form {
+  max-width: 100%;
+  overflow-x: hidden;
 }
