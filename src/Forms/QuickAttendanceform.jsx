@@ -74,8 +74,17 @@ export default function QuickAttendanceForm({ subject, onClose }) {
     <form onSubmit={handleSubmit} className="add-subject-form">
       <h2>Quick Attendance</h2>
 
-      <div className="subject-info" style={{ textAlign: 'center', marginBottom: '1rem' }}>
-        <p style={{ color: 'var(--primary-700)', fontWeight: '800', fontSize: '1.2rem' }}>
+      <div
+        className="subject-info"
+        style={{ textAlign: "center", marginBottom: "1rem" }}
+      >
+        <p
+          style={{
+            color: "var(--primary-700)",
+            fontWeight: "800",
+            fontSize: "1.2rem",
+          }}
+        >
           {subject.SubjectName}
         </p>
       </div>
@@ -86,6 +95,7 @@ export default function QuickAttendanceForm({ subject, onClose }) {
         min="1"
         value={count}
         onChange={(e) => handleCountChange(Number(e.target.value))}
+        required
       />
 
       <div className="schedule-list">
@@ -109,6 +119,7 @@ export default function QuickAttendanceForm({ subject, onClose }) {
             <select
               value={item.status}
               onChange={(e) => handleChange(index, "status", e.target.value)}
+              required
             >
               <option>Present</option>
               <option>Absent</option>
@@ -118,10 +129,7 @@ export default function QuickAttendanceForm({ subject, onClose }) {
         ))}
       </div>
 
-      <button
-        type="submit"
-        disabled={saving}
-      >
+      <button type="submit" disabled={saving}>
         {saving ? "Saving..." : "Mark Attendance"}
       </button>
     </form>

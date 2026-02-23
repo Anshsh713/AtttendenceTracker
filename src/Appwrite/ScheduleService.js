@@ -21,7 +21,10 @@ export class ScheduleService {
       const existing = await this.databases.listDocuments(
         this.databasesId,
         this.ScheduleCollection,
-        [Query.equal("UserID", userId), Query.equal("SubjectName", subjectName)]
+        [
+          Query.equal("UserID", userId),
+          Query.equal("SubjectName", subjectName),
+        ],
       );
       if (existing.documents.length > 0) {
         console.warn("Subject already exists");
@@ -39,7 +42,7 @@ export class ScheduleService {
           UserID: userId,
           SubjectName: subjectName,
           ClassesSchedule: classesSchedule,
-        }
+        },
       );
       return this.getUserSubject(userId);
     } catch (error) {
@@ -58,7 +61,7 @@ export class ScheduleService {
           UserID: userId,
           SubjectName: subjectName,
           ClassesSchedule: classesSchedule,
-        }
+        },
       );
     } catch (error) {
       console.error("Not able to Update your Subject ", error.message);
@@ -71,7 +74,7 @@ export class ScheduleService {
       const response = await this.databases.listDocuments(
         this.databasesId,
         this.ScheduleCollection,
-        [Query.equal("UserID", userId)]
+        [Query.equal("UserID", userId)],
       );
       return response.documents;
     } catch (error) {
@@ -85,7 +88,7 @@ export class ScheduleService {
       return await this.databases.deleteDocument(
         this.databasesId,
         this.ScheduleCollection,
-        SubjectId
+        SubjectId,
       );
     } catch (error) {
       console.log("Unable to Delete your Subject");
@@ -113,7 +116,7 @@ export class ScheduleService {
       const response = await this.databases.listDocuments(
         conf.appwriteDatabaseID,
         this.ScheduleCollection,
-        [Query.equal("UserID", userId)]
+        [Query.equal("UserID", userId)],
       );
 
       const todaysClasses = [];
@@ -154,22 +157,20 @@ export class ScheduleService {
   }
 
   async getAttendanceHistory(subjectId, userId) {
-    console.log("📡 getAttendanceHistory called with:", { subjectId, userId });
-
     try {
       const attendanceResponse = await this.databases.listDocuments(
         this.databasesId,
         conf.appwriteAttendClassesCollectionID,
-        [Query.equal("UserID", userId), Query.equal("SubjectID", subjectId)]
+        [
+          Query.equal("UserID", userId),
+          Query.equal("SubjectID", subjectId),
+          Query.limit(1000),
+        ],
       );
-
-      console.log("📡 RAW ATTENDANCE RESPONSE =", attendanceResponse);
 
       const sorted = attendanceResponse.documents.sort(
-        (a, b) => new Date(b.ClassDate) - new Date(a.ClassDate)
+        (a, b) => new Date(b.ClassDate) - new Date(a.ClassDate),
       );
-
-      console.log("🧾 SORTED ATTENDANCE =", sorted);
 
       return sorted;
     } catch (error) {

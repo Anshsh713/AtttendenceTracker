@@ -31,6 +31,7 @@ export default function UpdateAttendenceform({ updateClass, onstop }) {
             value="Present"
             checked={status === "Present"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Present
         </label>
@@ -43,6 +44,7 @@ export default function UpdateAttendenceform({ updateClass, onstop }) {
             value="Absent"
             checked={status === "Absent"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Absent
         </label>
@@ -55,6 +57,7 @@ export default function UpdateAttendenceform({ updateClass, onstop }) {
             value="Canceled"
             checked={status === "Canceled"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Canceled
         </label>

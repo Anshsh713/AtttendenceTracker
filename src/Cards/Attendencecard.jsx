@@ -53,7 +53,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
   if (loading)
     return (
       <div className="notfound">
-        <p className="empty-text">Subject Not Found</p>
+        <p className="empty-text">Finding Subjects...</p>
       </div>
     );
   if (!Array.isArray(subject) || subject.length === 0)

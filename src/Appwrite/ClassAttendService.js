@@ -284,7 +284,11 @@ export class ClassAttendService {
       const response = await this.databases.listDocuments(
         this.databasesId,
         this.attendClassesCollection,
-        [Query.equal("SubjectID", subjectId), Query.equal("UserID", userId)],
+        [
+          Query.equal("SubjectID", subjectId),
+          Query.equal("UserID", userId),
+          Query.limit(1000),
+        ],
       );
 
       const docs = response.documents;

@@ -113,7 +113,7 @@ export const AttendanceProvider = ({ children }) => {
         status,
       );
 
-      if (!response) {
+      if (!response?.success) {
         return false;
       }
 
@@ -170,9 +170,7 @@ export const AttendanceProvider = ({ children }) => {
         status,
       );
 
-      if (!response) {
-        return false;
-      }
+      if (!response?.success) return false;
 
       const totalCache =
         JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};

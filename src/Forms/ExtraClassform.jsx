@@ -82,6 +82,7 @@ export default function ExtraClassform({
             disabled={saving}
             checked={status === "Present"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Present
         </label>
@@ -94,6 +95,7 @@ export default function ExtraClassform({
             value="Absent"
             checked={status === "Absent"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Absent
         </label>

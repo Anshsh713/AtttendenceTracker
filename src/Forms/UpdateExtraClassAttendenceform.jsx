@@ -44,6 +44,7 @@ export default function UpdateExtraClassAttendenceform({
             value="Present"
             checked={status === "Present"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Present
         </label>
@@ -56,6 +57,7 @@ export default function UpdateExtraClassAttendenceform({
             disabled={saving}
             checked={status === "Absent"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Absent
         </label>
@@ -68,6 +70,7 @@ export default function UpdateExtraClassAttendenceform({
             disabled={saving}
             checked={status === "Canceled"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Canceled
         </label>

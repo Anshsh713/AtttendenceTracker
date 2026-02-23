@@ -34,6 +34,7 @@ export default function SubjectHistoryCard({ subjectId, close }) {
 
   return (
     <div className="history-card">
+      {console.log(history)}
       <h2>History: {history.subjectName}</h2>
 
       <p>

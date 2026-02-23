@@ -44,6 +44,7 @@ export default function Updateformhistory({ record, onSuccess }) {
             value="Present"
             checked={status === "Present"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Present
         </label>
@@ -56,6 +57,7 @@ export default function Updateformhistory({ record, onSuccess }) {
             value="Absent"
             checked={status === "Absent"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Absent
         </label>
@@ -68,6 +70,7 @@ export default function Updateformhistory({ record, onSuccess }) {
             value="Canceled"
             checked={status === "Canceled"}
             onChange={(e) => setStatus(e.target.value)}
+            required
           />
           Canceled
         </label>
@@ -81,4 +84,3 @@ export default function Updateformhistory({ record, onSuccess }) {
     </form>
   );
 }
-
