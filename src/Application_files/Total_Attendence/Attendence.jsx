@@ -40,7 +40,14 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
   } = stats;
 
   const target = profile?.attendence ?? 75;
-  const formatted = Number(attendancePercentage).toFixed(2);
+
+  // Always compute percentage safely from raw values
+  const totalClasses = totalPresent + totalAbsent;
+
+  const safePercentage =
+    totalClasses === 0 ? 0 : (totalPresent / totalClasses) * 100;
+
+  const formatted = safePercentage.toFixed(2);
 
   const COLORS = ["#10b981", "#ef4444", "#f1f5f9"];
 
@@ -49,13 +56,32 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
     { name: "Absent", value: totalAbsent },
   ];
 
-  const effective = totalPresent + totalAbsent + totalCanceled;
-  const t = target / 100;
-  const required = (t * effective - totalPresent) / (1 - t);
-  const classesNeeded =
-    effective === 0 && target > 0 ? 1 : Math.max(0, Math.ceil(required));
+  // Perfect mathematical model
+  const calculateNeededClasses = (present, absent, targetPercent) => {
+    const total = present + absent;
 
-  const isSafe = Number(attendancePercentage) >= target;
+    if (total === 0) return 1;
+
+    const T = targetPercent / 100;
+
+    const numerator = T * total - present;
+    const denominator = 1 - T;
+
+    if (denominator <= 0) return 0;
+
+    const result = numerator / denominator;
+
+    return result <= 0 ? 0 : Math.ceil(result);
+  };
+
+  const classesNeeded = calculateNeededClasses(
+    totalPresent,
+    totalAbsent,
+    target,
+  );
+
+  // Use safePercentage for logic
+  const isSafe = safePercentage >= target;
 
   const getAttendanceMessage = (percent) => {
     if (percent < target) {
@@ -89,7 +115,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
     return { text: "", type: "" };
   };
 
-  const statusMessage = getAttendanceMessage(Number(attendancePercentage));
+  const statusMessage = getAttendanceMessage(safePercentage);
 
   return (
     <div className="total-attendance-container">

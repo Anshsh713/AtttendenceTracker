@@ -14,7 +14,7 @@ export const AttendanceProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [attendanceRecords, setAttendanceRecords] = useState({});
   const [totalAttendance, setTotalAttendance] = useState({});
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleDateString("en-CA");
   const dayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
   const loadFromCacheForAttendance = (key) => {
@@ -144,11 +144,21 @@ export const AttendanceProvider = ({ children }) => {
   const QuickAttendance = async (status, subj, schedule) => {
     if (!user) return;
 
-    const key = `${subj.subjectId}_${schedule.day}_${schedule.time}_${schedule.date}`;
-    if (attendanceRecords[key]) {
-      alert("Attendance already marked for this class.");
-      return;
-    }
+    const key = `${subj.subjectId}_${schedule.day}_${schedule.time}`;
+
+    const updatedRecords = {
+      ...attendanceRecords,
+      [key]: {
+        Status: status,
+        ClassDay: schedule.day,
+        ClassTime: schedule.time,
+        ClassDate: schedule.date,
+      },
+    };
+
+    setAttendanceRecords(updatedRecords);
+
+    saveToCache({ attendancerecords: updatedRecords }, "AttendClassesCache");
     try {
       const response = await classAttendService.markAttendance(
         user.$id,
@@ -298,11 +308,12 @@ export const AttendanceProvider = ({ children }) => {
         },
       };
       setAttendanceRecords(updatedRecords);
-      saveToCache({
-        userId: user.$id,
-        timestamp: today,
-        attendancerecords: updatedRecords,
-      });
+      saveToCache(
+        {
+          attendancerecords: updatedRecords,
+        },
+        "AttendClassesCache",
+      );
       const totalCache =
         JSON.parse(localStorage.getItem("TotalAttendanceCache")) || {};
       delete totalCache[subj.subjectId];
@@ -349,13 +360,16 @@ export const AttendanceProvider = ({ children }) => {
 
       setAttendanceRecords(updatedAttendance);
 
-      SaveData("AttendClassesCache", {
-        timestamp: today,
-        attendancerecords: updatedAttendance,
-      });
+      saveToCache(
+        {
+          attendancerecords: updatedAttendance,
+        },
+        "AttendClassesCache",
+      );
 
       if (extraclassesRecords[key]) {
         const updatedExtra = {
+          ...extraclassesRecords,
           [key]: {
             ...extraclassesRecords[key],
             Status: data.Status,
@@ -363,11 +377,12 @@ export const AttendanceProvider = ({ children }) => {
         };
 
         setExtraClassesRecords(updatedExtra);
-
-        SaveData("ExtraClassCache", {
-          timestamp: today,
-          extraclassesRecords: updatedExtra,
-        });
+        saveToCache(
+          {
+            extraclassesRecords: updatedExtra,
+          },
+          "ExtraClassCache",
+        );
       }
 
       const totalCache =
@@ -376,10 +391,9 @@ export const AttendanceProvider = ({ children }) => {
       localStorage.setItem("TotalAttendanceCache", JSON.stringify(totalCache));
 
       await TotalAttendance(rec.SubjectID);
-      window.location.reload();
       return true;
     } catch (error) {
-      console.error("❌ Update extra class failed:", error);
+      console.error("Update extra class failed:", error);
       return false;
     }
   };
@@ -409,7 +423,7 @@ export const AttendanceProvider = ({ children }) => {
     try {
       const pastDate = new Date();
       pastDate.setDate(pastDate.getDate() - 1);
-      const dateString = pastDate.toISOString().split("T")[0];
+      const dateString = pastDate.toLocaleDateString("en-CA");
       const dayName = dayNames[pastDate.getDay()];
       const dayNameLower = dayName.toLowerCase();
 
@@ -477,10 +491,10 @@ export const AttendanceProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (user && allSubjects?.length) {
+    if (user?.$id && allSubjects?.length) {
       autoMarkYesterdayMissedClasses();
     }
-  }, [user, allSubjects]);
+  }, [user?.$id, allSubjects]);
 
   return (
     <AttendanceContext.Provider

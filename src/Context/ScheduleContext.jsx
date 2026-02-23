@@ -41,9 +41,12 @@ export const ScheduleProvider = ({ children }) => {
   const fetchScheduleData = async (forceRefresh = false) => {
     if (!user) return;
     setLoading(true);
-    if (!forceRefresh && loadfromcache()) {
-      setLoading(false);
-      return;
+    if (!forceRefresh) {
+      const loaded = loadfromcache();
+      if (loaded) {
+        setLoading(false);
+        return;
+      }
     }
     try {
       const baseDate = new Date();
@@ -107,8 +110,10 @@ export const ScheduleProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (user) fetchScheduleData();
-  }, [user]);
+    if (user?.$id) {
+      fetchScheduleData(true);
+    }
+  }, [user?.$id]);
 
   return (
     <ScheduleContext.Provider
