@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../Common_Componenets/Common_Button/Button.jsx";
 import { useHistory } from "../Context/HistoryContext.jsx";
 import "./SubjectHistoryCard.css";
+import { createPortal } from "react-dom";
 import Updateformhistory from "../Forms/Updateformhistory.jsx";
 
 export default function SubjectHistoryCard({ subjectId, close }) {
@@ -75,23 +76,25 @@ export default function SubjectHistoryCard({ subjectId, close }) {
         </ul>
       )}
 
-      {mistake && (
-        <div className="modal-overlay" onClick={() => setMistake(null)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setMistake(null)}>
-              ✖
-            </button>
+      {mistake &&
+        createPortal(
+          <div className="modal-overlay" onClick={() => setMistake(null)}>
+            <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close" onClick={() => setMistake(null)}>
+                ✖
+              </button>
 
-            <Updateformhistory
-              record={mistake}
-              onSuccess={async () => {
-                await getHistory(subjectId);
-                setMistake(null);
-              }}
-            />
-          </div>
-        </div>
-      )}
+              <Updateformhistory
+                record={mistake}
+                onSuccess={async () => {
+                  await getHistory(subjectId);
+                  setMistake(null);
+                }}
+              />
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

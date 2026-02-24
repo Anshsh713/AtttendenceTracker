@@ -24,7 +24,9 @@ function Home() {
   const toggleshowing = () => setaddSubject(!addSubject);
 
   const getClassesForDay = () => {
-    if (dayOffset === 0) return todayClasses;
+    if (dayOffset === 0) {
+      return todayClasses;
+    }
 
     return futureClasses.length
       ? futureClasses[dayOffset - 1]?.classes || []
@@ -89,6 +91,7 @@ function Home() {
           <Attendencecard
             subject={getClassesForDay()}
             onAttendenceMarked={handleAttendanceRefresh}
+            seeingfutureclass={dayOffset !== 0}
           />
 
           {addSubject && (

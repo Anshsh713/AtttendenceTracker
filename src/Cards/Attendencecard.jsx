@@ -4,7 +4,11 @@ import UpdateAttendenceform from "../Forms/UpdateAttendenceform.jsx";
 import { useAttendance } from "../Context/AttendenceContext.jsx";
 import "./Attendencecard.css";
 
-export default function Attendencecard({ subject = [], onAttendenceMarked }) {
+export default function Attendencecard({
+  subject = [],
+  onAttendenceMarked,
+  seeingfutureclass,
+}) {
   const {
     attendanceRecords,
     fetchAttendance,
@@ -96,7 +100,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                             }
                           />
                         </>
-                      ) : (
+                      ) : seeingfutureclass === false ? (
                         <>
                           <Button
                             title={AttendingStatus("Present", key)}
@@ -122,7 +126,7 @@ export default function Attendencecard({ subject = [], onAttendenceMarked }) {
                             }
                           />
                         </>
-                      )}
+                      ) : null}
                     </div>
                   </li>
                 );
