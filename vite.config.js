@@ -7,7 +7,6 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["logo.png"],
       manifest: {
         name: "Attendance Tracker",
         short_name: "Attendance",
@@ -16,17 +15,11 @@ export default defineConfig({
         background_color: "#222831",
         display: "standalone",
         orientation: "portrait",
-        scope: "/",
         start_url: "/",
         icons: [
           {
-            src: "/logo-192.png",
+            src: "/logo.png",
             sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "/logo-512.png",
-            sizes: "512x512",
             type: "image/png",
           },
         ],
