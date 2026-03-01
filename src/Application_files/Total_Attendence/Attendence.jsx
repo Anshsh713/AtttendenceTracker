@@ -91,7 +91,7 @@ export default function Total_Attendence({ subject, refresh_Trigger }) {
       };
     }
 
-    if (percent >= 75 && percent < 80) {
+    if (percent >= target && percent < 80) {
       return {
         text: " You can't skip classes. Keep attending regularly.",
         type: "warn",
